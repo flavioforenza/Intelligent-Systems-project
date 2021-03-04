@@ -1,0 +1,7 @@
+#some compilation file
+*.aux
+*.fdb_latexmk
+*.fls
+*.log
+*.gz
+*.pdf 

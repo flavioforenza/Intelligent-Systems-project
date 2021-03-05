@@ -12,3 +12,8 @@
 \end{center}
 
 \emph{IEEE TRANSACTIONS ON IMAGE PROCESSING, VOL. 25, NO. 8, AUGUST 2016}
+
+\subsection{Introduction}
+
+Al fine di poter ridurre la complessità nell’analisi di una scena, viene introdotto un metodo utili a poter rilevare potenziali informazioni , come regioni o oggetti, in maniera  simultanea. Tale metodo è detto ”Visual saliency”. Prima di introdurre l’argomento, bisogna spiegare quattro tipi di concetti: (1) Fissazioni: riguardano la scena inquadrata dall’occhio umano e vengono utilizzate per confrontare i metodi di previsione delle fissazioni. (2) ROI: ogni regione contiene informazioni in cui vi è la difficoltà di separare gli oggetti, come per esempio quelli chiari. (3) Oggetti salienti: animali, persone, automobili etc. (4) Contorno degli oggetti salienti. Il metodo proposto si basa nell’effettuare una Salient Structure (SS) Detection, utile a poter identificare le quattro proprietà precedenti, sia in scene disordinate che in quelle semplici. Il framework proposto è nominato CGVS (contour-guided visual search): questo strumento di ricerca visiva individua i target utilizzando due tipi di percorsi: (1) percorso selettivo: vengono rilevati i contorni di ogni oggetto utile per stimare la posizione e le dimensioni delle ROI: (2) percorso non selettivo: possono essere proprietà come il colore, luminaria, consistenza etc.
+Questa strategia di ricerca effettua un’elaborazione parallela su entrambi i percorsi, estrapolando informazioni globali e locali. Infine viene applicata un’inferenza Bayesiana per integrare la contour based spatial prior (CBSP), metodo utile a poter estrarre le informazioni sui contorni, e le informazioni locali per poter identificare la salienza di ciascun pixel.

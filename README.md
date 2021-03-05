@@ -1,2 +1,2 @@
-# Information-Retrieval-Project
+# Intelligent-Systems-Project
 This repo contains ten summarized papers based on topics such as "computer vision and CNN"

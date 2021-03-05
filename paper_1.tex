@@ -14,5 +14,23 @@
 \emph{IEEE TRANSACTIONS ON IMAGE PROCESSING, VOL. 25, NO. 8, AUGUST 2016}
 
 \subsection{Introduction}
-In order to reduce the complexity in the analysis of a scene, a useful method is introduced to be able to detect potential information, such as regions or objects, simultaneously. This method is called "Visual saliency". Before introducing the topic, four types of concepts must be explained: (1) Fixations: they concern the scene framed by the human eye and are used to compare the methods of forecasting fixations. (2) ROI: each region contains information where there is difficulty in separating objects, such as clear ones. (3) Salient objects: animals, people, cars etc. (4) Outline of salient objects. The proposed method is based on carrying out a Salient Structure (SS) Detection, useful for identifying the four previous properties, both in disordered and simple scenes. The proposed framework is called CGVS (contour-guided visual search): this visual search tool identifies the targets using two types of paths: (1) selective path: the contours of each object are detected, useful for estimating the position and size of the ROI: (2) non-selective path: it can be properties such as color, luminary, texture etc.
-This search strategy carries out parallel processing on both paths, extracting global and local information. Finally, a Bayesian inference is applied to integrate the contour based spatial prior (CBSP), a useful method for extracting information on the contours, and local information in order to identify the salience of each pixel. 
+In order to reduce the complexity in the analysis of a scene, a useful method 
+is introduced to be able to detect potential information, such as regions or 
+objects, simultaneously. This method is called "Visual saliency". Before introducing
+the topic, four types of concepts must be explained: (1)\emph{Fixations}: 
+they concern the scene framed by the human eye and are used to compare 
+the methods of forecasting fixations. (2)\emph{ROI}: each region contains information 
+where there is difficulty in separating objects, such as clear ones.(3)\emph{Salient objects}: 
+animals, people, cars etc. (4) Outline of salient objects. The proposed 
+method is based on carrying out a \emph{Salient Structure (SS) Detection},
+useful for identifying the four previous properties, both in disordered and 
+simple scenes. The proposed framework is called CGVS (contour-guided visual 
+search): this visual search tool identifies the targets using two types of 
+paths: (1)\emph{selective path}: the contours of each object are detected, useful 
+for estimating the position and size of the ROI: (2)\emph{non-selective path}: it 
+can be properties such as color, luminary, texture etc. This search strategy 
+carries out parallel processing on both paths, extracting global and local 
+information. Finally, a Bayesian inference is applied to integrate the contour 
+based spatial prior (CBSP), a useful method for extracting information on 
+the contours, and local information in order to identify the salience of each 
+pixel. 

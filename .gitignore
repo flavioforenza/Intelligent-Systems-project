@@ -5,4 +5,6 @@
 *.log
 *.gz
 *.pdf
-*.DS_Store 
+*.DS_Store
+*.bbl
+*.blg 

@@ -80,7 +80,7 @@ and texture are extracted. The information obtained from the CBSP is inserted
 into the Bayesian framework for the prediction of the salient structure. 
 Finally, the output of the Bayesian framework will represent the salient structure 
 which will be improved through an iterative procedure applied on the 
-CBSP process. The flowchart of the proposed method is summarized in Fig. 1.
+CBSP process. The flowchart of the proposed method is summarized in Fig. \ref{fid: flowchart}.
 
 \subsubsection{\emph{Contour-Based Spatial Prior (CBSP)}}
 \begin{figure}[htbp]
@@ -90,8 +90,28 @@ CBSP process. The flowchart of the proposed method is summarized in Fig. 1.
     \caption{CBSP reconstruction}
     \label{fid: CBSP}
 \end{figure}
+Within the non-selective path, the crucial operation is to calculate the 
+approximate spatial weights of salience based on the distribution of the previously 
+detected contours. In this path there is the problem of determining 
+the local information of each object. The solution to the problem is based 
+on an operation that fills the regions delimited by these contours. A very 
+efficient method proposed in \cite{07478155} result is used for the extraction of the contours.
+An example of CBSP reconstruction is shown in Fig. \ref{fid: CBSP}. Each pixel 
+has a direction represented by a radius $ d_r $ which is equal to $d_r = min (H, W) / 3$, where 
+\emph{H} and \emph{W} correspondingly indicate the width and height of the entire image.
+The diameter divides the circle into two parts where, on each of these, for 
+each pixel belonging to the edge, the average response of the edge (AER) will 
+be calculated. This calculation is useful in deciding which of the two halves 
+will belong to the salient region. Each spatial weight of salience is denoted 
+by $ S_e $, while the added bias is denoted by $ S_c $ and both are normalized in the 
+range of [0,1]. The value, which in turn will be normalized, of CBSP is given by: $$ S_w = S_e + S_c $$
 
-
-\cite{07478155}
+\subsubsection{Low-Level Feature Extraction}
+Features such as color (rgb), luminance (flum) and texture are extracted in 
+parallel. There are complicated regions in a texture that can be represented. 
+For this purpose, the texture channel ($ {f_{ed}} $)  has been introduced, which is 
+useful to better represent the salient regions using the contour density (ED). 
+The texture channel is calculated by using an 11x11 filter that smooths the 
+edges.
 
 

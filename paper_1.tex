@@ -15,7 +15,7 @@
     \emph{IEEE TRANSACTIONS ON IMAGE PROCESSING, VOL. 25, NO. 8, AUGUST 2016}
 \end{center}
 
-\subsection{Introduction}
+\subsection{INTRODUCTION}
 In order to reduce the complexity in the analysis of a scene, a useful method 
 is introduced to detect potential information, such as regions or 
 objects, simultaneously. This method is called "\emph{Visual Saliency}". Before introducing
@@ -37,6 +37,8 @@ based spatial prior (CBSP), a useful method for extracting information on
 the boundaries, and local information in order to identify the salience of each 
 pixel. 
 
+\subsection{RELATED WORK}
+
 \subsubsection{\emph{Fixation Prediction}}
 Fixation prediction models aim to calculate salience maps, which are used to 
 identify ROIs. Fixation prediction models provide smooth regions of interest 
@@ -55,3 +57,31 @@ of all objects in the scene, regardless of their salience. In this paper Bayesia
 inference is used to accomplish this task.
 
 \subsubsection{\emph{Bridging the Two Tasks}}
+Unlike the existing methods, the proposed one is able to obtain more detailed 
+salient structures in terms of resolution, moreover it is able to operate in 
+conditions in which the scene is simple or complex. Both tasks do not need 
+specific tuning.
+
+\subsection{CONTOUR-GUIDED VISUAL SEARCH MODEL}
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width = 0.8\linewidth]{images/selective and non-selective pathways.png}
+    \centering
+    \caption{The flowchart of the porposed system}
+    \label{fid: flowchart}
+\end{figure}
+
+The research of the possible potential positions, of the salient structures, is 
+carried out with the help of the contour-based spatial prior (CBSP) process, 
+which uses the contours detected in a non-selective path. At the same time, 
+in the selective path, the local characteristics concerning color, luminance 
+and texture are extracted. The information obtained from the CBSP is inserted 
+into the Bayesian framework for the prediction of the salient structure. 
+Finally, the output of the Bayesian framework will represent the salient structure 
+which will be improved through an iterative procedure applied on the 
+CBSP process. The flowchart of the proposed method is summarized in Fig. 1.
+
+\subsubsection{\emph{Contour-Based Spatial Prior (CBSP)}}
+
+

@@ -115,3 +115,21 @@ The texture channel is calculated by using an 11x11 filter that smooths the
 edges.
 
 \subsubsection{Bayesian Inference With Contour Guidance}
+Bayesian inference gives the possibility to calculate the probability that a 
+pixel x may belong to a salient structure s. This probability is computed as:
+$$ p(x|s) = \frac{p(s)p(x|s)}{p(s)p(x|s)+p(b)p(x|b) } $$
+Where $ p(x|s) $ is the probability of a pixel belonging to a salient structure, 
+$ p(x|b) $ is the probability that a pixel belongs to the background, $ p(b)=1-p(s) $,
+finally $ p(s)=Sw $ represents the CBSP value. The implementation 
+details are as follows.
+\begin{enumerate}
+    \item \emph{Predict the size of Potential Structure}: useful for obtaining $ p(x|s) $ and 
+    $ p(x|b) $. This procedure, through a binarization of the map obtained 
+    from $ p(s) $, separates the salient structures from the background, all 
+    through the use of a threshold. This threshold is calculated using the 
+    local parameters (color, luminance, etc.), a percentage not greater than 
+    50\% useful to denote the size of the salient structure, an initial weight 
+    and finally two sets of pixels corresponding to the background and the 
+    foreground (salient structure).
+    \item \emph{Evaluate the Importance of Each Feature}:  
+\end{enumerate}

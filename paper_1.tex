@@ -117,19 +117,35 @@ edges.
 \subsubsection{Bayesian Inference With Contour Guidance}
 Bayesian inference gives the possibility to calculate the probability that a 
 pixel x may belong to a salient structure s. This probability is computed as:
-$$ p(x|s) = \frac{p(s)p(x|s)}{p(s)p(x|s)+p(b)p(x|b) } $$
+$$ p(s|x) = \frac{p(s)p(x|s)}{p(s)p(x|s)+p(b)p(x|b) } $$
 Where $ p(x|s) $ is the probability of a pixel belonging to a salient structure, 
 $ p(x|b) $ is the probability that a pixel belongs to the background, $ p(b)=1-p(s) $,
 finally $ p(s)=Sw $ represents the CBSP value. The implementation 
 details are as follows.
 \begin{enumerate}
-    \item \emph{Predict the size of Potential Structure}: useful for obtaining $ p(x|s) $ and 
-    $ p(x|b) $. This procedure, through a binarization of the map obtained 
+    \item \emph{Predict the size of Potential Structure}: this procedure, through a binarization of the map obtained 
     from $ p(s) $, separates the salient structures from the background, all 
     through the use of a threshold. This threshold is calculated using the 
     local parameters (color, luminance, etc.), a percentage not greater than 
     50\% useful to denote the size of the salient structure, an initial weight 
     and finally two sets of pixels corresponding to the background and the 
     foreground (salient structure).
-    \item \emph{Evaluate the Importance of Each Feature}:  
+    \item \emph{Evaluate the Importance of Each Feature}: a feature is considered important 
+    when the difference between the average pixel values of its 
+    salient structure and those of the background is large enough, i.e. when \emph{$ w_i $} 
+    takes on a satisfiable value.
+    \item \emph{Calculate the Observation Likelihood}:in order to calculate the observed 
+    probabilities, the different color channels \emph{($ f_{lum}, f_{rg}, f_{by}, f_{ed} $)} are used, 
+    and the distribution functions $ p(x_i | S_{T_{opt}}) $ and $ p(x_i | B_{T_{opt}}) $ where $ S_{T_{opt}} $ 
+    represents the set of pixels belonging to the structure salient, while 
+    $ B_{T_{opt}} $ represents the set of pixels belonging to the background.
+    $$ p(x|s) = \prod_{i \in {\{} f_{lum}, f_{rg}, f_{by}, f_{ed} {\}}} {(p(x_i | S_{T_{opt}}))^{w_i}} $$
+    $$ p(x|b) = \prod_{i \in {\{} f_{lum}, f_{rg}, f_{by}, f_{ed} {\}}} {(p(x_i | B_{T_{opt}}))^{w_i}} $$
+    \item \emph{Enhance the Salient Structure by Iterating}: the salient structures, at 
+    each instant \emph{t}, with $ t = t_0,…, t_n $, are iteratively improved by applying 
+    a median filter on each of them. In addition, the weight attributed to 
+    the importance of each feature is changed. Finally, the CGVS model 
+    will operate on a set of instants \emph{t}, thus forming the contour-guided 
+    visual search.
+
 \end{enumerate}

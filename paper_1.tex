@@ -66,7 +66,7 @@ specific tuning.
 
 \begin{figure}[htbp]
     \centering
-    \includegraphics[width = 0.8\linewidth]{images/selective and non-selective pathways.png}
+    \includegraphics[width = 0.8\linewidth]{images/paper1/selective and non-selective pathways.png}
     \centering
     \caption{The flowchart of the porposed system}
     \label{fid: flowchart}
@@ -85,7 +85,7 @@ CBSP process. The flowchart of the proposed method is summarized in Fig. \ref{fi
 \subsubsection{\emph{Contour-Based Spatial Prior (CBSP)}}
 \begin{figure}[htbp]
     \centering
-    \includegraphics[width = 0.8\linewidth]{images/CBSP.png}
+    \includegraphics[width = 0.8\linewidth]{images/paper1/CBSP.png}
     \centering
     \caption{CBSP reconstruction}
     \label{fid: CBSP}
@@ -167,7 +167,7 @@ on three types of datasets, to compare the proposed system with o already
 existing at the state of the art, as shown in Fig. \ref{fig: ROC}.
 \begin{figure}[htbp]
     \centering
-    \includegraphics[width = 1 \linewidth]{images/ROC.png}
+    \includegraphics[width = 1 \linewidth]{images/paper1/ROC.png}
     \centering
     \caption{ROC comparison}
     \label{fig: ROC}
@@ -181,5 +181,22 @@ takes into account this center prior, without however losing the information
 on the other objects in the scene.
 
 \subsubsection{\emph{Salient Object Detection}}
-
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width = 1 \linewidth]{images/paper1/metrics.png}
+    \centering
+    \caption{Metrics comparison}
+    \label{fig: metrics}
+\end{figure}
+To compare the performance of the salient object detection, metrics such 
+as Precision, Recall, F-score, Weighted F-score and MAE (Mean Absolute 
+Error) were used on three types of datasets (ASD, ECSSD, PASCALS). The 
+results showed that for the first two metrics (P-R), systems such as HS and 
+RF are the best, while for the F-score the proposed method is able to consider 
+a greater range of thresholds. As it can be seen, in these two metrics the 
+proposed system (CGVS (t2)) considers the central bias unlike the others. 
+If the central bias were not considered, the results decrease but are still 
+satisfactory (CGVS ''). However, in the remaining two metrics, the proposed 
+system is the best, except in the PASCALS dataset where the best is the RF 
+method.
 

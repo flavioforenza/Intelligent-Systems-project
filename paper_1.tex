@@ -151,6 +151,19 @@ details are as follows.
 
 \subsection{EXPERIMENTS}
 The proposed method was evaluated on different datasets. For the fixation 
-prediction the datasets are \cite{0747815530} \cite{0747815531} \cite{0747815579}, while for the salient object detection \cite{0747815506} \cite{0747815508} \cite{0747815518} 
+prediction the datasets are \cite{0747815530} \cite{0747815531} \cite{0747815579}, while for the salient object detection \cite{0747815506} \cite{0747815508} \cite{0747815518}.
+
+\subsubsection{\emph{Basic Property of the Proposed Model}}
+The proposed system allows to carry out a multiple search of objects. In 
+comparison to the work of Itti et al. \cite{0747815505} the proposed system is able to detect, 
+after several iterations, the region and therefore the salient object.
+
+\subsubsection{\emph{Fixation Prediction}}
+Several proposed methods, such as the CA, in order to increase the ROC 
+index, aim to have a first fixation that is limited to having a central prior 
+in the scene. On the other hand, this method will lose information on surrounding 
+objects. In the proposed method, the computation of the CBSP 
+takes into account this center prior, without however losing the information 
+on the other objects in the scene.
 
 

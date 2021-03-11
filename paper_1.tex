@@ -159,11 +159,27 @@ comparison to the work of Itti et al. \cite{0747815505} the proposed system is a
 after several iterations, the region and therefore the salient object.
 
 \subsubsection{\emph{Fixation Prediction}}
+The prediction of fixation indicates the likelihood with which a human is 
+looking at a given position in the scene. There are several metrics that are 
+used to evaluate the prediction such as Natural Scanpath Saliency (NSS) 
+and ROC (AUC). In the following article the ROC method is mainly used, 
+on three types of datasets, to compare the proposed system with o already 
+existing at the state of the art, as shown in Fig. \ref{fig: ROC}.
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width = 1 \linewidth]{images/ROC.png}
+    \centering
+    \caption{ROC comparison}
+    \label{fig: ROC}
+\end{figure}
+
 Several proposed methods, such as the CA, in order to increase the ROC 
 index, aim to have a first fixation that is limited to having a central prior 
 in the scene. On the other hand, this method will lose information on surrounding 
 objects. In the proposed method, the computation of the CBSP 
 takes into account this center prior, without however losing the information 
 on the other objects in the scene.
+
+\subsubsection{\emph{Salient Object Detection}}
 
 

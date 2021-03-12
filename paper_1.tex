@@ -87,7 +87,7 @@ CBSP process. The flowchart of the proposed method is summarized in Fig. \ref{fi
     \centering
     \includegraphics[width = 0.8\linewidth]{images/paper1/CBSP.png}
     \centering
-    \caption{CBSP reconstruction}
+    \caption{CBSP reconstruction.}
     \label{fid: CBSP}
 \end{figure}
 Within the non-selective path, the crucial operation is to calculate the 
@@ -169,7 +169,7 @@ existing at the state of the art, as shown in Fig. \ref{fig: ROC}.
     \centering
     \includegraphics[width = 1 \linewidth]{images/paper1/ROC.png}
     \centering
-    \caption{ROC comparison}
+    \caption{ROC comparison.}
     \label{fig: ROC}
 \end{figure}
 
@@ -185,7 +185,7 @@ on the other objects in the scene.
     \centering
     \includegraphics[width = 1 \linewidth]{images/paper1/metrics.png}
     \centering
-    \caption{Metrics comparison}
+    \caption{Metrics comparison.}
     \label{fig: metrics}
 \end{figure}
 To compare the performance of the salient object detection, metrics such 
@@ -216,9 +216,27 @@ three luminance gradients and two color-opponent channels. The system also
 proves to be capable of being able to detect text as well.
 
 \subsubsection{\emph{Robustness to Parameters}}
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width = 0.6 \linewidth]{images/paper1/bad threshold.png}
+    \centering
+    \caption{Incorrect estimation.}
+    \label{fig: Incorrect}
+\end{figure}
 In order to test the robustness of the model, parameters $ d_r $ and $ \sigma_c $ were used 
 in various ranges of $ \{ 1/2, 1/3, 1/4, 1/5, 1/6 \} * min(W,H) $,useful to obtain the 
 CBSP. Parameter changes do not cause performance degradation, but show 
-that the model is robust across different datasets. Threshold-based selection 
-of the object size is a method that still needs to be adapted to the type of 
-scene.
+that the model is robust across different datasets. However, the 
+selection of the object size, based on the threshold, is a method that still 
+needs to be adapted to the type of scene. A wrong choice of value could lead 
+to not considering some important parts of the objects (Fig.\ref{fig: Incorrect}).
+
+\subsection{DISCUSSION}
+The proposed model searches for salient structures and associated objects 
+without using tools, such as the superpixel technique, adopted by other methods. 
+The system can be extended by introducing other local features such as 
+(e.g., depth, motion, etc.) to be used also in video processing. It is possible 
+to carry out an analysis of the scene using unsupervised learning methods. 
+Finally, this method offers a dual use. In a cluttered scene with no dominant 
+objects, the system will function as a fixation prediction model. On the other 
+hand, with simple scenes, the system reveals the existing dominant objects.

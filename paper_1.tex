@@ -194,9 +194,17 @@ Error) were used on three types of datasets (ASD, ECSSD, PASCALS). The
 results showed that for the first two metrics (P-R), systems such as HS and 
 RF are the best, while for the F-score the proposed method is able to consider 
 a greater range of thresholds. As it can be seen, in these two metrics the 
-proposed system (CGVS (t2)) considers the central bias unlike the others. 
+proposed system (\emph{CGVS($ t_2 $)}) considers the central bias unlike the others. 
 If the central bias were not considered, the results decrease but are still 
-satisfactory (CGVS ''). However, in the remaining two metrics, the proposed 
+satisfactory (\emph{CGVS''}). However, in the remaining two metrics, the proposed 
 system is the best, except in the PASCALS dataset where the best is the RF 
 method.
 
+\subsubsection{\emph{Between Saliency Map and Salient Object}}
+Most fixation prediction methods perform poorly when used to detect salient 
+objects. To solve this problem, a two-dimensional Gaussian distribution is 
+applied to each salience map derived from any method. The derived output 
+will be used as an initial CBSP from which the salient objects can be 
+extracted with the previously proposed calculations. The metrics, used to 
+measure the performance of the different methods, improve if the methods 
+replace their salience map with CBSP.

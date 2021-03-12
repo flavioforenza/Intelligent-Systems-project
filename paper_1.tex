@@ -214,3 +214,11 @@ The peculiarity of the proposed method also lies in the search for salient
 edges. This process is possible by replacing the four color components with 
 three luminance gradients and two color-opponent channels. The system also 
 proves to be capable of being able to detect text as well.
+
+\subsubsection{\emph{Robustness to Parameters}}
+In order to test the robustness of the model, parameters $ d_r $ and $ \sigma_c $ were used 
+in various ranges of $ \{ 1/2, 1/3, 1/4, 1/5, 1/6 \} * min(W,H) $,useful to obtain the 
+CBSP. Parameter changes do not cause performance degradation, but show 
+that the model is robust across different datasets. Threshold-based selection 
+of the object size is a method that still needs to be adapted to the type of 
+scene.

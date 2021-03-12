@@ -108,11 +108,14 @@ both are normalized in the range of [0,1]. The value, which in turn will be
 normalized, of CBSP is given by: $$ S_w = S_e + S_c $$
 
 \subsubsection{Low-Level Feature Extraction}
-In the selective path, features such as complementary colors ($ f_{rg} = r-g$, 
-$ f_{by} = b-(r+g)/2 $), luminance ($ f_{lum} = (r+g+b)/3 $) and texture are 
-extracted. In addition, the density of the edges ($ f_{ed} $) is extracted, useful to 
-represent the level of density of the edges, smoothed by a median filter of 
-11x11 pixels.
+In the selective path, features such as complementary colors ($ f_{rg}, f_{by}$), luminance 
+($ f_{lum} $) and texture are extracted. In addition, the density of the 
+edges ($ f_{ed} $) is extracted, useful to represent the level of density of the edges, 
+smoothed by a median filter of 11x11 pixels.
+$$ f_{rg} = r-g $$
+$$ f_{by} = b-(r+g)/2 $$
+$$ f_{lum} = (r+g+b)/3 $$
+
 
 \subsubsection{Bayesian Inference With Contour Guidance}
 Bayesian inference gives the possibility to calculate the probability that a 
@@ -131,10 +134,12 @@ details are as follows.
     for denoting the size of the salient structure, an initial non-zero 
     weight and finally two sets of pixels ($ B_{T_k}$ , $ S_{T_k}$) corresponding to the background 
     and foreground (salient structure).
+    $$ T_{opt} = \argmax\limits_{T_k} \sqrt{\sum_{i} (\omega_i^0*(\tilde{S}^i_{T_{k}}) - (\tilde{B}^i_{T_{k}}))^2} $$
     \item \emph{Evaluate the Importance of Each Feature}: a feature is considered important 
     when the difference between the average pixel values of its 
-    salient structure and those of the background is large enough, i.e. when $ w_i $ 
+    salient structure and those of the background is large enough, i.e. when $ \omega_i $ 
     takes on a satisfiable value.
+    $$ \omega_i = \frac{1}{\mu} * | \tilde{S}^i_{T_{opt}} - \tilde{B}^i_{B_{opt}} |$$
     \item \emph{Calculate the Observation Likelihood}:in order to calculate the observed 
     probabilities, the different color channels \emph{($ f_{lum}, f_{rg}, f_{by}, f_{ed} $)} are used, 
     and the distribution functions $ p(x_i | S_{T_{opt}}) $ and $ p(x_i | B_{T_{opt}}) $ where $ S_{T_{opt}} $ 

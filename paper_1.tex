@@ -20,22 +20,21 @@ In order to reduce the complexity in the analysis of a scene, a useful method
 is introduced to detect potential information, such as regions or 
 objects, simultaneously. This method is called "\emph{Visual Saliency}". Before introducing
 the topic, four types of concepts must be explained: (1)\emph{Fixations}: 
-they concern the scene framed by the human eye. They are used to compare 
-the methods of forecasting fixations. (2)\emph{ROI}: each region contains information, 
-such as light or dark objects, which is intended to be separated.(3)\emph{Salient objects}: 
+they concern the scene framed by the human eye (ground-truth), used to benchmark 
+fixation prediction methods. (2)\emph{ROI}: each region contains information, such 
+as light or dark objects, which is intended to be separated.(3)\emph{Salient objects}: 
 animals, people, cars etc. (4)\emph{Salient edges}: boundary of each object. The proposed 
 method is based on carrying out a \emph{Salient Structure (SS) Detection},
 useful for identifying the four previous properties, both in cluttered and 
 simple scenes. The proposed framework is called \emph{CGVS (contour-guided visual 
 search)}. This visual search tool identifies the targets using two types of 
-paths: (1)\emph{selective path}: the boundaries of each object are detected, useful 
-for estimating the position and size of the ROI: (2)\emph{non-selective path}: it 
+pathsways: (1)\emph{selective pathway}: the boundaries of each object are detected, useful 
+for estimating the position and size of the ROI: (2)\emph{non-selective pathway}: it 
 can be properties such as color, luminary, texture etc. This search strategy 
 carries out parallel processing on both paths, extracting global and local 
 information. Finally, a Bayesian inference is applied to integrate the contour 
-based spatial prior (CBSP), a useful method for extracting information on 
-the boundaries, and local information in order to identify the salience of each 
-pixel. 
+based spatial prior (CBSP), and local information in order to identify 
+the salience of each pixel. 
 
 \subsection{RELATED WORK}
 
@@ -68,7 +67,7 @@ specific tuning.
     \centering
     \includegraphics[width = 0.8\linewidth]{images/paper1/selective and non-selective pathways.png}
     \centering
-    \caption{The flowchart of the porposed system}
+    \caption{The flowchart of the porposed system.}
     \label{fid: flowchart}
 \end{figure}
 
@@ -94,8 +93,8 @@ Within the non-selective path, the crucial operation is to calculate the
 approximate spatial weights of salience based on the distribution of the previously 
 detected contours. In this path there is the problem of determining 
 the local information of each object. The solution to the problem is based 
-on an operation that fills the regions delimited by these contours. A very 
-efficient method proposed in \cite{0747815500} result is used for the extraction of the contours.
+on an operation that fills the regions delimited by these contours \cite{0747815567}. A very 
+efficient method proposed in \cite{0747815570} result is used for the extraction of the contours.
 An example of CBSP reconstruction is shown in Fig. \ref{fid: CBSP}. Each pixel 
 has a direction represented by a radius $ d_r $ which is equal to $d_r = min (H, W) / 3$, where 
 \emph{H} and \emph{W} correspondingly indicate the width and height of the entire image.
@@ -103,36 +102,38 @@ The diameter divides the circle into two parts where, on each of these, for
 each pixel belonging to the edge, the average response of the edge (AER) will 
 be calculated. This calculation is useful in deciding which of the two halves 
 will belong to the salient region. Each spatial weight of salience is denoted 
-by $ S_e $, while the added bias is denoted by $ S_c $ and both are normalized in the 
-range of [0,1]. The value, which in turn will be normalized, of CBSP is given by: $$ S_w = S_e + S_c $$
+by $ S_e $, while the added center-bias, which is modeled by a Gussian 
+mask having standard deviation as $ \sigma_c = min (H, W) / 3 $, is denoted by $ S_c $ and 
+both are normalized in the range of [0,1]. The value, which in turn will be 
+normalized, of CBSP is given by: $$ S_w = S_e + S_c $$
 
 \subsubsection{Low-Level Feature Extraction}
-Features such as color (rgb), luminance (flum) and texture are extracted in 
-parallel. There are complicated regions in a texture that can be represented. 
-For this purpose, the texture channel ($ {f_{ed}} $)  has been introduced, which is 
-useful to better represent the salient regions using the contour density (ED). 
-The texture channel is calculated by using an 11x11 filter that smooths the 
-edges.
+In the selective path, features such as complementary colors ($ f_{rg} = r-g$, 
+$ f_{by} = b-(r+g)/2 $), luminance ($ f_{lum} = (r+g+b)/3 $) and texture are 
+extracted. In addition, the density of the edges ($ f_{ed} $) is extracted, useful to 
+represent the level of density of the edges, smoothed by a median filter of 
+11x11 pixels.
 
 \subsubsection{Bayesian Inference With Contour Guidance}
 Bayesian inference gives the possibility to calculate the probability that a 
-pixel x may belong to a salient structure s. This probability is computed as:
+pixel \emph{x} may belong to a salient structure \emph{s}. This probability is computed as:
 $$ p(s|x) = \frac{p(s)p(x|s)}{p(s)p(x|s)+p(b)p(x|b) } $$
 Where $ p(x|s) $ is the probability of a pixel belonging to a salient structure, 
 $ p(x|b) $ is the probability that a pixel belongs to the background, $ p(b)=1-p(s) $,
 finally $ p(s)=Sw $ represents the CBSP value. The implementation 
 details are as follows.
 \begin{enumerate}
-    \item \emph{Predict the size of Potential Structure}: this procedure, through a binarization of the map obtained 
-    from $ p(s) $, separates the salient structures from the background, all 
-    through the use of a threshold. This threshold is calculated using the 
-    local parameters (color, luminance, etc.), a percentage not greater than 
-    50\% useful to denote the size of the salient structure, an initial weight 
-    and finally two sets of pixels corresponding to the background and the 
-    foreground (salient structure).
+    \item \emph{Predict the size of Potential Structure}: this procedure, through a binarization 
+    of the map obtained from $ p(s) $, separates the salient structures 
+    from the background, all through the use of a threshold. This 
+    threshold is calculated using local parameters (color, luminance, etc.), 
+    a threshold $ T_k $ no greater than 50\% of the size of the entire image, useful 
+    for denoting the size of the salient structure, an initial non-zero 
+    weight and finally two sets of pixels ($ B_{T_k}$ , $ S_{T_k}$) corresponding to the background 
+    and foreground (salient structure).
     \item \emph{Evaluate the Importance of Each Feature}: a feature is considered important 
     when the difference between the average pixel values of its 
-    salient structure and those of the background is large enough, i.e. when \emph{$ w_i $} 
+    salient structure and those of the background is large enough, i.e. when $ w_i $ 
     takes on a satisfiable value.
     \item \emph{Calculate the Observation Likelihood}:in order to calculate the observed 
     probabilities, the different color channels \emph{($ f_{lum}, f_{rg}, f_{by}, f_{ed} $)} are used, 
@@ -154,16 +155,19 @@ The proposed method was evaluated on different datasets. For the fixation
 prediction the datasets are \cite{0747815530} \cite{0747815531} \cite{0747815579}, while for the salient object detection \cite{0747815506} \cite{0747815508} \cite{0747815518}.
 
 \subsubsection{\emph{Basic Property of the Proposed Model}}
-The proposed system allows to carry out a multiple search of objects. In 
-comparison to the work of Itti et al. \cite{0747815505} the proposed system is able to detect, 
-after several iterations, the region and therefore the salient object.
+In comparison to the work of Itti et al. \cite{0747815505} the proposed system is able to:
+\begin{enumerate}
+    \item Automatically select the size of potential salient structures and assign them a weight;
+    \item Detect multiple objects in a scene;
+    \item Include an iterative process that improves research;
+\end{enumerate}
 
 \subsubsection{\emph{Fixation Prediction}}
-The prediction of fixation indicates the likelihood with which a human is 
+The fixation prediction indicates the likelihood with which a human is 
 looking at a given position in the scene. There are several metrics that are 
 used to evaluate the prediction such as Natural Scanpath Saliency (NSS) 
 and ROC (AUC). In the following article the ROC method is mainly used, 
-on three types of datasets, to compare the proposed system with o already 
+on three types of datasets, to compare the proposed system with others already 
 existing at the state of the art, as shown in Fig. \ref{fig: ROC}.
 \begin{figure}[htbp]
     \centering
@@ -181,13 +185,6 @@ takes into account this center prior, without however losing the information
 on the other objects in the scene.
 
 \subsubsection{\emph{Salient Object Detection}}
-\begin{figure}[htbp]
-    \centering
-    \includegraphics[width = 1 \linewidth]{images/paper1/metrics.png}
-    \centering
-    \caption{Metrics comparison.}
-    \label{fig: metrics}
-\end{figure}
 To compare the performance of the salient object detection, metrics such 
 as Precision, Recall, F-score, Weighted F-score and MAE (Mean Absolute 
 Error) were used on three types of datasets (ASD, ECSSD, PASCALS). The 
@@ -198,22 +195,27 @@ proposed system (\emph{CGVS($ t_2 $)}) considers the central bias unlike the oth
 If the central bias were not considered, the results decrease but are still 
 satisfactory (\emph{CGVS''}). However, in the remaining two metrics, the proposed 
 system is the best, except in the PASCALS dataset where the best is the RF 
-method.
+method (Fig. \ref{fig: metrics}).
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width = 1 \linewidth]{images/paper1/metrics.png}
+    \centering
+    \caption{Metrics comparison.}
+    \label{fig: metrics}
+\end{figure}
 
 \subsubsection{\emph{Between Saliency Map and Salient Object}}
 Most fixation prediction methods perform poorly when used to detect salient 
 objects. To solve this problem, a two-dimensional Gaussian distribution is 
 applied to each salience map derived from any method. The derived output 
 will be used as an initial CBSP from which the salient objects can be 
-extracted with the previously proposed calculations. The metrics, used to 
-measure the performance of the different methods, improve if the methods 
-replace their salience map with CBSP.
+extracted with the previously proposed calculations. 
 
 \subsubsection{\emph{Extended Saliency-Related Applications}}
 The peculiarity of the proposed method also lies in the search for salient 
 edges. This process is possible by replacing the four color components with 
 three luminance gradients and two color-opponent channels. The system also 
-proves to be capable of being able to detect text as well.
+provide excellent text detection.
 
 \subsubsection{\emph{Robustness to Parameters}}
 \begin{figure}[htbp]
@@ -232,11 +234,12 @@ needs to be adapted to the type of scene. A wrong choice of value could lead
 to not considering some important parts of the objects (Fig.\ref{fig: Incorrect}).
 
 \subsection{DISCUSSION}
-The proposed model searches for salient structures and associated objects 
-without using tools, such as the superpixel technique, adopted by other methods. 
-The system can be extended by introducing other local features such as 
-(e.g., depth, motion, etc.) to be used also in video processing. It is possible 
-to carry out an analysis of the scene using unsupervised learning methods. 
-Finally, this method offers a dual use. In a cluttered scene with no dominant 
-objects, the system will function as a fixation prediction model. On the other 
-hand, with simple scenes, the system reveals the existing dominant objects.
+The proposed model is able to search for different salient structures and the 
+objects inside them, without using tools, such as the superpixel technique, 
+adopted by other methods. The system can be extended by introducing 
+other local features such as (e.g., depth, motion, etc.) to be used also 
+in video processing. It is possible to carry out an analysis of the scene 
+using unsupervised learning methods. Finally, this method offers a dual use. In 
+a cluttered scene with no dominant objects, the system will function as a 
+fixation prediction model. Finally, on the other hand, with simple scenes, 
+the system detects existing relevant objects.

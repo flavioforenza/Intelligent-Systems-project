@@ -11,4 +11,6 @@
 *.nav
 *.out
 *.snm
-*.toc 
+*.toc
+*.bcf
+*.run.xml 

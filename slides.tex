@@ -102,8 +102,32 @@
     \end{enumerate}
 \end{frame}
 
-\begin{frame}{EXPERIMENTS}
-    
+\begin{frame}[t]{EXPERIMENTS}
+    The results obtained on different datasets \footfullcite{PASCAL-S, ECSSD, ASD}, were compared with those 
+    btained by the systems already existing at the state of the art.
+    \begin{figure}[htbp]
+        \centering
+        \includegraphics[width = 0.8 \linewidth]{/paper1/metrics.png}
+        \centering
+        \caption{Metrics comparison.}
+        \label{fig: metrics}
+    \end{figure}
+\end{frame}
+
+\begin{frame}{DISCUSSION}
+    It is necessary to say that the results obtained by the proposed method 
+    are obtained using the center bias, which if removed places the system 
+    performance under those of systems such as \emph{RF} \footfullcite{0747815518} and \emph{HS}\footfullcite{0747815508} (which do not 
+    use the central bias). This method offers a dual use. In 
+    a cluttered scene with no dominant objects, the system will function as a 
+    fixation prediction model. Finally, on the other hand, with simple scenes, 
+    the system detects existing relevant objects.
+    \begin{figure}[htbp]
+        \centering
+        \includegraphics[width = 0.7 \linewidth]{paper1/SystemsComp.png}
+        \centering
+        \label{fig: metrics}
+    \end{figure}
 \end{frame}
 
 

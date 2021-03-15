@@ -32,7 +32,7 @@
 \subsection{\emph{"A Unified Framework for Salient StructureDetection by Contour-Guided Visual Search"}}
 \begin{frame}
     \frametitle{INTRODUCTION}
-    The purpose of the paper is to introduce a new method, in the 
+    The purpose of the paper is to introduce a new method, called CGVS in the 
     state of the art, which is able to identify regions and salient objects 
     within a scene simultaneously. The proposed system attempts to 
     bridge the gap between the two highly related tasks of \emph{"human 
@@ -87,6 +87,23 @@
         \item $ p(x|b) \rightarrow $ likelihood of a pixel at \emph{x} belonging to the background \emph{b}
         \item $ p(s) \mbox{ and } p(b)=1-p(s) \rightarrow $ prior probabilities of a pixel at x belonging to a salient structure and the background, respectively.
     \end{enumerate}
+\end{frame}
+
+\begin{frame}{CONTOUR-GUIDED VISUAL SEARCH MODEL pt3}
+    To compute the prior probabilities, we need:
+    \begin{enumerate}
+        \item \emph{Predict the Size of Potential Structure}: using a optimal threshold ($ T_{opt} $) 
+        useful for separating the background from the foreground (salient structures).
+        \item \emph{Evaluate the Importance of Each Feature}: weighing every salient structure.
+        \item \emph{Calculate the Observation Likelihood:} both $ p(x|s) \mbox{ and } p(x|b) $
+        \item \emph{Enhance the Salient Structure by Iterating}: we re-initialize the prior 
+        function with the smoothed version of $ p(s|x) $ (by median filtering 
+        with a size of 21 × 21 pixels)
+    \end{enumerate}
+\end{frame}
+
+\begin{frame}{EXPERIMENTS}
+    
 \end{frame}
 
 

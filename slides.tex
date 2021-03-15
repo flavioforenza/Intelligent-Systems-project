@@ -1,9 +1,12 @@
-\documentclass{beamer}
+\documentclass[10pt]{beamer}
 \usepackage{graphicx}
 \usepackage{amsmath}
 \usepackage{bibentry}
 \usepackage{biblatex}
+\setbeamertemplate{caption}[numbered]
 \bibliography{Bibliography}
+
+
 
 
 
@@ -52,13 +55,38 @@
     \end{figure}
 \end{frame}
 
-\begin{frame}{CONTOUR-GUIDED VISUAL SEARCH MODEL}
-    In Non-Selective pathway are computed:
+\begin{frame}[t]{CONTOUR-GUIDED VISUAL SEARCH MODEL pt1}
+    In \emph{Non-Selective} pathway are computed:
     \begin{enumerate}
-        \item \emph{Contours} \footfullcite{0747815508}
-        \item \emph{Contour-Based Spatial Prior} $ \rightarrow d_r = min (H, W) / 3$
+        \item \emph{Boundary} \footfullcite{0747815570}
+        \item \emph{Contour-Based Spatial Prior (CBSP)} $ \rightarrow S_w = S_e + S_c $
     \end{enumerate}
+    \begin{figure}[htbp]
+        \centering
+        \includegraphics[width = 0.5\linewidth]{images/paper1/CBSP.png}
+        \centering
+        \caption{CBSP reconstruction.}\vspace{0mm}
+        \label{fid: CBSP}
+    \end{figure}
+    In \emph{Selective} pathway are computed the basic low-level features:
+    \begin{enumerate}
+        \item \emph{Luminance} $ \rightarrow f_{lum} = (r+g+b)/3 $
+        \item \emph{Color-Opponent} $ \rightarrow f_{rg} = r-g , f_{by} = b-(r+g)/2 $
+        \item \emph{Texture Channel} ($ f_{ed} $)
+    \end{enumerate}
+\end{frame}
 
+\begin{frame}[t]{CONTOUR-GUIDED VISUAL SEARCH MODEL pt2}
+    \begin{block}{Bayesian inference}
+        All the previous informations are used to compute the Bayesian inference:
+        $$ p(s|x) = \frac{p(s)p(x|s)}{p(s)p(x|s)+p(b)p(x|b) } $$
+    \end{block}
+    Where:
+    \begin{enumerate}
+        \item $ p(x|s) \rightarrow $ likelihood of a pixel at \emph{x} belonging to a salient structure \emph{s}
+        \item $ p(x|b) \rightarrow $ likelihood of a pixel at \emph{x} belonging to the background \emph{b}
+        \item $ p(s) \mbox{ and } p(b)=1-p(s) \rightarrow $ prior probabilities of a pixel at x belonging to a salient structure and the background, respectively.
+    \end{enumerate}
 \end{frame}
 
 

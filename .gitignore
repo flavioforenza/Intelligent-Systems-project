@@ -13,4 +13,5 @@
 *.snm
 *.toc
 *.bcf
-*.run.xml 
+*.run.xml
+*.bib 

@@ -35,3 +35,49 @@ satisfy all the previous points with a high memory efficiency. In LSC, each
 pixel is mapped to a point within a ten-dimensional space of characteristics 
 in which the weighted K-means is applied for segmentation. 
 
+\subsection{LSC SUPERPIXEL}
+The task of LSC is to discover the relationships that exist between the objective 
+functions ($ F_{N_{cuts}} $) (\ref{FNcuts}), of the normalized cuts, and the objective functions 
+of the weighted K-means ($ F_{km}$) (\ref{Fkm}). 
+\begin{equation} \label{Fkm}
+    F_{km} = \sum_{k=1}^K\sum_{p\in\pi_k}\omega(p)= || \phi(p)-m_k ||^2 
+\end{equation}
+\begin{equation} \label{Centroid}
+    m_k = \frac{\sum_{q\in\pi_k}\omega(q)\phi(q)}{\sum_{q\in\pi_k}\omega(q)}
+\end{equation}
+\begin{equation} \label{FNcuts}
+    F_{N_{cuts}} = \frac{1}{K}\sum_{k=1}^K\frac{\sum_{p\in\pi_k}\sum_{q\in\pi_k}W(p,q)}{\sum_{p\in\pi_k}\sum_{q\in{V}}W(p,q)}
+\end{equation}
+Where $ m_k $ (\ref{Centroid}) represent the average point, or centroid, of each cluster. Within 
+the formulation of normalized cuts, each data Point corresponds to a node 
+within a graph \emph{G = (V, E, W)} where \emph{V} is the set of all nodes, \emph{E} represents 
+the set of all edges connected and \emph{W} represents the result returned by a 
+similarity function between nodes. The criterion of normalized cuts is based 
+on maximizing the $ F_{N_{cuts}} $ function. The minimization or maximization problems 
+are called \emph{optimization problems} which can be solved by using a positive kernel of 
+a matrix. To see the relationship between the two functions, the Dhillon's concept \cite{0781426526} is extended, to obtain {\bfseries Corollary 1}:
+
+\begin{corollary} 
+    Optimizations of the objective functions of the weighted K-means
+    and the normalized cuts are mathematically equivalent if (\ref{eq4}) and (\ref{eq5}) 
+    hold simultaneously. The symbol $ \cdot $ stands for inner product.
+\end{corollary}
+
+\begin{equation} \label{eq4}
+    \omega(p)\pi(p) \cdot \omega(q)\pi(q) = W(p,q), \forall p,q \in V
+\end{equation}
+
+\begin{equation} \label{eq5}
+    w(p) = \sum_{q \in V} W(p,q), \forall p \in V
+\end{equation}
+
+After making various derivative calculations, $ F_{km} $ can be seen as: 
+\begin{equation}
+    F_{km} = C - K * F_{N_{cuts}} 
+\end{equation}
+
+From the above definition it is possible to note that the minimization of 
+$ F_{km} $ is equivalent to the maximization of $ F_{N_{cuts}} $. Specifically, both $ F_{km} $ and 
+$ F_{km} $ perform an identical partitioning of the n-dimensional space defined by 
+the function $ \phi $.
+

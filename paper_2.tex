@@ -36,6 +36,12 @@ pixel is mapped to a point within a ten-dimensional space of characteristics
 in which the weighted K-means is applied for segmentation. 
 
 \subsection{LSC SUPERPIXEL}
+The study focuses on the relationships between the results returned by the 
+optimization functions, and those returned by two other equations. If the results 
+are equivalent, then weighted k-means clustering can replace the highly 
+complex eigen based method.
+
+\subsubsection{Mathematical Backgrounds}
 The task of LSC is to discover the relationships that exist between the objective 
 functions ($ F_{N_{cuts}} $) (\ref{FNcuts}), of the normalized cuts, and the objective functions 
 of the weighted K-means ($ F_{km}$) (\ref{Fkm}). 
@@ -80,4 +86,6 @@ From the above definition it is possible to note that the minimization of
 $ F_{km} $ is equivalent to the maximization of $ F_{N_{cuts}} $. Specifically, both $ F_{km} $ and 
 $ F_{km} $ perform an identical partitioning of the n-dimensional space defined by 
 the function $ \phi $.
+
+\subsubsection{LSC Algorithm}
 

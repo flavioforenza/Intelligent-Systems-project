@@ -95,13 +95,52 @@ by five dimensional vectors \emph{(l, a, b, x, y)} in the CIELAB color space, wh
 epresents brightness, \emph{a} and \emph{b} represent opposite colors and \emph{x} and \emph{y} represent
 the coordinates of the plane. The similarity function, in order to satisfy 
 the positivity condition required by (\ref{eq4}), is extended as a convergent Fourier series: 
+\begin{equation}
+    \begin{split}
+        W(p,q) = C_s^2(\cos \frac{\pi}{2}(x_p-x_q)+\cos\frac{\pi}{2}(y_p-y_q)) \\
+        + C_c^2(\cos \frac{\pi}{2}(l_p-l_q)+\cos\frac{\pi}{2}(\alpha_p-\alpha_q) \\
+        + \cos\frac{\pi}{2}(\beta_p-\beta_q)x2.55^2)
+    \end{split}
+\end{equation}
+The mapping function that maps a point in a ten-dimensional space is as follows:
+\begin{equation}
+    \begin{split}
+        \phi(p) = \frac{1}{\omega(p)}[C_c\cos\frac{\pi}{2}l_p, C_c\sin\frac{\pi}{2}l_p, 2.55C_c\cos\frac{\pi}{2}\alpha_p \\
+        x 2.55C_c\sin\frac{\pi}{2}\alpha_p, 2.55C_c\cos\frac{\pi}{2}\beta_p, 2.55C_c\sin\frac{\pi}{2}\alpha_p, \\
+        x C_s\cos\frac{\pi}{2}x_p, C_s\sin\frac{\pi}{2}x_p, C_s\cos\frac{\pi}{2}y_p, C_s\sin\frac{\pi}{2}x_p]
+    \end{split}
+\end{equation}
+In the defined space, the weighted K-mean clustering as well as being 
+equivalent to the Fncuts optimization function, creates the optimal context to 
+optimize it. The LCS algorithm takes two parameters as input; The image 
+to be segmented and the preferred K number of superpixels that the 
+algorithm will have to produce. Each \emph{K} pixel represents the central search point 
+and its vector will be used as the weighted initial vector of the corresponding 
+cluster. Each pixel is assigned to te cluster for which the weightedd mean 
+is closet to the picel's vector in the ten-dimensional feature space. At each 
+assignment, the weighted average and the central point will be updated until 
+the system convergence. Each cluster will form a superpixel and each of 
+these, if considered spatially small, can be joined to other clusters to form 
+a larger cluster. The total complexity achieved by LSC is \emph{O(kN + nZ)}, where 
+\emph{k} represents the number of iterations, \emph{N} the number of pixels, \emph{n} the average 
+number of adjacent neighbors and \emph{z} represents the number of small 
+isolated superpixels to be joined. This complexity, when compared with that 
+achieved by other superpixel systems, is the lowest, therefore LSC is the 
+fastest superpixel segmentation algorithms.
 
-\begin{multline}
-    W(p,q) = C_s^2(\cos \frac{\pi}{2}(x_p-x_q)+\cos\frac{\pi}{2}(y_p-y_q)) \\
-    \leftarrow + C_c^2(\cos \frac{\pi}{2}(l_p-l_q)+\cos\frac{\pi}{2}(\alpha_p-\alpha_q) \\
-    + \cos\frac{\pi}{2}(\beta_p-\beta_q)x2.55^2) 
-\end{multline}
- 
+\subsection{COMPARATIVE EXPERIMENTS}
+In order to evaluate the quantitative goodness of the proposed algorithm, 
+three comparison metrics are used: under segmentation error (\emph{UE}) \cite{0781426514}, boundary 
+recreation (\emph{BR}) and achievable segmentation accuracy (\emph{ASA}) \cite{0781426508}. The goal 
+is to have high values in all three metrics. A low percentuage of UE indicates 
+that the boundarye isn't costituted only by the pixels that form it, but is 
+also made up of pixels that belong to other objects. A segmentation is correct 
+when at least two boundary pixel fall from at least one superpixel boundary 
+point. A high BR index indicates that the better segmentation is obtained. 
+On the other hand, the ASA metric indicates the level of accurancy achieved 
+in the segmentation pashe of contour, obtained thanks to the various labels 
+(ground-truth) placed on each superpixel. A high ASA value indicates that 
+superpixel adapt well to objects. The experiments were conducted on a set 
+of 300 images belonging to the Barkeley Segmentation Database \cite{0781426515}.
 
-
-
+\subsubsection{Parameter Selection}

@@ -88,4 +88,20 @@ $ F_{km} $ perform an identical partitioning of the n-dimensional space defined 
 the function $ \phi $.
 
 \subsubsection{LSC Algorithm}
+The purpose of LSC is to find the correct positive function W (p, q) in order 
+to satisfy {\emph{Corollary \ref{Corollary1}}}. To achieve this, the Euclidean distance calculation 
+was used as an index of similarity between two pixels. Each pixel \emph{p} is represented 
+by five dimensional vectors \emph{(l, a, b, x, y)} in the CIELAB color space, where \emph{l} 
+epresents brightness, \emph{a} and \emph{b} represent opposite colors and \emph{x} and \emph{y} represent
+the coordinates of the plane. The similarity function, in order to satisfy 
+the positivity condition required by (\ref{eq4}), is extended as a convergent Fourier series: 
+
+\begin{multline}
+    W(p,q) = C_s^2(\cos \frac{\pi}{2}(x_p-x_q)+\cos\frac{\pi}{2}(y_p-y_q)) \\
+    \leftarrow + C_c^2(\cos \frac{\pi}{2}(l_p-l_q)+\cos\frac{\pi}{2}(\alpha_p-\alpha_q) \\
+    + \cos\frac{\pi}{2}(\beta_p-\beta_q)x2.55^2) 
+\end{multline}
+ 
+
+
 

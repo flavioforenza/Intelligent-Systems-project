@@ -102,7 +102,9 @@ the positivity condition required by (\ref{eq4}), is extended as a convergent Fo
         + \cos\frac{\pi}{2}(\beta_p-\beta_q)x2.55^2)
     \end{split}
 \end{equation}
-The mapping function that maps a point in a ten-dimensional space is as follows:
+Where $ C_s $ and $ C_c $ are used to control the relative significance of
+color and spatial information. The mapping function that maps a point in a ten-dimensional
+space is as follows:
 \begin{equation}
     \begin{split}
         \phi(p) = \frac{1}{\omega(p)}[C_c\cos\frac{\pi}{2}l_p, C_c\sin\frac{\pi}{2}l_p, 2.55C_c\cos\frac{\pi}{2}\alpha_p \\
@@ -144,3 +146,15 @@ superpixel adapt well to objects. The experiments were conducted on a set
 of 300 images belonging to the Barkeley Segmentation Database \cite{0781426515}.
 
 \subsubsection{Parameter Selection}
+When the ratio $ r = C_s / C_c $ is high, then the neighboring pixels tend to 
+be aggregated into a single cluster, forming superpixels with a regular shape 
+and therefore potentially incorrect. On the other hand, when \emph{r} is small, then 
+it means that the pixels tend to have similar colors, therefore both will be 
+grouped into a single cluster, forming irregular superpixels. Therefore \emph{r} 
+can be used as a correction parameter. In order to control the search range 
+of the K-means cluster algorithm, a $ \tau $ parameter is used which is equal to at 
+least 0.5. This value will be multiplied by the spatial components, vertical 
+($ v_x $) and horizontal ($ v_y $), of the vector belonging to each point in space. Clearly, 
+as this parameter increases, the size of each superpixel generated and the 
+general $ O(N) $ complexity will increase. In the experiments conducted, $ \tau $ 
+is set to 1.

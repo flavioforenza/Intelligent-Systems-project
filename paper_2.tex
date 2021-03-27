@@ -127,8 +127,7 @@ a larger cluster. The total complexity achieved by LSC is \emph{O(kN + nZ)}, whe
 \emph{k} represents the number of iterations, \emph{N} the number of pixels, \emph{n} the average 
 number of adjacent neighbors and \emph{z} represents the number of small 
 isolated superpixels to be joined. This complexity, when compared with that 
-achieved by other superpixel systems, is the lowest, therefore LSC is the 
-fastest superpixel segmentation algorithms.
+achieved by other superpixel systems, is the lowest.
 
 \subsection{COMPARATIVE EXPERIMENTS}
 In order to evaluate the quantitative goodness of the proposed algorithm, 
@@ -158,3 +157,32 @@ least 0.5. This value will be multiplied by the spatial components, vertical
 as this parameter increases, the size of each superpixel generated and the 
 general $ O(N) $ complexity will increase. In the experiments conducted, $ \tau $ 
 is set to 1.
+
+\subsubsection{Comparison With State-of-the-Art}
+The proposed system is compared with other existing superpixels algorithms 
+in the state of the art. A comparison, in terms of boundary adherence and 
+speed in segmentation, is shown in table () when the number of superpixels 
+\emph{K} generated is 400. With a relatively high \emph{K} number, LSC achieves 
+the best performance.
+
+\begin{table}[h!]
+    \centering
+    \begin{adjustbox}{max width=\textwidth}
+    \begin{tabular}{*{9}{|c}|}%%{|c|c|c|c|c|c|c|c|c|}
+        \hline
+        & EneOpt0 & SEEDS & ERS & Lattices & NCuts & SLIC & Turbo & LSC \\
+        \hline
+        \bfseries{ADERENCE TO BOUNDARY} & & & & & & & & \\
+        \emph{Under segmentation error} & 0.230 & 0.197 & 0.198 & 0.303 & 0.220 & 0.213 & 0.277 & \bfseries{0.190}\\
+        \emph{Boundary recall} & 0.765 & 0.918 & 0.920 & 0.811 & 0.789 & 0.837 & 0.739 & \bfseries{0.926}\\
+        \emph{Achievable segmentation accuracy} & 0.950 & 0.960 & 0.959 & 0.933 & 0.956 & 0.956 & 0.943 & \bfseries{0.962}\\
+        \hline
+        \bfseries{SEGMENTATION SPEED} & & & & & & & & \\
+        \emph{Computational complexity} & $ O(N^3/K^2) $ & $ O(N) $ & $ O(N^2 \lg{N}) $ & $ O(N^{\frac{3}{2}} \lg{N}) $ & $ O(N^{\frac{3}{2}}) $ & $ O(N) $ & $ O(N) $ & $ O(N) $\\
+        \emph{Average time per image} & 3.35s & \bfseries{0.0935}s & 0.969s & 0.284s & 93.4s & 0.125s & 6.61s & 0.334s\\
+        \hline
+    \end{tabular}
+    \end{adjustbox}
+    \caption{Performance metrics superpixel segmentation algorithms at K=400}
+    \label{table superpixels}
+\end{table}

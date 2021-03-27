@@ -132,38 +132,46 @@ achieved by other superpixel systems, is the lowest.
 \subsection{COMPARATIVE EXPERIMENTS}
 In order to evaluate the quantitative goodness of the proposed algorithm, 
 three comparison metrics are used: under segmentation error (\emph{UE}) \cite{0781426514}, boundary 
-recreation (\emph{BR}) and achievable segmentation accuracy (\emph{ASA}) \cite{0781426508}. The goal 
-is to have high values in all three metrics. A low percentuage of UE indicates 
-that the boundarye isn't costituted only by the pixels that form it, but is 
-also made up of pixels that belong to other objects. A segmentation is correct 
-when at least two boundary pixel fall from at least one superpixel boundary 
-point. A high BR index indicates that the better segmentation is obtained. 
-On the other hand, the ASA metric indicates the level of accurancy achieved 
-in the segmentation pashe of contour, obtained thanks to the various labels 
-(ground-truth) placed on each superpixel. A high ASA value indicates that 
-superpixel adapt well to objects. The experiments were conducted on a set 
-of 300 images belonging to the Barkeley Segmentation Database \cite{0781426515}.
+recall (\emph{BR}) and achievable segmentation accuracy (\emph{ASA}) \cite{0781426508}. The 
+goal is to have a low UE value, while it is preferable to have high values in BR 
+and ASA. A low percentage of UE indicates that the detected boundary is made 
+up of a small amount of pixels not belonging to the object to be delimited. 
+A segmentation is correct when at least two boundary pixel fall from at least 
+one superpixel boundary point. A high BR index indicates that the better 
+segmentation is obtained. On the other hand, the ASA metric indicates the 
+level of accurancy achieved in the segmentation pashe of contour, obtained 
+thanks to the various labels (ground-truth) placed on each superpixel. A 
+high ASA value indicates that superpixel adapt well to objects. The experiments 
+were conducted on a set of 300 images belonging to the Barkeley 
+Segmentation Database \cite{0781426515}.
 
 \subsubsection{Parameter Selection}
-When the ratio $ r = C_s / C_c $ is high, then the neighboring pixels tend to 
-be aggregated into a single cluster, forming superpixels with a regular shape 
-and therefore potentially incorrect. On the other hand, when \emph{r} is small, then 
-it means that the pixels tend to have similar colors, therefore both will be 
-grouped into a single cluster, forming irregular superpixels. Therefore \emph{r} 
-can be used as a correction parameter. In order to control the search range 
-of the K-means cluster algorithm, a $ \tau $ parameter is used which is equal to at 
-least 0.5. This value will be multiplied by the spatial components, vertical 
-($ v_x $) and horizontal ($ v_y $), of the vector belonging to each point in space. Clearly, 
+When the ratio $ r = C_s / C_c $ is high, then the neighboring pixels tend to be 
+aggregated into a single cluster, forming superpixels with a regular shape 
+and therefore potentially incorrect. On the other hand, when \emph{r} is small, 
+then it means that the pixels tend to have similar colors, therefore both 
+will be grouped into a single cluster, forming irregular superpixels. In order to 
+choose an optimal r value, it is necessary to introduce a metric that calculates 
+the average  values of shape regularity. The average value of shape regularity 
+is measured with a metric called superpixel compactness \emph{(CP)} \cite{0781426533} which is 
+inversely proportional to the BR index. So as CP increases, the likelihood 
+of regular shapes being created is greater and at the same time worse segmentation 
+will be generated as BR decreases. The r value will be chosen 
+when the value resulting from $ (1-BR / CP) $ is the lowest. Therefore \emph{r} can be 
+used as a correction parameter. In order to control the search range of the 
+K-means cluster algorithm, a $ \tau $ parameter is used which is equal to at least 
+0.5. This value will be multiplied by the spatial components, vertical ($ v_x $) 
+and horizontal ($ v_y $), of the vector belonging to each point in space. Clearly, 
 as this parameter increases, the size of each superpixel generated and the 
-general $ O(N) $ complexity will increase. In the experiments conducted, $ \tau $ 
-is set to 1.
+general $ O(N) $ complexity will increase. In the experiments conducted, $ \tau $ is 
+set to 1.
 
 \subsubsection{Comparison With State-of-the-Art}
 The proposed system is compared with other existing superpixels algorithms 
 in the state of the art. A comparison, in terms of boundary adherence and 
-speed in segmentation, is shown in table () when the number of superpixels 
-\emph{K} generated is 400. With a relatively high \emph{K} number, LSC achieves 
-the best performance.
+speed in segmentation (Table \ref{table superpixels}), when the number of superpixels \emph{K} generated 
+is 400. With a relatively high \emph{K} number, LSC achieves the best 
+performance.
 
 \begin{table}[h!]
     \centering
@@ -186,3 +194,12 @@ the best performance.
     \caption{Performance metrics superpixel segmentation algorithms at K=400}
     \label{table superpixels}
 \end{table}
+As we can see from the results, the worst algorithm, in terms of time, 
+is \emph{NCuts}, while a good algorithm, which ranks second before \emph{LSC}, is \emph{SLIC}. 
+Unlike the algorithm studied, SLIC uses an iterative K-means clustering 
+performed inside different feature spaces, based only on local characteristics. 
+On the other hand, LSC is able to use local and global features thanks to the 
+$ \phi $  mapping function, all to have a better segmentation. Looking at the data 
+in the table, this makes us understand how LSC is able to have a better BR 
+value despite having a higher CP value than the previous algorithms, this 
+represents the strength of this algorithm.

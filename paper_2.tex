@@ -132,7 +132,7 @@ achieved by other superpixel systems, is the lowest.
 \subsection{COMPARATIVE EXPERIMENTS}
 In order to evaluate the quantitative goodness of the proposed algorithm, 
 three comparison metrics are used: under segmentation error (\emph{UE}) \cite{0781426514}, boundary 
-recall (\emph{BR}) and achievable segmentation accuracy (\emph{ASA}) \cite{0781426508}. The 
+recall (\emph{BR}) and achievable segmentation accuracy (\emph{ASA}). The 
 goal is to have a low UE value, while it is preferable to have high values in BR 
 and ASA. A low percentage of UE indicates that the detected boundary is made 
 up of a small amount of pixels not belonging to the object to be delimited. 
@@ -199,7 +199,17 @@ is \emph{NCuts}, while a good algorithm, which ranks second before \emph{LSC}, i
 Unlike the algorithm studied, SLIC uses an iterative K-means clustering 
 performed inside different feature spaces, based only on local characteristics. 
 On the other hand, LSC is able to use local and global features thanks to the 
-$ \phi $  mapping function, all to have a better segmentation. Looking at the data 
+$ \phi $  mapping function, all to have a better segmentation. However, when 
+K = 400, the CP value of the \emph{ERS} \cite{0781426508} and \emph{SEEDS} \cite{0781426509} algorithms are 0.151 
+and 0.280 respectively, while the CP value of LSC is 0.366. Looking at the data 
 in the table, this makes us understand how LSC is able to have a better BR 
 value despite having a higher CP value than the previous algorithms, this 
 represents the strength of this algorithm.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width = 1 \linewidth]{images/paper2/superpixelsComparison.png}
+    \centering
+    \caption{Superpixel results from different algorithms. (a) SEEDS. (b) NCuts. (c) SLIC. (d) ERS. (e) LSC.}
+    \label{fig: superpixelsComparison}
+\end{figure}

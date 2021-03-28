@@ -206,7 +206,7 @@ in the table, this makes us understand how LSC is able to have a better BR
 value despite having a higher CP value than the previous algorithms, this 
 represents the strength of this algorithm. 
 
-\begin{figure}[htbp]
+\begin{figure}[h!]
     \centering
     \includegraphics[width = 1 \linewidth]{images/paper2/superpixelsComparison.png}
     \centering
@@ -258,3 +258,69 @@ more regular for the background.
     \label{fig: superpixelSegmentation}
 \end{figure}
 
+\subsubsection{Weakly Supervised Semantic Segmentation}
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width = 0.4 \linewidth]{images/paper2/semanticSegmentation.png}
+    \centering
+    \caption{Weakly supervised semantic segmentation. (a) A training image with bounding boxes. (b) Output of soft-max layer of $ FCN_c $. (c) Coarse semantic segmentation result. (d) Superpixels with higher probability of foreground. (e) Fore-/Background segmentation result after iterative optimization. (f) Refined semantic segmentation result.}
+    \label{fig: flowchartSemanticSegmentation}
+\end{figure}
+As the title suggests, the LSC algorithm is able to improve semantic segmentation 
+with a weakly supervised method. The images of the PASCAL 
+VOC2012 database \cite{0781426538} are used as tests, in which there are 1449 images
+containing labeled objects and the remaining 10582 images containing only 
+bounding boxes used for training and validation. The flow chart of the proposed 
+method can be seen in figure (\ref{fig: flowchartSemanticSegmentation}). The steps are as follows: coarse 
+semantic segmentation, fore-/background segmentation and refined semantic 
+segmentation. In the first step there is a completely convolutional network, 
+called $ FCN_c $, trained with images containing only the bounding boxes which 
+will be restricted in order to eliminate the border pixels that seem to be 
+irrelevant. These new squares are used as positive examples, while the cut 
+parts are used as negative examples. For each superpixel \emph{p} generated within 
+each bounding box $ i_{th} $, we set $ c_p^i $ as the average value of the colors of each 
+pixel within the superpixel and then we set $ l_p^i $ as the label to be estimated (0 
+backgroud, 1 foreground). The separation of the background from the 
+foreground is seen as an optimization problem
+\begin{equation}
+    \begin{split}
+        \argmax\limits_{l} \sum_i\sum_p(E_a(l_p^i,c_p^i) + \lambda_1E_c(l_p^i, FCN_c)\\
+        + \lambda_2\sum_{q\in N(p)}E_s(l_p^i,c_p^i,l_q^i,c_q^i)) 
+    \end{split}
+\end{equation}
+Where $ E_s $ is useful for capturing the smoothness prior produced by a covariance 
+matrix, $ E_c $ represents the probability that the superpixel belongs 
+to the foreground, while $ E_a $, also called the appearance model, represents 
+the probability that a superpixel belongs to the background or foreground. 
+After several iterations, which have the purpose of updating the foreground 
+and background labels of the superpixels, a correct segmentation will be 
+obtained. The segmentation obtained will be used to train a convolutional 
+network called $ FCN_r $ which is combined with a dense CRF model useful for 
+formulating the final semantic segmentation model. This system is also 
+called $ Joint_{sp} $. The model is compared with other supervivided methods \cite{0781426541}, 
+a strong one, called \emph{Strong}, and a weak one called \emph{Bbox-seg}, the results of 
+which can be seen in figure \ref{fig: semanticSegmentation}.
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width = 0.6 \linewidth]{images/paper2/segmentationAlgo.png}
+    \centering
+    \caption{Semantic segmentation. (a) Input image. (b) Strong. (c) Bbox-seg. (d) $ Joint_{sp} $ (LSC) }
+    \label{fig: semanticSegmentation}
+\end{figure}
+
+While the accuracy, measured with the intersection over-union (\emph{IOU}), 
+achieved by the systems mentioned is visible in the table \ref{table accuracy semantic segmentation}.
+\begin{table}[h!]
+    \centering
+    \begin{adjustbox}{max width=\textwidth}
+    \begin{tabular}{*{4}{|c}|}%%{|c|c|c|c|}
+        \hline
+        Strong & Bbox-seg & $ Joint_{sp} $ \\
+        \hline
+        62.5 & 60.6 & \bfseries{64.0} \\
+        \hline
+    \end{tabular}
+    \end{adjustbox}
+    \caption{Semantic segmentation accuracy in terms of Mean IOU (\%)}
+    \label{table accuracy semantic segmentation}
+\end{table}

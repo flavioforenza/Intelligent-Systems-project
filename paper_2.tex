@@ -204,7 +204,7 @@ K = 400, the CP value of the \emph{ERS} \cite{0781426508} and \emph{SEEDS} \cite
 and 0.280 respectively, while the CP value of LSC is 0.366. Looking at the data 
 in the table, this makes us understand how LSC is able to have a better BR 
 value despite having a higher CP value than the previous algorithms, this 
-represents the strength of this algorithm.
+represents the strength of this algorithm. 
 
 \begin{figure}[htbp]
     \centering
@@ -213,3 +213,48 @@ represents the strength of this algorithm.
     \caption{Superpixel results from different algorithms. (a) SEEDS. (b) NCuts. (c) SLIC. (d) ERS. (e) LSC.}
     \label{fig: superpixelsComparison}
 \end{figure}
+
+\subsection{APPLICATIONS}
+\subsubsection{Class Segmentation}
+An SVM-based multi-class object classifier trained on the histograms of the generated 
+superpixels was used. In order for similar superpixels to have the same 
+label, a conditional random field (CRF) is used to refine the segmentation. 
+Thanks to this model, the prediction made by the classifier will also 
+take into account the neighbors superpixels to the one to be labeled. The 
+method used is that proposed in \cite{0781426534} where the main unit of measurement is 
+that of the superpixel. In \cite{0781426534} the quick shift (\emph{QS}) algorithm is used for the 
+generation of superpixels. The experiments were conducted on the \emph{Graz-02} 
+database \cite{0781426535} containing already labeled objects. The accuracy achieved by 
+the QS, ERS, SLIC and LSC algorithms is that shown in the Table \ref{table accuracy}, while 
+the various segmentations, obtained from each of these, are visible in the 
+figure \ref{fig: superpixelSegmentation}. As you can see, LSC performs a better segmentation than the other 
+methods, this happens because the information obtained from the histograms 
+belonging to the SIFT of different superpixel generated are used. In this way 
+there is a better adherence to the boundary of each object in addition the 
+superpixels take on a highly irregular shape for objects in the foreground and 
+more regular for the background.
+\begin{table}[h!]
+    \centering
+    \begin{adjustbox}{max width=\textwidth}
+    \begin{tabular}{*{5}{|c}|}%%{|c|c|c|c|c|}
+        \hline
+        & QS & ERS & SLIC & LSC\\
+        \hline
+        bike & 72.2 & 74.2 & 76.3 & \bfseries{76.9}\\
+        cars & 72.2 & 74.7 & 72.5 & \bfseries{76.8}\\
+        person & 66.3 & 66.5 & 66.7 & \bfseries{67.0}\\
+        \hline
+    \end{tabular}
+    \end{adjustbox}
+    \caption{Accuracy using different superpixels algorithms.}
+    \label{table accuracy}
+\end{table}
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width = 1 \linewidth]{images/paper2/superpixelAlgo.png}
+    \centering
+    \caption{Segmentation using different superpixels algorithms. (a) Original Image. (b) QS. (c) ERS. (d) SLIC. (e) LSC. (f)Ground Truth.}
+    \label{fig: superpixelSegmentation}
+\end{figure}
+

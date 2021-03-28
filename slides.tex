@@ -131,8 +131,75 @@
 \end{frame}
 
 \section{Paper 2}
-\begin{frame}
+\subsection{\emph{"Linear Spectral Clustering Superpixel"}}
+\begin{frame}{INTRODUCTION}
+    The introduced technique is called SUPERPIXEL. Widely used in image 
+    processing for particular tasks such as image segmentation, image analysis, 
+    image classification, target tracking, 3D reconstruction, surface retrieval and 
+    object proposal. The purpose of the elaborate story is to reduce the 
+    computational complexity through a superpixel system called LSC (Linear Spectral
+    Clustering).
+\end{frame}
+
+\begin{frame}{LSC SUPERPIXEL pt1}
+    Goal: optimization (max/min) of two objective functions to create clusters of pixels called superpixels:
+    \begin{block}{Objective Function 1: Weighted K-Means}
+        $$ F_{km} = \sum_{k=1}^K\sum_{p\in\pi_k}\omega(p)= || \phi(p)-m_k ||^2 $$
+    \end{block}
+    \begin{block}{Objective Function 2: Normalized cuts}
+        $$ F_{N_{cuts}} = \frac{1}{K}\sum_{k=1}^K\frac{\sum_{p\in\pi_k}\sum_{q\in\pi_k}W(p,q)}{\sum_{p\in\pi_k}\sum_{q\in{V}}W(p,q)} $$
+    \end{block}
+    Problem: extremely high computational!
+\end{frame}
+
+\begin{frame}{LSC SUPERPIXEL pt2}
+    If corollary 1 is satisfied, then  \emph{weghted K-means clustering} can be used 
+    for segmentation and for creation of superpixel regions, instead of the 
+    eigen-vector based method.
+    \begin{block}{\bfseries{Corollary 1}}
+        Optimizations of the objective functions of the weighted K-means
+        and the normalized cuts are mathematically equivalent if (1) and (2) 
+        hold simultaneously. The symbol $ \cdot $ stands for inner product.
+    \end{block}
+
+    \begin{block}{Equation (1)}
+           $$ \omega(p)\phi(p) \cdot \omega(q)\phi(q) = W(p,q), \forall p,q \in V $$
+    \end{block}
+
+    \begin{block}{Equation (2)}
+        $$ \omega(p) = \sum_{q \in V} W(p,q), \forall p \in V $$
+    \end{block}
+\end{frame}
+
+\begin{frame}{LSC Algorithm pt1}
+    Problem? $ \rightarrow $ Find the correct positive similarity function $ W (p,q) $, 
+    between two data points \emph{p} and \emph{q} to solve equation 1.
+    \begin{block}{Similarity Function}
+        \begin{equation}\small
+            \begin{split}
+                W(p,q) = C_s^2(\cos \frac{\pi}{2}(x_p-x_q)+\cos\frac{\pi}{2}(y_p-y_q)) \\
+                + C_c^2(\cos \frac{\pi}{2}(l_p-l_q)+\cos\frac{\pi}{2}(\alpha_p-\alpha_q) \\
+                + \cos\frac{\pi}{2}(\beta_p-\beta_q)x2.55^2)
+            \end{split}
+        \end{equation}
+    \end{block}
     
+    \begin{block}{Mapping Function}
+        \begin{equation}\small
+            \begin{split}
+                \phi(p) = \frac{1}{\omega(p)}[C_c\cos\frac{\pi}{2}l_p, C_c\sin\frac{\pi}{2}l_p, 2.55C_c\cos\frac{\pi}{2}\alpha_p \\
+                x 2.55C_c\sin\frac{\pi}{2}\alpha_p, 2.55C_c\cos\frac{\pi}{2}\beta_p, 2.55C_c\sin\frac{\pi}{2}\alpha_p, \\
+                x C_s\cos\frac{\pi}{2}x_p, C_s\sin\frac{\pi}{2}x_p, C_s\cos\frac{\pi}{2}y_p, C_s\sin\frac{\pi}{2}x_p]
+            \end{split}
+        \end{equation} 
+    \end{block}
+    
+\end{frame}
+
+\begin{frame}{LSC Algorithm pt2}
+    Assuming that equation 1 exists, LSC method takes two parameters as 
+    input; The image to be segmented and the preferred K number of 
+    superpixels that the algorithm will have to produce.
 \end{frame}
 
 

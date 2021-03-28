@@ -259,9 +259,9 @@ more regular for the background.
 \end{figure}
 
 \subsubsection{Weakly Supervised Semantic Segmentation}
-\begin{figure}[htbp]
+\begin{figure}[h!]
     \centering
-    \includegraphics[width = 0.4 \linewidth]{images/paper2/semanticSegmentation.png}
+    \includegraphics[width = 0.6 \linewidth]{images/paper2/semanticSegmentation.png}
     \centering
     \caption{Weakly supervised semantic segmentation. (a) A training image with bounding boxes. (b) Output of soft-max layer of $ FCN_c $. (c) Coarse semantic segmentation result. (d) Superpixels with higher probability of foreground. (e) Fore-/Background segmentation result after iterative optimization. (f) Refined semantic segmentation result.}
     \label{fig: flowchartSemanticSegmentation}
@@ -299,17 +299,18 @@ network called $ FCN_r $ which is combined with a dense CRF model useful for
 formulating the final semantic segmentation model. This system is also 
 called $ Joint_{sp} $. The model is compared with other supervivided methods \cite{0781426541}, 
 a strong one, called \emph{Strong}, and a weak one called \emph{Bbox-seg}, the results of 
-which can be seen in figure \ref{fig: semanticSegmentation}.
+which can be seen in figure \ref{fig: semanticSegmentation}. While the accuracy, measured with the intersection 
+over-union (\emph{IOU}), achieved by the systems mentioned is visible in the 
+table \ref{table accuracy semantic segmentation}.
+
 \begin{figure}[htbp]
     \centering
-    \includegraphics[width = 0.6 \linewidth]{images/paper2/segmentationAlgo.png}
+    \includegraphics[width = 0.8 \linewidth]{images/paper2/segmentationAlgo.png}
     \centering
     \caption{Semantic segmentation. (a) Input image. (b) Strong. (c) Bbox-seg. (d) $ Joint_{sp} $ (LSC) }
     \label{fig: semanticSegmentation}
 \end{figure}
 
-While the accuracy, measured with the intersection over-union (\emph{IOU}), 
-achieved by the systems mentioned is visible in the table \ref{table accuracy semantic segmentation}.
 \begin{table}[h!]
     \centering
     \begin{adjustbox}{max width=\textwidth}
@@ -324,3 +325,13 @@ achieved by the systems mentioned is visible in the table \ref{table accuracy se
     \caption{Semantic segmentation accuracy in terms of Mean IOU (\%)}
     \label{table accuracy semantic segmentation}
 \end{table}
+
+\subsection{CONCLUSIONS}
+Like all superpixel algorithms, there are still two problems that need to be 
+solved. The first concerns the number K of superpixels to be generated. Unfortunately, 
+this parameter still has to be entered manually and today there 
+is no stable method that can establish a specific K number of superpixels on 
+each type of image. The second, on the other hand, concerns the study of 
+new similarity techniques, instead of the one already used in this article 
+($ W(p,q) $), useful for improving the performance, in terms of segmentation, 
+of LSC.

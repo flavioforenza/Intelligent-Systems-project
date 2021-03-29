@@ -18,3 +18,23 @@ on Convolutional Neural Networks}
 \end{center}
 
 \subsection{INTRODUCTION}
+In recent years, within the field of computer vision, remarkable results have 
+been achieved with regard to image compression. The purpose of compression 
+is to be able to transmit, or save, the entire image at low bit rates. As far as 
+decompression is concerned, deblocking and denoising techniques have been 
+developed that are useful for obtaining good images. Further pre-processing 
+steps have been found to negatively impact in system performance. Therefore 
+the proposed method uses a framework composed of two convolutional 
+networks (\emph{CNNs}). The first network, called compact convolutional neural 
+newtork (\emph{comCNN}), is used for compression and uses the JPEG, JPEG2000 
+and BPG encoding codecs. The second network, called reconstruction convolutional 
+neural network (\emph{RecCNN}), is used for image decompression. A 
+first example of the work carried out by the proposed framework is visible in 
+the Fig. \ref{fig:output}.
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width = 0.6 \linewidth]{images/paper3/output .png}
+    \centering
+    \caption{Left: the JPEG-coded image. Right: the decoded image.}
+    \label{fig:output}
+\end{figure}

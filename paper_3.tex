@@ -64,3 +64,33 @@ However, all of these methods ignore compatibility with various image codecs,
 thus limiting their use in some existing systems. The proposed framework 
 solves this problem by operating with different image codecs, also taking into 
 account the compression performance.
+
+\subsection{THE PROPOSED COMPRESSION FRAMEWORK}
+\subsubsection{Architecture of End-to-End Compression Framework}
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width = 0.8 \linewidth]{images/paper3/framework.png}
+    \centering
+    \caption{The proposed novel compression framework.}
+    \label{fig:framework}
+\end{figure}
+As mentioned, the first \emph{ComCNN} convolutional network is used to generate 
+a compact representation of the input image which preserves the structural 
+information and facilitates the reconstruction of image in high quality. The 
+second convolutional network, \emph{RecCNN}, is used to improve the quality of the 
+decoded image. In particular:
+\begin{enumerate}
+    \item \emph{Compact Representation Convolutional Neural Network (ComCNN)}: 
+    This network is made up of three weighted layers. The first layer is 
+    used to perform the extraction and representation of patches from the 
+    input image. 64 filters are used, each 3x3xc in size where c indicates 
+    the number of image channels. Thanks to these filters, 64 feature maps 
+    are generated. The second layer has the task of downscaling and improving 
+    the features with convolutional operations having stride equal to 2 
+    and 64 filters of 3x3x64 size. In the last layer, \emph{c} filters, of 3x3x64 
+    size, are used to reconstruct the compact representation.
+    \item \emph{Reconstruction Convolutional Neural Network (RecCNN)}: The layers 
+    are identical to those of the \emph{ComCNN} network, unlike the number. To 
+    speed up training, as well as performance, methods such as residual 
+    learning and batch normalization \cite{0799924133} are used. Finally, the image will be upsampled to its original size, using a cubic interpolation.
+\end{enumerate}

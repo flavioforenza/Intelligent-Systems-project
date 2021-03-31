@@ -153,21 +153,73 @@ Various quality factors (\emph{QS}), useful for indicating the degree of loss in
 compressed image, are manually set in order to achieve the same bits per 
 pixel (\emph{bpp}) of the original image. In order to compare the other methods 
 existing at the state of the art with the proposed method, two compression 
-quality indices were used such as \emph{PSNR} and \emph{SSIM}. With a \emph{QF} set to 5, the ù
-comparison results obtained are shown in figure \ref{fig:QF5}, while the results 
-obtained whit \emph{QF} set to 10 are shown in figure \ref{fig:QF10}
-\begin{figure}[h!]
+quality indices were used such as \emph{PSNR} and \emph{SSIM}. With a \emph{QF} set to 5 and 10, the 
+comparison results obtained are shown in figure \ref{fig:QF5}.
+\begin{figure}[htbp]
     \centering
     \includegraphics[width = 1 \linewidth]{images/paper3/comparison.png}
-    \centering
-    \caption{JPEG: QF=5, PSNR(db) and SSIM results of alghoritms image deblocking and denoising.}
-    \label{fig:QF5}
-\end{figure}
-
-\begin{figure}[h!]
-    \centering
     \includegraphics[width = 1 \linewidth]{images/paper3/comparison2.png}
     \centering
-    \caption{JPEG: QF=10, PSNR(db) and SSIM results of alghoritms image deblocking and denoising.}
-    \label{fig:QF10}
+    \caption{JPEG: QF=5 and QF=10, PSNR(db) and SSIM results of alghoritms image deblocking and denoising.}
+    \label{fig:QF5}
 \end{figure}
+As we can see from figure \ref{fig:QF5}, 
+the most used method in the state of the art \cite{0799924108} blurs the image a lot by 
+losing some detail on the corners, the proposed method has a gain of 1.20db 
+in PSNR, producing compressed images with better quality, and a gain of 
+0.0227 in SSIM indicating a high similarity with the original image. The 
+proposed framework also manages to exceed the performance of the ARCNN 
+\cite{0799924109} method which represents a milestone in this area. The strength of the 
+proposed method is based on obtaining better compression than commonly 
+used codecs, such as \emph{JPEG}, \emph{JPEG2000} and \emph{BPG}, in a variable bit rate 
+range. As we can see from the comparison made in figure \ref{fig:JPEG2000p}, the difference 
+in visual quality between the proposed method and the JPEG2000 codec 
+is considerable. With the same amount of bit rates, the JPEG2000 codec 
+produces worse results by losing several structural information.
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width = 1 \linewidth]{images/paper3/JPEG2000p.png}
+    \centering
+    \caption{Performance comparison of JPEG2000 at difference bit rates.}
+    \label{fig:JPEG2000p}
+\end{figure}
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width = 0.6 \linewidth]{images/paper3/JPEG2000.png}
+    \centering
+    \caption{Average PSNR(dB)/SSIM results of JPEG2000 and the proposed method.}
+    \label{fig:JPEG2000}
+\end{figure}
+As for the BPG codec, 
+if used in combination with the ComCNN and RecCNN networks, it reaches 
+higher PSNR and SSIM levels than when used individually or with only one 
+of the two networks, moreover, on average, it has a saving of about 5.22\% of 
+the amount of bit rate.
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width = 1 \linewidth]{images/paper3/BPG.png}
+    \centering
+    \caption{BPG: PSNR (dB) and SSIM result of BPG, BPG + RecCNN and the proposed method.}
+    \label{fig:BPG}
+\end{figure}
+
+\subsubsection{Running Time}
+The execution time of all algorithms, CPU and GPU, are shown in figure \ref{fig:time}. 
+It should be noted that the time reached by the GPU was calculated only 
+for the proposed method. The processed images, in grayscale, are in a size 
+of 256x256. The proposed algorithm appears to be the fastest compared to 
+the others.
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width = 1 \linewidth]{images/paper3/time.png}
+    \centering
+    \caption{Running time(s) of compared methods in CPU (/GPU) }
+    \label{fig:time}
+\end{figure}
+
+\subsection{CONCLUSION}
+The proposed method seems to have the best performance compared to other 
+methods already existing in the state of the art. The proposed technique 
+then validates the use of one or more convolutional neural networks to carry 
+out the task of encoding and decoding images, even in some cases achieving 
+better quality than existing codecs for image compression.

@@ -107,12 +107,26 @@ have to be optimized iteratively:
     \hat{\theta_2} = \argmin\limits_{\theta_2}||Re(\hat{\theta_2},\hat{x}_m)-x||^2
 \end{equation}
 Where:
-\begin{enumerate}
+\begin{itemize}
     \item \emph{x} represents the original image
     \item $ \hat{\theta_1} $ and $ \hat{\theta_2} $ are the parameters of \emph{ComcCNN} and \emph{RecCNN}
     \item $ C_r(\cdot) $ and $ R_e() $ represent the \emph{ComcCNN} and \emph{RecCNN}
-\end{enumerate}
+    \item $ \hat{x}_m $ is th e decoded compact representation of \emph{x}
+\end{itemize}
 
 \subsubsection{Loss Functions}
+For ComCNN training: as a loss function, we use the mean square error (\emph{MSE}):
+\begin{equation}
+    L_1(\theta_1) = \frac{1}{2N}\sum_{k=1}^N||Re(\hat{\theta_2}, C_r(\theta1,x_k))-x_k||^2
+\end{equation}
+Where \emph{N} and $ \theta_1 $ represent the batch size and the trainable parameter.
+For REcCNN training: after obtaining a set of compact $ x_m $ images from 
+\emph{ComCNN} and the original \emph{x} images, we also use the mean square error 
+(\emph{MSE}) here:
+\begin{equation}
+    L_2(\theta_2) = \frac{1}{2N}\sum_{k=1}^N||res(Co(\hat{x}_{mk}), \theta_2) - (Co(\hat{x}_{mk})-x_k)||^2
+\end{equation}
+Where $ \theta_2 $ are the trained parameters of the network while $ res(\cdot) $ represent 
+the residual learning of the \emph{RecCNN}.
 
 

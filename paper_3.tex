@@ -148,4 +148,26 @@ size of 128. The learning rate falls from 0.01 to 0.0001. The initial parameters
 of the second RecCNN network are identical to those of the first network, 
 including the batch size.
 
+\subsubsection{Experimental Results}
+Various quality factors (\emph{QS}), useful for indicating the degree of loss in a 
+compressed image, are manually set in order to achieve the same bits per 
+pixel (\emph{bpp}) of the original image. In order to compare the other methods 
+existing at the state of the art with the proposed method, two compression 
+quality indices were used such as \emph{PSNR} and \emph{SSIM}. With a \emph{QF} set to 5, the ù
+comparison results obtained are shown in figure \ref{fig:QF5}, while the results 
+obtained whit \emph{QF} set to 10 are shown in figure \ref{fig:QF10}
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width = 1 \linewidth]{images/paper3/comparison.png}
+    \centering
+    \caption{JPEG: QF=5, PSNR(db) and SSIM results of alghoritms image deblocking and denoising.}
+    \label{fig:QF5}
+\end{figure}
 
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width = 1 \linewidth]{images/paper3/comparison2.png}
+    \centering
+    \caption{JPEG: QF=10, PSNR(db) and SSIM results of alghoritms image deblocking and denoising.}
+    \label{fig:QF10}
+\end{figure}

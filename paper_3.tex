@@ -129,4 +129,23 @@ For REcCNN training: after obtaining a set of compact $ x_m $ images from
 Where $ \theta_2 $ are the trained parameters of the network while $ res(\cdot) $ represent 
 the residual learning of the \emph{RecCNN}.
 
+\subsection{EXPERIMENTS}
+In order to evaluate the performance of the proposed framework, the results 
+obtained were compared with six deblocking methods and two denoising 
+methods. In order to train the network, the \emph{MatConvNet} \cite{0799924138} package is 
+used.
+
+\subsubsection{Datasets for Training and Testing}
+For training, 400 images of 180x180 size are used. The patches used are in 
+total 204800 $ (400x8x64)^2 $, with stride equal to 20. For the test, however only 
+7 images are used which obviously are not present in the training ones.
+
+\subsubsection{Model Initialization}
+The initialization of the weights takes place following the method in \cite{0799924140}, 
+while for the optimization of the gradient the method defined in \cite{0799924121} is used.
+The training of the ComCNN network takes place in 50 epochs with a batch 
+size of 128. The learning rate falls from 0.01 to 0.0001. The initial parameters 
+of the second RecCNN network are identical to those of the first network, 
+including the batch size.
+
 

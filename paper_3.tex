@@ -92,5 +92,27 @@ decoded image. In particular:
     \item \emph{Reconstruction Convolutional Neural Network (RecCNN)}: The layers 
     are identical to those of the \emph{ComCNN} network, unlike the number. To 
     speed up training, as well as performance, methods such as residual 
-    learning and batch normalization \cite{0799924133} are used. Finally, the image will be upsampled to its original size, using a cubic interpolation.
+    learning and batch normalization \cite{0799924133} are used. Finally, the image will 
+    be upsampled to its original size, using a cubic interpolation.
 \end{enumerate}
+
+\subsubsection{Learning Algotrithm}
+In order for both networks to have good training, their parameters must be 
+optimized (weights and bias). To achieve this, the following formulas will 
+have to be optimized iteratively:
+\begin{equation}
+    \hat{\theta_1} = \argmin\limits_{\theta_1}||Re(\hat{\theta_2},Cr(\theta_1,x))-x||^2
+\end{equation}
+\begin{equation}
+    \hat{\theta_2} = \argmin\limits_{\theta_2}||Re(\hat{\theta_2},\hat{x}_m)-x||^2
+\end{equation}
+Where:
+\begin{enumerate}
+    \item \emph{x} represents the original image
+    \item $ \hat{\theta_1} $ and $ \hat{\theta_2} $ are the parameters of \emph{ComcCNN} and \emph{RecCNN}
+    \item $ C_r(\cdot) $ and $ R_e() $ represent the \emph{ComcCNN} and \emph{RecCNN}
+\end{enumerate}
+
+\subsubsection{Loss Functions}
+
+

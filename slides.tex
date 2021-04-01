@@ -9,6 +9,8 @@
 \captionsetup[figure]{labelsep=period}
 \captionsetup[subfigure]{labelformat=simple} % default is 'parens'
 \renewcommand\thesubfigure{\thefigure.\alph{subfigure}.}
+\DeclareMathOperator*{\argmax}{argmax}
+\DeclareMathOperator*{\argmin}{argmin}
 
 \setbeamertemplate{navigation symbols}{}
 \setbeamertemplate{caption}[numbered]
@@ -337,6 +339,57 @@
     these ignore the use of the various existing codecs.
 \end{frame}
 
+\begin{frame}{THE PROPOSED COMPRESSION FRAMEWORK pt1}
+    The proposed system is composed of two convolutional neural networks:
+    \begin{enumerate}
+        \item \emph{ComCNN}: used for compact representation of images
+        \item \emph{RecCNN}: used for decoding and reconstruction of images
+    \end{enumerate}
+    \begin{figure}[htbp]
+        \centering
+        \includegraphics[width = 0.8 \linewidth]{images/paper3/framework.png}
+        \centering
+        \caption{Up: the ComCNN. Down: the RecCNN. Right: the codec.}
+        \label{fig: framework}
+    \end{figure}
+\end{frame}
+
+\begin{frame}{THE PROPOSED COMPRESSION FRAMEWORK pt2}
+    \begin{minipage}{\linewidth}
+        \centering
+        \begin{minipage}{0.45\linewidth}
+            \begin{figure}[H]
+                \includegraphics[width = 1 \linewidth]{images/paper3/ComCNN.png}
+                \caption{ComCNN architecture.}
+            \end{figure}
+            \begin{block}{Parameter optimizations}
+                \small $$ \hat{\theta_1} = \argmin\limits_{\theta_1}||Re(\hat{\theta_2},Cr(\theta_1,x))-x||^2 $$
+            \end{block}
+            \begin{block}{Loss Function}
+               \tiny $$ L_1(\theta_1) = \frac{1}{2N}\sum_{k=1}^N||Re(\hat{\theta_2}, C_r(\theta1,x_k))-x_k||^2 $$
+            \end{block}
+        \end{minipage}
+        \hspace{0.05\linewidth}
+        \begin{minipage}{0.45\linewidth}
+            \begin{figure}[htbp]
+                \centering
+                \includegraphics[width = 1 \linewidth]{images/paper3/RecCNN.png}
+                \centering
+                \caption{RecCNN architecture.}
+            \end{figure}
+            \begin{block}{Parameter optimizations}
+                \small $$ \hat{\theta_2} = \argmin\limits_{\theta_2}||Re(\hat{\theta_2},\hat{x}_m)-x||^2 $$
+            \end{block}
+            \begin{block}{Loss Function}
+                \tiny $$ L_2(\theta_2) = \frac{1}{2N}\sum_{k=1}^N||res(Co(\hat{x}_{mk}), \theta_2) - (Co(\hat{x}_{mk})-x_k)||^2 $$
+             \end{block}
+        \end{minipage}
+    \end{minipage}
+\end{frame}
+
+\begin{frame}{EXPERIMENTS}
+    
+\end{frame}
 
     
 \end{document}

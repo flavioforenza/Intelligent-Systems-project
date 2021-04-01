@@ -14,4 +14,23 @@
 \end{center}
 
 \subsection{INTRODUCTION}
-
+Color constancy is a characteristic of the human visual system (HVS) that 
+helps to perceive a constant color, for example of an object, at different levels 
+of illuminations. It is claimed that the achievement of constancy occurs by 
+approximating the composition of the lighting in order to obtain the true 
+color of the object. There are supervised and unsupervised methods 
+that calculate color consistency. Unsupervised methods are divided into two 
+categories, based on the techniques they use to estimate the color of 
+the illuminating source. The first category makes statistical assumptions 
+about reflectance in a scene. The second category instead uses the physical 
+properties of objects in scenes. Supervised methods also fall into two categories. 
+The first category tries to learn a combination of unsupervised methods to 
+estimate the illumination. The second category builds its own model for 
+learning about illumination. The major factor affecting all of these methods 
+is the sensitivity of the camera sensor. When the sets used for training, 
+validation and testing contain images taken by different cameras, the results 
+returned by the algorithms may be different, as well as their performance. 
+On the other hand, one method returns "fixed" results when operating on 
+images from the same camera. In the CC field, this problem is called camera-independence.
+This report provides a dataset, called Intel-TUT, which is useful for testing 
+camera-independence in the CC. Three different cameras capture real scenes both in the lab and elsewhere. Laboratory images have different lighting conditions. The dataset contains 1536 images and a test set consisting of 454 images taken by a single camera.

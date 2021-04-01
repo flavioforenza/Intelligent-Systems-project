@@ -388,7 +388,98 @@
 \end{frame}
 
 \begin{frame}{EXPERIMENTS}
-    
+    The performance comparison is made by citing various techniques present 
+    at the state of the art. A compression quality index ({\bfseries\emph{PSNR}}) and ù
+    an image similarity index ({\bfseries\emph{SSIM}}) are used. What is really important to note 
+    is how the proposed method manages to have better performance than 
+    the already used codecs such as \emph{JPEG}, \emph{JPEG2000} and \emph{BPG}, at different 
+    bit rates (\emph{bpp}) and quality factors (\emph{QS}). As for the execution times, in 
+    terms of CPU / GPU, the proposed algorithm is faster than those already 
+    existing.
+    \begin{figure}[htbp]
+        \centering
+        \includegraphics[width = 1 \linewidth]{images/paper3/time.png}
+        \centering
+        \caption{Running time(s) of compared methods in CPU (/GPU) }
+        \label{fig:time}
+    \end{figure}
+\end{frame}
+
+\begin{frame}{EXPERIMENTS: JPEG vs. The proposed system}
+    With a variable QF (first set to 5 and then to 10), the results obtained by 
+    the various methods, in terms of PSNR and SSIM, are shown in the following figures:
+    \begin{minipage}{\linewidth}
+        \centering
+        \begin{minipage}{0.45\linewidth}
+            \begin{figure}[H]
+                \includegraphics[width = 1 \linewidth]{images/paper3/comparison.png}
+                \caption{QF = 5, PSNR(db) and SSIM results of alghoritms image deblocking and denoising}
+            \end{figure}
+        \end{minipage}
+        \hspace{0.05\linewidth}
+        \begin{minipage}{0.45\linewidth}
+            \begin{figure}[htbp]
+                \centering
+                \includegraphics[width = 1 \linewidth]{images/paper3/comparison2.png}
+                \caption{QF = 10, PSNR(db) and SSIM results of alghoritms image deblocking and denoising}
+                \centering
+            \end{figure}
+        \end{minipage}
+    \end{minipage}
+\end{frame}
+
+\begin{frame}{EXPERIMENTS: JPEG2000 vs. The proposed system}
+    As we can see from the comparison made in figure \ref{fig:parrot}, the difference in  
+    visual quality between the proposed method and the JPEG2000 codec is 
+    considerable. With the same amount of bit rates, the JPEG2000 codec 
+    produces worse results by losing several structural information. 
+    \begin{minipage}{\linewidth}
+        \centering
+        \begin{minipage}{0.45\linewidth}
+            \begin{figure}[H]
+                \includegraphics[width = 1 \linewidth]{images/paper3/JPEG2000.png}                
+                \caption{Average PSNR(dB)/SSIM results of JPEG2000 and the proposed method on different datasets.}
+            \end{figure}
+        \end{minipage}
+        \hspace{0.05\linewidth}
+        \begin{minipage}{0.45\linewidth}
+            \begin{figure}[htbp]
+                \centering
+                \includegraphics[width = 1 \linewidth]{images/paper3/JPEG2000p.png}
+                \caption{Performance comparison of JPEG2000 at difference bit rates.}
+                \label{fig:parrot}
+                \centering
+            \end{figure}
+        \end{minipage}
+    \end{minipage}
+\end{frame}
+
+\begin{frame}{EXPERIMENTS: BPG vs. The proposed system}
+    As for the BPG codec, if used in combination with the \emph{ComCNN} and 
+    \emph{RecCNN} networks, it reaches higher \emph{PSNR} and \emph{SSIM} levels than when 
+    used individually or with only one of the two networks.   
+    \begin{figure}[htbp]
+        \centering
+        \includegraphics[width = 1 \linewidth]{images/paper3/BPG.png}
+        \centering
+        \caption{BPG: PSNR (dB) and SSIM result of BPG, BPG + RecCNN and the proposed method.}
+        \label{fig:BPG}
+    \end{figure}
+\end{frame}
+
+\begin{frame}{CONCLUSION}
+    The proposed method seems to have the best performance compared to other 
+    methods already existing in the state of the art. The proposed technique 
+    then validates the use of one or more convolutional neural networks to carry 
+    out the task of encoding and decoding images, even in some cases achieving 
+    better quality than existing codecs for image compression.
+    \begin{figure}[htbp]
+        \centering
+        \includegraphics[width = 0.5 \linewidth]{images/paper3/final.png}
+        \centering
+        \caption{Visual quality comparison of image deblocking ad different QF.}
+        \label{fig:final comparison}
+    \end{figure}
 \end{frame}
 
     

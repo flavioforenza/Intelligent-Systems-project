@@ -32,5 +32,45 @@ validation and testing contain images taken by different cameras, the results
 returned by the algorithms may be different, as well as their performance. 
 On the other hand, one method returns "fixed" results when operating on 
 images from the same camera. In the CC field, this problem is called camera-independence.
-This report provides a dataset, called Intel-TUT, which is useful for testing 
-camera-independence in the CC. Three different cameras capture real scenes both in the lab and elsewhere. Laboratory images have different lighting conditions. The dataset contains 1536 images and a test set consisting of 454 images taken by a single camera.
+This report provides a dataset, called \emph{Intel-TUT}, which is 
+useful for testing camera-independence in the CC. Three different cameras 
+capture real scenes both in the lab and elsewhere. Laboratory images have 
+different lighting conditions. The dataset contains 1536 images and a test 
+set consisting of 454 images taken by a single camera.
+
+\subsection{COLOR CONSTANCY DATASETS}
+One of the first datasets for calculating the CC was the one proposed in 
+\cite{0807099130}. The single camera captured images showing a total of 1995 surfaces, 
+11 lab illuminations and 81 illuminations from the real world. The dataset 
+also contains a number of images that make up 50 scenes. After a correct 
+calibration, it removes the irrelevant images, the remainder was made up of 
+only 529 images which made up 30 scenes. Each of these images belongs to 
+the set captured in the lab. Another dataset is the one proposed in \cite{0807099132}, consisting 
+of 11,000 images of indoor / outdoor scenes. The scenes were captured in 
+different geographic locations and under different weather conditions. Unfortunately 
+this dataset contains low resolution images that require a correction 
+phase. Another dataset containing 246 indoor images and 322 outdoor images, 
+taken by two different cameras, is the one proposed in \cite{0807099120}. Another 
+dataset that uses the auto-bracketing technique to acquire the images is the 
+one proposed in \cite{0807099134}. In this dataset they are acquired up to 9 different 
+images, of the same scene, with different settings for each shot. A dataset that 
+aims to obtain multiple lighting in a scene is the one proposed in \cite{0807099135}. 
+This contains relatively few images, 9 acquired in an outdoor environment 
+and 59 lab images. The is also a dataset containing the videos mentioned 
+in \cite{0807099136}. There was only one study \cite{0807099129} that relies on color conversion in order 
+to achieve camera independence. However, this method requires a very 
+sensitive spectral camera to achieve good performance, so it is not applicable 
+to all images. Finally, a last dataset consisting of 1600 indoor and outdoor 
+images, taken by 9 different cameras, is the one proposed in \cite{0807099128} called NUS. 
+In this collection, each scene was captured by each camera with slight misalignments. 
+The database proposed in this paper is similar to the NUT only 
+for the different cameras used. However, the proposed database has some 
+features such as the following:
+\begin{itemize}
+    \item Provides the spectral sensitivities of the cameras;
+    \item Different illuminants illuminate the scene;
+    \item Among the different cameras used, one is mobile;
+    \item Provides a set of tests for good evaluation of CC methods.
+\end{itemize}
+
+\subsection{THE PROPOSED INTEL-TUT DATA SET}

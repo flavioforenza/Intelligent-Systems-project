@@ -88,10 +88,72 @@ xy chromaticity, have been appropriately set to have an equitable acquisition.
 \subsubsection{Cameras}
 Three types of camera are used for the construction of the dataset. Two 
 of these belong to the high-end, while a third belongs to the category of 
-mobile phones. To achieve correct color correction, several 3x3 size color 
+mobile. To achieve correct color correction, several 3x3 size color 
 conversion matrices (\emph{CCMs}) were used. In other words, try to transform 
 the components of the image from RGB to sRGB in order to adapt them to 
 the lighting under which the image is viewed. For the outdoors, 10 CCMs 
 were used based on the type of illumination. Another factor that required 
 correction was the color shading (\emph{CS}). This only requires correction for the 
-images coming from the mobile phone.
+images coming from the mobile.
+
+\subsubsection{Scene Contents}
+The scenes that make up the dataset are divided into lab scenes and field 
+scenes. There are several types of different lab scenes, each having 5 different 
+illuminations (Fig. \ref{fig:Lab}). Both the lab scenes and those acquired in the field 
+are 64, for a total of 128 scenes. Each lab scene is captured with each camera 
+in almost the same shot. An attempt was made to preserve the same settings 
+in the field scenes even if the latter have different lighting. In order to have 
+good stabilization, a fixed tripod is used.
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width = 0.6 \linewidth]{images/paper4/lab.png}
+    \centering
+    \caption{Lab real scenes}
+    \label{fig:Lab}
+\end{figure}
+
+\subsubsection{Ground Truths}
+The ground-truth is based on the chromaticity of the illumination, or white 
+points, assumed by the camera which can change for each image. This parameter 
+is calculated by averaging the achromatic colors present in the lighter 
+patches of the color-checker, that appear in the last line.
+
+\subsubsection{Recommendations for Evaluating CC Algorithm Performance}
+In order to evaluate the performance of the algorithm with this type of 
+dataset, it is recommended to use the following strategies:
+\begin{enumerate}
+    \item \emph{Camera independence}: the article proposes six-fold cross validation, 
+    where each fold, divided into training, validation and test, contains a 
+    grouping of images for each of the nine cameras. This technique aims 
+    to obtain a fair evaluation of camera-independence of an algorithm (the 
+    algorithm considers all images as if coming from the same camera).
+    \item \emph{Camera and Scene Independence}: in this case it is recommended to 
+    use the images acquired by Nikon and the mobile for training, while 
+    the Canon images must be used for validation. As for the test, it is 
+    recommended to use the Canon images belonging to the second group 
+    of images. In this way you can understand the influence of camera-
+    independence. If you get a low error, which means that the algorithm 
+    treats each scene (each made up of images captured by different cameras) 
+    as if it had been captured entirely by a single camera, then at 
+    this point you would get, in addition to independence of the camera, 
+    the independence of the scene. This is a good result if it is achieved in 
+    this type of dataset.
+    \item \emph{Camera and Scene Independence from Single Camera}: in this strategy 
+    it is suggested to use the images from the second group as training 
+    and validation while using the images acquired by Nikon and the 
+    mobile for testing. In this way we want to understand if the algorithm 
+    obtains the camera/scene independence effect with images produced 
+    by another different camera (Canon). If this technique were 
+    used with the 1 (where a low error implies the achievement of the 
+    camera-independence) then when new images of different origin would 
+    be inserted, the error would be higher than that obtained in 1, this is 
+    because the camera-independence it faces the old set of cameras and not 
+    the new one. It is being said that thanks to the combination of these, 
+    it is possible to have a targeted camera-independence and a targeted 
+    scene-independence for each new camera.
+    \item \emph{Testing the Effect of Color Shading}: if you were to use the images 
+    of your mobile, to test their color shading correction (CS), you could 
+    enclose them all in a test set. Images that cause a high error will be 
+    those that have not undergone the correction process.
+    \item \emph{Testing the Effect of Resolution}: color constancy can be easily calculated when the images are at high resolution. As you can guess, this result is not achievable with images from a mobile phone. For this reason, the dataset contains a portion of image downscaling (1080p) useful for observing how the resolution can affect the performance of the algorithm.
+\end{enumerate}

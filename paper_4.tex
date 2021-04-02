@@ -74,3 +74,24 @@ features such as the following:
 \end{itemize}
 
 \subsection{THE PROPOSED INTEL-TUT DATA SET}
+The purpose of the dataset is to help the algorithms to determine if the color 
+constancy value obtained is to be considered good or not. If an algorithm 
+does not find a change in this value on the same set of images taken by the 
+same camera, then this algorithm is able to have a uniform color constancy 
+and consequently would produce optimal outputs.
+
+\subsubsection{Light Sources}
+A variety of devices were used that were capable of producing a light source. 
+Each property such as luminance (Lux), color temperature (CCT) and CIE 
+xy chromaticity, have been appropriately set to have an equitable acquisition.
+
+\subsubsection{Cameras}
+Three types of camera are used for the construction of the dataset. Two 
+of these belong to the high-end, while a third belongs to the category of 
+mobile phones. To achieve correct color correction, several 3x3 size color 
+conversion matrices (\emph{CCMs}) were used. In other words, try to transform 
+the components of the image from RGB to sRGB in order to adapt them to 
+the lighting under which the image is viewed. For the outdoors, 10 CCMs 
+were used based on the type of illumination. Another factor that required 
+correction was the color shading (\emph{CS}). This only requires correction for the 
+images coming from the mobile phone.

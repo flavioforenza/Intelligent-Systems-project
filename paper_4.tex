@@ -155,5 +155,57 @@ dataset, it is recommended to use the following strategies:
     of your mobile, to test their color shading correction (CS), you could 
     enclose them all in a test set. Images that cause a high error will be 
     those that have not undergone the correction process.
-    \item \emph{Testing the Effect of Resolution}: color constancy can be easily calculated when the images are at high resolution. As you can guess, this result is not achievable with images from a mobile phone. For this reason, the dataset contains a portion of image downscaling (1080p) useful for observing how the resolution can affect the performance of the algorithm.
+    \item \emph{Testing the Effect of Resolution}: color constancy can be easily calculated 
+    when the images are at high resolution. As you can guess, this 
+    result is not achievable with images from a mobile phone. For this 
+    reason, the dataset contains a portion of image downscaling (1080p) 
+    useful for observing how the resolution can affect the performance of 
+    the algorithm.
 \end{enumerate}
+
+\subsection{EXPERIMENTAL RESULTS}
+\subsubsection{Evaluation of Unsupervised Baseline Methods}
+In summary, in order to have the effect of the camera-independecy on a 
+set of images from different cameras, it is enough to be able to calculate 
+the constancy of the color which, in other words, means having to detect the 
+chromaticity of the illuminate that precisely illuminates the scene. Given the 
+chromaticity estimated by the algorithm ($ p^{Est} $) and the effective chromaticity 
+(white point or ground truth) ($ p^E $), the performance of an algorithm can be 
+evaluated based on the result returned by the recovery angular error (RAE):
+\begin{equation}
+    RAE=\cos^{-1}\left(\frac{p^Ep^{Est}}{||p^E||~||p^{Est}||}\right)
+\end{equation}
+This error index is calculated both on the performances obtained in high 
+resolution images and in those obtained at low resolution. To make some 
+comparison, an algorithm that has a low RAE is the unsupervised algorithm 
+GW \cite{0807099104} which assumes that the average chromaticity in an image is gray. 
+Even the MaxRGB algorithm \cite{0807099103} manages to have good performance 
+in images where there are saturated areas where, thanks to these, the white 
+point can be easily recovered. MaxRGB is currently the only algorithm that 
+manages to have a low RAE even with low quality images (1080p). The 
+performances of these algorithms, together with two others (SoG and GE), 
+are compared in figure \ref{fig:RAE} where for each set of images (Lab 
+Printouts, Lab Real Scenes, $ 1^{st} $ Field Set and $ 2^{nd} $ Field set), taken from different cameras, 
+are calculated mean, median and maximum of RAE values reached for each 
+image. Subsequently, in figure \ref{fig:RAEstandard} the mean, median and maximum of the 
+standard deviation obtained from each image, from each algorithm, are calculated 
+again. As you can see, the GW algorithm is the only one to have the 
+camera-independence for all the rooms used.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width = 1 \linewidth]{images/paper4/RAEHigh.png}
+    \centering
+    \caption{Recovery Angular Errors (Mean, Median and Maximum) of some algorithms.}
+    \label{fig:RAE}
+\end{figure}
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width = 0.6 \linewidth]{images/paper4/standardHigh.png}
+    \centering
+    \caption{Mean, Median and Maximum RAE of some algorithms.}
+    \label{fig:RAEstandard}
+\end{figure}
+
+\subsubsection{Evaluation of a Direct Supervised Method}

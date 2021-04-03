@@ -258,3 +258,32 @@ output in which there is the estimated chromaticity of the lighting. In order to
     \end{figure}
 \end{enumerate}
 
+\subsubsection{A State of the Art Camera Independent Method}
+The following section presents a competitive method \cite{0807099125} that can beat the 
+performance of \cite{0807099122}. Also in this new method there is an even deeper CNN 
+that uses a set of images on which a CCM pre-processing phase has already 
+been applied. The comparisons of the results obtained by \cite{0807099122} and by \cite{0807099125} in 
+all the techniques proposed in \ref{recommend} where it can be seen that all the error 
+rates of \cite{0807099125} are smaller than those of \cite{0807099122} and therefore the model is able to 
+reach the camera/scene-independece more easily.
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width = 1 \linewidth]{images/paper4/25tech1.png}
+    \centering
+    \caption{Camera Independence of \cite{0807099122} with CCM on $ 1^{nd} $ thecnique. Mean, Median and Maximum RAE of CNN.}
+    \label{fig:25t1}
+    \begin{minipage}[t]{.45\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{images/paper4/25tech2.png}
+        \caption{\small Camera Independence of \cite{0807099122} on $ 2^{nd} $ thecnique. Mean, Median and Maximum RAE of CNN.}\label{fig:1}
+    \end{minipage}
+    \hfill
+    \begin{minipage}{.45\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{images/paper4/25tech3.png}
+        \caption{\small Camera Independence of \cite{0807099122} on $ 3^{nd} $ thecnique. Mean, Median and Maximum RAE of CNN.}\label{fig:1}
+    \end{minipage}  
+    \label{fig:1-2}
+\end{figure}
+
+\subsection{CONCLUSION}

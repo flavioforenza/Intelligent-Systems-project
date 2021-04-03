@@ -118,7 +118,7 @@ points, assumed by the camera which can change for each image. This parameter
 is calculated by averaging the achromatic colors present in the lighter 
 patches of the color-checker, that appear in the last line.
 
-\subsubsection{Recommendations for Evaluating CC Algorithm Performance}
+\subsubsection{Recommendations for Evaluating CC Algorithm Performance}\label{recommend}
 In order to evaluate the performance of the algorithm with this type of 
 dataset, it is recommended to use the following strategies:
 \begin{enumerate}
@@ -209,3 +209,52 @@ camera-independence for all the rooms used.
 \end{figure}
 
 \subsubsection{Evaluation of a Direct Supervised Method}
+In order to be able to calculate color constancy, and thus be able to achieve 
+the camera-independence, various methods were used that included the use 
+of convolutional neural networks (CNNs). In method \cite{0807099122}, the network used 
+is composed of a convolutional layer with 240 filters of size 1x1, the usual 
+function of ReLU, a max-Pooling of blocks of size 8x8 with stride 8. Finally 
+there is a fully-connected layer with 40 layers hidden and a 3-dimensional 
+output in which there is the estimated chromaticity of the lighting. In order to demonstrate the validity of the proposed dataset, the use of CNN has been adapted to the techniques described in \ref{recommend}:
+\begin{enumerate}
+    \item Following technique 1, various CNNs are trained to provide the least 
+    possible error. The error reached by the model is less than when using 
+    the Canon for training and validation. This means that the networks 
+    assume the camera-independence only with the Nikon and mobile models. 
+    Therefore the networks would be able to recognize new cameras. As 
+    can be seen in the figure, the RAE values between the various cameras 
+    are very similar (Fig. \ref{fig:CNNtec1}).
+    \begin{figure}[htbp]
+        \centering
+        \includegraphics[width = 1 \linewidth]{images/paper4/CNNtec1.png}
+        \centering
+        \caption{Camera Independence of \cite{0807099122} with CCM on $ 1^{rst} $ thecnique. Mean, Median and Maximum RAE of CNN.}
+        \label{fig:CNNtec1}
+    \end{figure}
+    \item Now a CNN is trained using technique 2. The training is carried out 
+    with images acquired from both Nikon and mobile. Canon's images are 
+    used for validation, while Canon's images belonging to the $ 2^{nd} $ field 
+    are used for the test. Low errors are obtained with the use of a color 
+    conversion matrix (CCM) \cite{0807099129} and therefore the model manages to have 
+    the camera/scene-independence (Fig. \ref{fig:CNNtec2}).
+    \begin{figure}[h!]
+        \centering
+        \includegraphics[width = 0.6 \linewidth]{images/paper4/CNNtec2.png}
+        \centering
+        \caption{Camera Independence of \cite{0807099122} with CCM on $ 2^{nd} $ thecnique. Mean, Median and Maximum RAE of CNN.}
+        \label{fig:CNNtec2}
+    \end{figure}
+    \item According to technique 3, a CNN can be trained to reach camera independence 
+    only on one camera, excluding the others. In this case, since 
+    the images of the $ 2^{nd} $ field, used for both training and validation, belong 
+    only to Canon, then CNN will get the camera/scene-independence 
+    only on this type of camera.
+    \begin{figure}[h!]
+        \centering
+        \includegraphics[width = 0.6 \linewidth]{images/paper4/CNNtec3.png}
+        \centering
+        \caption{Camera Independence of \cite{0807099122} on $ 3^{nd} $ thecnique. Mean, Median and Maximum RAE of CNN.}
+        \label{fig:CNNtec2}
+    \end{figure}
+\end{enumerate}
+

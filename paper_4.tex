@@ -78,7 +78,11 @@ The purpose of the dataset is to help the algorithms to determine if the color
 constancy value obtained is to be considered good or not. If an algorithm 
 does not find a change in this value on the same set of images taken by the 
 same camera, then this algorithm is able to have a uniform color constancy 
-and consequently would produce optimal outputs.
+and consequently would produce optimal outputs. Each image in the 
+dataset has undergone several changes such as: black level correction (BLC), 
+color shading correction (CSC) (only for mobile camera), white balance (WB), 
+color conversion from RGB sensor to sRGB (CCM) , gamma correction of 
+0.45, sharpening effect correction (blur) and brightness normalization.
 
 \subsubsection{Light Sources}
 A variety of devices were used that were capable of producing a light source. 
@@ -248,13 +252,13 @@ output in which there is the estimated chromaticity of the lighting. In order to
     only on one camera, excluding the others. In this case, since 
     the images of the $ 2^{nd} $ field, used for both training and validation, belong 
     only to Canon, then CNN will get the camera/scene-independence 
-    only on this type of camera.
+    only on this type of camera (Fig. \ref{fig:CNNtec3}).
     \begin{figure}[h!]
         \centering
         \includegraphics[width = 0.6 \linewidth]{images/paper4/CNNtec3.png}
         \centering
         \caption{Camera Independence of \cite{0807099122} on $ 3^{nd} $ thecnique. Mean, Median and Maximum RAE of CNN.}
-        \label{fig:CNNtec2}
+        \label{fig:CNNtec3}
     \end{figure}
 \end{enumerate}
 
@@ -287,3 +291,4 @@ reach the camera/scene-independece more easily.
 \end{figure}
 
 \subsection{CONCLUSION}
+The dataset proposed in this paper is useful for testing the behavior of an algorithm, or a model based on CNN, in the search of camera/scene-independece. If the algorithm manages to obtain this benefit, then it will be able to generalize a scene composed of several images acquired from different cameras, otherwise the results returned by this will be highly variable. Achieving this goal can also be done using a CNN if the CMM process is applied to its input set. It is necessary to specify that, in order to achieve the final result, it is essential to have the spectral sensitivities of each camera without which it would not be possible to achieve camera independence.

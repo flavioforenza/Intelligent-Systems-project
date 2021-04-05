@@ -532,7 +532,7 @@
     \begin{block}{Target}
         The goal is to be able to bring the white point, calculated by each 
         algorithm, closer to the white point of the ground truth, within the same 
-        color spectrum (sRGB). To do this, a "\emph{Color Conversion Matrix}" (CMM) 
+        color spectrum (sRGB). To do this, a "\emph{Color Conversion Matrix}" (CCM) 
         is used.
     \end{block}
 \end{frame}
@@ -568,5 +568,50 @@
         \label{fig:RAEstandard}
     \end{figure}
 \end{frame}
+
+\begin{frame}{EXPERIMENTAL RESULTS - Supervised methods}
+    Color constancy can also be calculated from convolutional neural networks (\emph{CCNs}) such as the one proposed in \footfullcite{0807099125}
+    \begin{figure}[htbp]
+        \centering
+        \includegraphics[width = 1 \linewidth]{images/paper4/25tech1.png}
+        \centering
+        \caption{Camera Independence with CCM on $ 1^{nd} $ thecnique. Mean, Median and Maximum RAE of CNN.}
+        \label{fig:CNNtec1}
+    \end{figure}
+    \begin{minipage}{\linewidth}
+        \centering
+        \begin{minipage}{0.45\linewidth}
+            \begin{figure}[H]
+                \includegraphics[width=\linewidth]{images/paper4/25tech2.png}
+                \caption{\small Camera Independence on $ 2^{nd} $ thecnique. Mean, Median and Maximum RAE of CNN.}\label{fig:1}
+            \end{figure}
+        \end{minipage}
+        \hspace{0.05\linewidth}
+        \begin{minipage}{0.45\linewidth}
+            \begin{figure}[htbp]
+                \centering
+                \includegraphics[width=0.8\linewidth]{images/paper4/25tech3.png}
+                \caption{\small Camera Independence on $ 3^{nd} $ thecnique. Mean, Median and Maximum RAE of CNN.}\label{fig:1}
+                \centering
+            \end{figure}
+        \end{minipage}
+    \end{minipage}
+\end{frame}
     
+\begin{frame}{CONCLUSION}
+    The dataset proposed in this paper is useful for testing the behavior of 
+    an algorithm, or a model based on CNN, in the search of camera/scene-independece. 
+    Achieving this goal can also be done using a CNN if the CMM process is 
+    applied to its input set. It is necessary to specify that, in order to 
+    achieve the final result, it is essential to have the spectral sensitivities of each camera 
+    without which it would not be possible to achieve camera independence.
+    \begin{figure}[htbp]
+        \centering
+        \includegraphics[width = 0.5 \linewidth]{images/paper4/CSS.png}
+        \centering
+        \caption{Camera Spectral Sensitivities (CSS) of the light sources.}
+        \label{fig:CNNtec1}
+    \end{figure}
+\end{frame}
+
 \end{document}

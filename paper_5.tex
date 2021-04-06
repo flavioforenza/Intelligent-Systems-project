@@ -38,3 +38,14 @@ is OU-ISIR gait database \cite{0857651721}.
 \end{figure}
 
 \subsection{RELATED WORK}
+Some methods have placed inertial sensors in different parts of the body 
+such as legs \cite{0857651733}, hips \cite{0857651732}, ankles, or even in objects such as bags [35] and 
+pockets \cite{0857651720}. Other methods \cite{0857651736} directly use all the inertial sensors present 
+in the smartphone. With the advent of deep learning and CNNs, classifying 
+an activity has turned out to be an easier job. The input provided to these 
+networks is either the raw data of the inertial sensors, or the images that 
+represented such data. The entire sequence of data is divided into segments, 
+or windows, in order not to negatively affect the performance of the network. 
+In the following work, a union of all the data produced by inertial sensors is 
+carried out with the multi-task approach in order to provide a single model 
+that uses different inputs to produce different outputs.

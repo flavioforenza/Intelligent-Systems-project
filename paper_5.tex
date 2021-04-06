@@ -28,7 +28,8 @@ to the network. The first deals with merging sensory data, while the second
 deals with improving the learning process and producing multiple outputs 
 from a single input, thanks to a multi-task scheme. The tasks considered 
 are: identification, gender recognition and age estimation. The dataset used 
-is OU-ISIR gait database \cite{0857651721}.
+is OU-ISIR gait database \cite{0857651721}, containing information such as inertial sensors 
+such as accelerometers and gyroscopes.
 \begin{figure}[htbp]
     \centering
     \includegraphics[width = 0.6 \linewidth]{images/paper5/usecase.png}
@@ -49,3 +50,21 @@ or windows, in order not to negatively affect the performance of the network.
 In the following work, a union of all the data produced by inertial sensors is 
 carried out with the multi-task approach in order to provide a single model 
 that uses different inputs to produce different outputs.
+
+\subsection{PROPOSED APPROACH}
+\subsubsection{Problem definition}
+The proposed neural network is able to automatically extract the discriminat 
+features from a gait sequence. There is no data pre-processing phase. The 
+dataset used contains three labels for each fetature, indicating the age, years 
+and gender of the subject, but in addition to this, any type of dataset with 
+labels and sensory data would have been fine. In the following paper the 
+following nomenclature will be used:
+\begin{itemize}
+    \item {\bfseries{\emph{S}}}: input temporal sequence of \emph{D} channel measurements taken by a sensor.
+    \item {\bfseries{$ s_i $}}: sub-sequence of \emph{S} having length \emph{L}, given as input to CNN.
+    \item $ y_i^t $: label of the sub-sequence $ s_i $ and taskt \emph{t}.
+    \item $ g(s_i, \theta ) $: non-linear function applied to $ s_i $ with a set of parameters $ \theta $.
+    \item {\bfseries{$ \hat{y_i} $}}: output of the network for a given $ s_i $ input.
+\end{itemize}
+
+\subsubsection{Initial CNN Architecture}

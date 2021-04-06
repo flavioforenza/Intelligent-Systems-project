@@ -68,3 +68,26 @@ following nomenclature will be used:
 \end{itemize}
 
 \subsubsection{Initial CNN Architecture}
+The length of the input is normalized before it can end up on CNN. Each 
+sequence S is divided into U sub-sequences $ s_i $, where $ 1 \leq i \leq U $. However, 
+a sequence is divided into windows having length L, with an overlap of 0\%, 
+where each signal size defines a specific input channel. The number D of 
+channels is useful for defining the 1 x N x D dimension of the filter of the 
+first layer, where N indicates the dimension of the convolution. The proposed 
+convolutional network is composed of 4 convolutional layers and a gradually 
+increasing number of filters. After convolution there are elements such as 
+ReLU, batch normalization (useful for faster learning) and max pooling. After 
+the last convolutional layer, the average is chosen as a pooling operation. 
+Then dropout and fully-connected layers are added with a number of outputs 
+equal to the required classes. The last layer is composed of the Softmax 
+normalization function which returns the probability distribution of each class. 
+To train the model, a cross-entropy is used as a loss function.
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width = 1 \linewidth]{images/paper5/architecture.png}
+    \centering
+    \caption{Pipeline for multi-task and multi-sensor learning in a gait-based system}
+    \label{fig:pipeline}
+\end{figure}
+
+\subsubsection{Multi-task Approach}

@@ -81,7 +81,8 @@ the last convolutional layer, the average is chosen as a pooling operation.
 Then dropout and fully-connected layers are added with a number of outputs 
 equal to the required classes. The last layer is composed of the Softmax 
 normalization function which returns the probability distribution of each class. 
-To train the model, a cross-entropy is used as a loss function.
+To train the model, only for the identification task, a cross-entropy is used 
+as a loss function.
 \begin{figure}[htbp]
     \centering
     \includegraphics[width = 1 \linewidth]{images/paper5/architecture.png}
@@ -91,3 +92,23 @@ To train the model, a cross-entropy is used as a loss function.
 \end{figure}
 
 \subsubsection{Multi-task Approach}
+The aim is to training a deep multi-task model (DTM). In order to do this, 
+there must be a set of tuples $ I = (s_i, y_i^m, y_1^1, ..., y_i^T) $ where $ y_i^m $ is the label 
+of the main task, $ y_i^t $, with $ t \in [1,T] $, is the label for each auxilary task. 
+Each individual task has its own loss function \emph{L}. The loss function (\ref{loss-function}) is 
+calculated on each sub-sequence \emph{s} and is formed by the product of each single 
+loss function, of each task, with the weights ($ \lambda $)  associated at each task.
+\begin{eqnarray}\label{loss-function}
+    \emph{$ L_{DTM} (g(s,\theta), Y) $} & = & \lambda_{id}L_{id}(\hat{y}^{id}, y^{id}) \nonumber \\
+                                        &   & + \lambda_{age}L_{age}(\hat{y}^{age}, y^{age}) \nonumber \\
+                                        &   & + \lambda_{gender}L_{gender}(\hat{y}^{gender}, y^{gender}) 
+\end{eqnarray}
+Where $ Y = (y^{id}_i, y^{age}_i, y^{gender}_i) $ and $ L_{id}, L_{age}, L_{gender} $ are the loss functions of 
+each tasks. As for the identity and gender tasks, their loss function is the 
+cross-entropy and is calculated with the formula \ref{cross-entropy}.
+\begin{equation}\label{cross-entropy}
+    \emph{$ L_m(\hat{y}, c) $} = -\hat{y}_c+\log\sum^K_{k=1}e^{\hat{y}k} 
+\end{equation}
+Where $ \hat{y} $ is the ouput vector of the network, $ \hat{y}_c $ is the output for target class, 
+$ \hat{y}_k $ is the \emph{k}-th component of the output vector, \emph{c} is the ground-truth class 
+and \emph{K} is the total number of classes.

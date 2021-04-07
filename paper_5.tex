@@ -124,3 +124,23 @@ task of extracting the combined features from all the sensors. Based on the accu
 layer that will return the best result will be selected.
 
 \subsubsection{Identity Authentication}
+An authentication process begins by submitting a sample of input to CNN. 
+Within this, there may be a layer that will produce a vector of features. 
+To find out which layer it is, a cross-validation process is performed. Once 
+extracted, the features are normalized with the L2 standard. Subsequently 
+a vector is calculated containing the Euclidean distances between the values 
+given in input and those present in the training set. In order to calculate the 
+\emph{Area Under Curve} (AUC) or the \emph{Equal-Error-Rate} (EER), these distances 
+are transformed into probabilities.
+
+\subsection{EXPERIMENTS AND RESULTS}
+\subsubsection{Dataset}
+The OU-ISIR dataset is composed in two parts. Part A contains data on 744 
+individuals, each having two sub-sequence (s) recording at a rate of 100Hz 
+via an IMU sensor located at the waist of each. The first sequence is used for 
+training, the second for testing. The labels associated with each individual 
+are: identity, gender and age (split in ranges). Part B, on the other hand, 
+is composed of 495 individuals with 3 IMU sensors located on the body. For 
+each individual and sensor, there are two sequences of walking levels, an up-slope 
+walk sequence and the other down-slope walk. The data that will be 
+merged are those coming from sensors such as accelerometer and gyroscope.

@@ -144,3 +144,35 @@ is composed of 495 individuals with 3 IMU sensors located on the body. For
 each individual and sensor, there are two sequences of walking levels, an up-slope 
 walk sequence and the other down-slope walk. The data that will be 
 merged are those coming from sensors such as accelerometer and gyroscope.
+
+\subsubsection{Input data}
+A data augumentation process is carried out to increase the amount of data 
+available for training. In this way, instead of giving a single sequence S 
+as input, three will be given, more precisely:
+\begin{itemize}
+    \item A Gaussian noise is added to the input signal;
+    \item The sequence S is resized with a random value between 0.7 and 1.1;
+    \item A sequence of 10 numbers is first interpolated to S and then the resulting sequence is sampled.
+\end{itemize}
+Each sequence (S) is divided into 100 sub-sequences ($ s_i $) (100Hz = 1 per 
+second), a number enough to contain a walk, with overlap equal to 75\%.
+
+\subsubsection{Implementation details}
+First 100 epochs are performed in order to train the model, with the training 
+set divided into training and validation. At the end of the training, in order to 
+be able to fine-tune the parameters, a further 50 epochs are performed with 
+the training set only. The optimization is carried out with the stochastic 
+gradient descent (SGD) standard with a mini-batch of 128 samples, weigth 
+decay of 0.0005 and a moment of 0.9. The total accuracy is obtained by 
+combining the accuracies derived from the output of each sub-sequence ($ s_i $) 
+of the input S. To obtain this, simply multiply each probability obtained 
+from each of the sub-sequences with the following equation:
+\begin{equation}
+    P(S=c) = \prod_{i=1}^UP_i(s_i=c)
+\end{equation}
+Where U is the number of subsequences $ s_i $, P(s=c) is the probability of assign the identity \emph{c} to the person in sequence S and $ P_i(s_i=c) $ is the probability of assign the identity \emph{c} to teh person in subsequence $ s_i $.
+
+\subsubsection{Gait Recognition experiments}
+\begin{enumerate}
+    \item \emph{Sensor position}: 
+\end{enumerate}

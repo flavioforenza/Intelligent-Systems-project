@@ -112,3 +112,15 @@ cross-entropy and is calculated with the formula \ref{cross-entropy}.
 Where $ \hat{y} $ is the ouput vector of the network, $ \hat{y}_c $ is the output for target class, 
 $ \hat{y}_k $ is the \emph{k}-th component of the output vector, \emph{c} is the ground-truth class 
 and \emph{K} is the total number of classes.
+
+\subsubsection{Modality Fusion}
+The merging of data that occurs at the input is useful for increasing the accuracy of the 
+network and allows understanding the relationships between 
+the different types of input data. Each data coming from a specific sensor 
+will be inserted in an individual branch, composed of a specific number of 
+convolutional layers that will calculate specific predictors for each sensor. 
+In the end, the data will be concatenated in a common branch which has the 
+task of extracting the combined features from all the sensors. Based on the accuracy metric, the 
+layer that will return the best result will be selected.
+
+\subsubsection{Identity Authentication}

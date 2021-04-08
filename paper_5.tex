@@ -29,7 +29,11 @@ deals with improving the learning process and producing multiple outputs
 from a single input, thanks to a multi-task scheme. The tasks considered 
 are: identification, gender recognition and age estimation. The dataset used 
 is OU-ISIR gait database \cite{0857651721}, containing information such as inertial sensors 
-such as accelerometers and gyroscopes.
+such as accelerometers and gyroscopes. Gait recognition can be used in two contexts:
+\begin{enumerate}
+    \item {\bfseries{Identification}}: gait is used to obtain the identity of a known subject.
+    \item {\bfseries{Authentication}}: gait is used to validate the identity of a known subject.
+\end{enumerate}
 \begin{figure}[htbp]
     \centering
     \includegraphics[width = 0.6 \linewidth]{images/paper5/usecase.png}
@@ -173,7 +177,7 @@ from each of the sub-sequences with the following equation:
 Where U is the number of subsequences $ s_i $, P(s=c) is the probability of assign the identity \emph{c} to the person in sequence S and $ P_i(s_i=c) $ is the probability of assign the identity \emph{c} to teh person in subsequence $ s_i $.
 
 \subsubsection{Gait Recognition experiments}
-Different types of experiments and their respective performances, in terms of accuracy and F1-measure, are presented below.
+Different types of experiments on recognition, and their respective performances, in terms of accuracy and F1-measure, are presented below.
 \begin{enumerate}
     \item \emph{Sensor position}: the following experiment show that using 3 different 
     sensors, the model has greater accuracy and a high value of F1-measure, 
@@ -325,7 +329,11 @@ the sample vectors present in the training set. Subsequently, it was necessary
 to transform these distances into probabilities that will be represented 
 on a ROC curve. Once this is done, for each model previously described, 
 the values for AUC (the higher the better) and EER (the lower the better), 
-calculated on the ROC curve, are shown in table \ref{Authentication}. 
+calculated on the ROC curve, are shown in table \ref{Authentication}. From the results shown 
+in the table, the multitask model obtains worse performance than the singletask 
+model, this is caused by the fact that in the multitask model the labels 
+to be managed are many more than the single label (id) to be managed in 
+the singletask model.
 \begin{table}[h!]
     \centering
     \begin{adjustbox}{max width=\textwidth}
@@ -348,3 +356,66 @@ calculated on the ROC curve, are shown in table \ref{Authentication}.
     \caption{Authentication accuracy.}
     \label{Authentication}
 \end{table}
+
+\subsubsection{State of art comparison}
+Comparing the proposed system with those already existing in the state of 
+art, both for gait recognition (Tab.\ref{Gait comparison}) and authentication (Tab.\ref{Authentication comparison}), the 
+performances outperforms those of the competitors.
+\begin{table}[h!]
+    \centering
+    \begin{adjustbox}{max width=\textwidth}
+    \begin{tabular}{|c|ccc|c|}
+        \hline
+        CNN & Id & Age & Gender & Avg\\
+        \hline
+        AE-GDI-CC & 61.0 & - & - & -\\
+        Muaaz et al. & 63.5 & - & - & -\\
+        Ngo et al. & 70.2 & - & - & -\\
+        Wei et al. & 83.8 & - & - & - \\
+        \hline
+        MultiTask Fusion & \bfseries{94.8} & \bfseries{96.1} & \bfseries{97.7} & \bfseries{96.2}\\
+        \hline
+    \end{tabular}
+    \end{adjustbox}
+    \caption{Gait recognition comparison with some methods.}
+    \label{Gait comparison}
+\end{table}
+
+\begin{table}[h!]
+    \centering
+    \begin{adjustbox}{max width=\textwidth}
+    \begin{tabular}{|c|c|}
+        \hline
+        Approach & EER\\
+        \hline
+        Gafurov et al. & 15.8 \\
+        Derawi et al. & 14.3 \\
+        Rong et al. & 14.3 \\
+        Ngo et al. & 13.5 \\
+        Imp GDI + i-vector & 7.1 \\
+        NC GDI + i-vector & 5.6 \\
+        \hline
+        SingleTask Fusion & \bfseries{1.1}\\
+        \hline
+    \end{tabular}
+    \end{adjustbox}
+    \caption{Authentication comparison with some methods.}
+    \label{Authentication comparison}
+\end{table}
+
+\subsubsection{Execution time during test}
+MultiTask models are the most time-consuming, but it is also true that they 
+produce three outputs simultaneously (Fig. \ref{fig:time}).
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width = 0.6 \linewidth]{images/paper5/time.png}
+    \centering
+    \caption{Execution time of the proposed models}
+    \label{fig:time}
+\end{figure}
+
+\subsection{CONCLUSIONS}
+As a final consideration, the model to be used, in the case of gait recognition, 
+is the one that merges the input information and adopts a multitask 
+approach. On the other hand, as regards the authentication problem, it has 
+been seen that it is better to use a singletask model.

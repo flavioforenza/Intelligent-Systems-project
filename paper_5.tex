@@ -173,6 +173,105 @@ from each of the sub-sequences with the following equation:
 Where U is the number of subsequences $ s_i $, P(s=c) is the probability of assign the identity \emph{c} to the person in sequence S and $ P_i(s_i=c) $ is the probability of assign the identity \emph{c} to teh person in subsequence $ s_i $.
 
 \subsubsection{Gait Recognition experiments}
+Different types of experiments and their respective performances, in terms of accuracy and F1-measure, are presented below.
 \begin{enumerate}
-    \item \emph{Sensor position}: 
+    \item \emph{Sensor position}: the following experiment show that using 3 different 
+    sensors, the model has greater accuracy and a high value of F1-measure, 
+    when using data from the sensor positioned on the left side of the body.
+    \begin{table}[h!]
+        \centering
+        \begin{adjustbox}{max width=\textwidth}
+        \begin{tabular}{*{3}{|c}|}%%{|c|c|c|}
+            \hline
+            IMU Position & Acc & F1-score \\
+            \hline
+            center & 92.3 & 90.8\\
+            left & \bfseries{95.2} & \bfseries{94.0}\\
+            right & 91.5 & 90.0\\
+            \hline
+        \end{tabular}
+        \end{adjustbox}
+        \caption{Accuracy and F1-score of three different sensors.}
+        \label{table accuracy and F1}
+    \end{table}
+
+    \item \emph{Single task with individuals sensors} (1 Task - 1 Sensor): being a multi-task 
+    network, a CNN network is created for each sensor in combination 
+    with each label. As there are three types of labels and two sensors, a 
+    total of 6 CNN networks are trained. From the results obtained from 
+    the experiment, it can be seen that both sensors affect the model in an 
+    almost similar way, in terms of accuracy and F1-Measure. These values 
+    indicate that both sensors can be used in order to achive the purpose 
+    of identifying the walk.
+    \begin{table}[h!]
+        \centering
+        \begin{adjustbox}{max width=\textwidth}
+        \begin{tabular}{|c||ccc|c||ccc|c|}
+            \hline
+                & \multicolumn{4}{c||}{Acc} & \multicolumn{4}{c|}{F1-Score} \\
+            \hline
+                Architecture & Id & Age & Gender & Avg & Id & Age & Gender & Avg\\
+            \hline
+                SingleTask Accelerometer & 89.7 & 91.0 & 94.8 & 91.8 & 87.6 & 91.3 & 94.5 & 91.2\\
+                SingleTask Gyroscope& 89.1 & 89.1 & 94.4 & 90.9 & 87.5 & 89.7 & 94.4 & 90.5\\
+            \hline 
+        \end{tabular}
+        \end{adjustbox}
+        \caption{Accuracy and F1-score (1 Task - 1 Sensor).}
+        \label{table accuracy and F1 (1 Task - 1 Sensor)}
+    \end{table}
+
+    \item \emph{Multi-task with individual sensors} (+ Task - 1 Sensor): in this experiment 
+    more tasks are assigned to each of the sensors (3 tasks for 1 
+    sensor) implying the creation of two CNN networks. This experiment 
+    is useful to see if there are any performance improvements with respect 
+    to the single assignment (defined in the previous point). The loss function 
+    is that described in equation \ref{loss-function}. Comparing the results obtained 
+    in table \ref{table accuracy and F1 (1 Task - 1 Sensor)} with table \ref{table accuracy and F1 (more Task - 1 Sensor)}, it can be seen that the following experiment led 
+    to a slight improvement in performance.
+    \begin{table}[h!]
+        \centering
+        \begin{adjustbox}{max width=\textwidth}
+        \begin{tabular}{|c||ccc|c||ccc|c|}
+            \hline
+                & \multicolumn{4}{c||}{Acc} & \multicolumn{4}{c|}{F1-Score} \\
+            \hline
+                Architecture & Id & Age & Gender & Avg & Id & Age & Gender & Avg\\
+            \hline
+                MultiTask Accelerometer & 90.9 & 93.3 & 95.9 & 93.4 & 89.1 & 93.3 & 95.9 & 92.8\\
+                MultiTask Gyroscope & 90.1 & 90.1 & 94.8 & 91.7 & 88.3 & 90.5 & 94.9 & 91.2\\
+            \hline 
+        \end{tabular}
+        \end{adjustbox}
+        \caption{Accuracy and F1-score (+ Task - 1 Sensor).}
+        \label{table accuracy and F1 (more Task - 1 Sensor)}
+    \end{table}
+
+    \item \emph{Selection of the fusion position}: The fusion can take place in any convolutional 
+    layer, called the common branch, of the network. For each 
+    layer, a number of filters are applied which increases as the 
+    depth of the network increases. As can be seen from table \ref{table accuracy and F1 fusion}, the best performances 
+    are obtained in the fusion obtained in the first convolutional layer of 
+    the network. Subsequent convolutional layers score lower because the 
+    amount of information used for training is low.
+    \begin{table}[h!]
+        \centering
+        \begin{adjustbox}{max width=\textwidth}
+        \begin{tabular}{*{3}{|c}|}%%{|c|c|c|}
+            \hline
+            Position & Acc & F1-score\\
+            \hline
+            Conv1 & \bfseries{94.2} & \bfseries{92.9}\\
+            Conv2 & 94.0 & 92.7\\
+            Conv3 & 93.4 & 92.0\\
+            Conv4 & 89.0 & 86.7\\
+            Conv5 & 89.0 & 86.7\\
+            \hline
+        \end{tabular}
+        \end{adjustbox}
+        \caption{Accuracy and F1-score of fusion level experiment.}
+        \label{table accuracy and F1 fusion}
+    \end{table}
+
+    
 \end{enumerate}

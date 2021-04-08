@@ -195,7 +195,7 @@ Different types of experiments and their respective performances, in terms of ac
         \label{table accuracy and F1}
     \end{table}
 
-    \item \emph{Single task with individuals sensors} (1 Task - 1 Sensor): being a multi-task 
+    \item \emph{Single task with individuals sensors} (1 Task, 1 Sensor): being a multi-task 
     network, a CNN network is created for each sensor in combination 
     with each label. As there are three types of labels and two sensors, a 
     total of 6 CNN networks are trained. From the results obtained from 
@@ -217,11 +217,11 @@ Different types of experiments and their respective performances, in terms of ac
             \hline 
         \end{tabular}
         \end{adjustbox}
-        \caption{Accuracy and F1-score (1 Task - 1 Sensor).}
+        \caption{Accuracy and F1-score (1 Task, 1 Sensor).}
         \label{table accuracy and F1 (1 Task - 1 Sensor)}
     \end{table}
 
-    \item \emph{Multi-task with individual sensors} (+ Task - 1 Sensor): in this experiment 
+    \item \emph{Multi-task with individual sensors} (+ Task, 1 Sensor): in this experiment 
     more tasks are assigned to each of the sensors (3 tasks for 1 
     sensor) implying the creation of two CNN networks. This experiment 
     is useful to see if there are any performance improvements with respect 
@@ -243,7 +243,7 @@ Different types of experiments and their respective performances, in terms of ac
             \hline 
         \end{tabular}
         \end{adjustbox}
-        \caption{Accuracy and F1-score (+ Task - 1 Sensor).}
+        \caption{Accuracy and F1-score (+ Task, 1 Sensor).}
         \label{table accuracy and F1 (more Task - 1 Sensor)}
     \end{table}
 
@@ -273,5 +273,26 @@ Different types of experiments and their respective performances, in terms of ac
         \label{table accuracy and F1 fusion}
     \end{table}
 
-    
+    \item \emph{Single Task with Fusion} (1 Task, + Sensor): in this experiment 3 CNNs 
+    are used, one for each task, each making up a branch. In this case, the 
+    combination of data from different sensors will be useful to be able to 
+    determine only 1 task and therefore only one class. The results obtained 
+    are better than the previous points, except for the gender class where 
+    the MultiTask approach achieves a better score.
+    \begin{table}[h!]
+        \centering
+        \begin{adjustbox}{max width=\textwidth}
+        \begin{tabular}{|c||ccc|c||ccc|c|}
+            \hline
+                & \multicolumn{4}{c||}{Acc} & \multicolumn{4}{c|}{F1-Score} \\
+            \hline
+                Architecture & Id & Age & Gender & Avg & Id & Age & Gender & Avg\\
+            \hline
+                SingleTask Fusion & 94.2 & 95.0 & 95.6 & 94.9 & 93.5 & 95.0 & 95.6 & 94.7\\
+            \hline 
+        \end{tabular}
+        \end{adjustbox}
+        \caption{Accuracy and F1-score (1 Task, + Sensor).}
+        \label{table accuracy and F1 (1 Task, + Sensor)}
+    \end{table}
 \end{enumerate}

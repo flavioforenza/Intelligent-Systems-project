@@ -295,4 +295,23 @@ Different types of experiments and their respective performances, in terms of ac
         \caption{Accuracy and F1-score (1 Task, + Sensor).}
         \label{table accuracy and F1 (1 Task, + Sensor)}
     \end{table}
+
+    \item \emph{Multi-task with Fusion} (+ Task, + Sensor): the last experiment consists in applying the fusion in a multitasking context within the network. In this case it will be necessary to train a CNN for all three existing tasks. From the results shown in table \ref{table accuracy and F1 (+ Task, + Sensor)}, this architecture manages to achieve better performance than the others mentioned above, this is because the model has much more information (labels and inputs) to describe people. The strength of this architecture is that it manages to return a result for each task.
+    \begin{table}[h!]
+        \centering
+        \begin{adjustbox}{max width=\textwidth}
+        \begin{tabular}{|c||ccc|c||ccc|c|}
+            \hline
+                & \multicolumn{4}{c||}{Acc} & \multicolumn{4}{c|}{F1-Score} \\
+            \hline
+                Architecture & Id & Age & Gender & Avg & Id & Age & Gender & Avg\\
+            \hline
+                MultiTask Fusion & \bfseries{94.8} & \bfseries{96.1} & \bfseries{97.7} & \bfseries{96.2} & \bfseries{93.8} & \bfseries{96.3} & \bfseries{97.7} & \bfseries{95.9}\\
+            \hline 
+        \end{tabular}
+        \end{adjustbox}
+        \caption{Accuracy and F1-score (1 Task, + Sensor).}
+        \label{table accuracy and F1 (+ Task, + Sensor)}
+    \end{table}
+
 \end{enumerate}

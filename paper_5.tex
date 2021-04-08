@@ -123,7 +123,7 @@ In the end, the data will be concatenated in a common branch which has the
 task of extracting the combined features from all the sensors. Based on the accuracy metric, the 
 layer that will return the best result will be selected.
 
-\subsubsection{Identity Authentication}
+\subsubsection{Identity Authentication}\label{IA}
 An authentication process begins by submitting a sample of input to CNN. 
 Within this, there may be a layer that will produce a vector of features. 
 To find out which layer it is, a cross-validation process is performed. Once 
@@ -313,5 +313,38 @@ Different types of experiments and their respective performances, in terms of ac
         \caption{Accuracy and F1-score (1 Task, + Sensor).}
         \label{table accuracy and F1 (+ Task, + Sensor)}
     \end{table}
-
 \end{enumerate}
+
+\subsubsection{Authentication Experiments}
+In paragraph \ref{IA} we said that to see if two different samples belong to the 
+same subject, an identity authentication process must be carried out. In 
+other words, it is necessary to evaluate the goodness of a model by calculating 
+the AUC and EER index. To do this, one had to first calculate the 
+Euclidean distances between the sample vector present in the test set with 
+the sample vectors present in the training set. Subsequently, it was necessary 
+to transform these distances into probabilities that will be represented 
+on a ROC curve. Once this is done, for each model previously described, 
+the values for AUC (the higher the better) and EER (the lower the better), 
+calculated on the ROC curve, are shown in table \ref{Authentication}. 
+\begin{table}[h!]
+    \centering
+    \begin{adjustbox}{max width=\textwidth}
+    \begin{tabular}{|c|cc|}
+        \hline
+        Architecture & EER & AUC\\
+        \hline
+        SingleTask Accelerometer & 1.47 & 99.91\\
+        SingleTask Gyroscope & 2.50 & 99.80\\
+        \hline
+        MultiTask Accelerometer & 1.61 & 99.90\\
+        MultiTask Gyroscope & 2.85 & 99.72\\
+        \hline
+        SingleTask Fusion & \bfseries{1.14} & \bfseries{99.93}\\
+        \hline
+        MultiTask Fusion & 1.34 & 99.92\\
+        \hline
+    \end{tabular}
+    \end{adjustbox}
+    \caption{Authentication accuracy.}
+    \label{Authentication}
+\end{table}

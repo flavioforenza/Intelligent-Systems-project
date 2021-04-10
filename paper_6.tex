@@ -56,10 +56,51 @@ The methods in the first point, if trained with precise labels, are able to
 obtain the best performances.
 
 \subsubsection{Foreground Segmentation}
-The labels assigned to pixels can be useful to separate a foreground object from a background object. Also for this task there are three strategies to perform a segmentation of the objects in the foreground:
+The labels assigned to pixels can be useful to separate a foreground object 
+from a background object. Also for this task there are three strategies to 
+perform a segmentation of the objects in the foreground:
 \begin{enumerate}
     \item \emph{Joint segmentation-based Methods}: used prior knowledge as supervision.
-    \item \emph{Saliency prediction-based Methods}: identify regions present in the human visual scene.
+    \item \emph{Saliency prediction-based Methods}: identify regions present in the human 
+    visual scene.
     \item \emph{Object proposal-based Methods}: locate all objects in images.
 \end{enumerate}
 The proposed framework can also be used for this purpose.
+
+\subsection{THE PROPOSED APPROACH}
+\subsubsection{Overview}
+The work performed by the model is divided into three steps: \emph{coarse mask 
+generation}, \emph{coarse mask enhancement}, and \emph{Recursive mask refinement} (Fig. \ref{fig:step}). In 
+order to generate the initial masks, a CNN is trained and subsequently these 
+are improved with a graph-based model. Images, enhanced masks and lables 
+are used to train the model.
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width = 1 \linewidth]{images/paper6/step.png}
+    \centering
+    \caption{Steps of the proposed method.}
+    \label{fig:step}
+\end{figure}
+
+\subsubsection{Coarse Mask Generation}
+The generation of a mask must occur without any information on the labels.
+The CNN present in \cite{0876055520} is used for this purpose. This network is trained 
+with millions of unlabeled images and is also the fastest of other methods 
+existing in the state of the art. Unfortunately, as seen in image \ref{fig:semanticWork}, the 
+generated coarse masks appear to be inaccurate and do not correspond with 
+the position of the underlying object.
+
+\subsubsection{Coarse Mask Enhancement}
+The enhancement of the mask is done before the net training process takes 
+place. To carry out the improvement, the unsupervised GrubCut model \cite{0876055542} 
+is used. This method performs segmentations that divide the background 
+from the foreground using a Gaussian Mixture model to estimate the color 
+distribution of objects. These distributions are used to construct a Markov 
+Random Field on the labels of each pixel. A graph cut optimization has the 
+task of maximizing the search for connected regions having the same label. 
+There are two steps to apply the GrabCut:
+\begin{enumerate}
+    \item search for the smallest bounding box inside the mask.
+    \item enhance the mask based on the previously created bounding box and on the RGB image.
+\end{enumerate}
+The enhanced mask will be used to recursively train the network.

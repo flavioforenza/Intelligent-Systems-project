@@ -106,7 +106,15 @@ There are two steps to apply the GrabCut:
 The enhanced mask will be used to recursively train the network.
 
 \subsubsection{Recursive Mask Refinement}
-By combining the labels with the enhanced masks, a semantic segmentation is obtained. The purpose is to assign the category label that describes the content to the pixels belonging to the foreground. As a semantic segmentation network it was decided to use the one called \emph{DeepLab} \cite{0876055502}. This network is trained with the improved masks and has the purpose of generating more and more precise masks, without noise, which will be used as a new training set. Enhancing the mask is a recursive process that will end when the system converges to the best representation of the mask. The masks are then used as semantic labels to continue training the network.
+By combining the labels with the enhanced masks, a semantic segmentation 
+is obtained. The purpose is to assign the category label that describes the 
+content to the pixels belonging to the foreground. As a semantic segmentation 
+network it was decided to use the one called \emph{DeepLab} \cite{0876055502}. This network 
+is trained with the improved masks and has the purpose of generating more and more 
+precise masks, without noise, which will be used as a new training 
+set. Enhancing the mask is a recursive process that will end when the system 
+converges to the best representation of the mask. The masks are then used 
+as semantic labels to continue training the network.
 \begin{figure}[h!]
     \centering
     \includegraphics[width = 1 \linewidth]{images/paper6/DeepLab.png}
@@ -114,3 +122,34 @@ By combining the labels with the enhanced masks, a semantic segmentation is obta
     \caption{The process of semantic mask generation.}
     \label{fig:semanticWork}
 \end{figure}
+
+\subsubsection{Model Parameterization}
+In summary, to generate high-quality semantic segmentation masks, it is 
+required to take an image from the ImgNet dataset and submit it to the 
+following steps:
+\begin{enumerate}
+    \item Create a first mask ($ mask_c $) with a non-superivisoned network \cite{0876055520};
+    \item Improve maskc with the GrabCut model \cite{0876055542} to generate a new mask ($ mask_e $);
+    \item Train DeepLab network \cite{0876055502} with $ mask_e $;
+    \item Generate a better mask ($ mask_r $) using the original ImgNet image;
+    \item Enhance the generated mask ($ mask_e $) by applying the GrubCut method;
+    \item Repeat from step 3 until the best mask will be obtained.
+\end{enumerate}
+
+\subsubsection{Extended the Proposed Framework to Foreground Segmentation}
+In order to use the proposed framework in a foreground object recognition 
+problem, only the part concerning the enhanced of the mask must be replaced 
+with a code that allows to perform the required task. With an architecture 
+similar to \emph{FPN} \cite{0876055543}, the new network is called the \emph{Dilated Feature Pyramid 
+Network} (DFPN). This network has several dilated layers, in three branches, 
+added to enlarge the receptive field of the network (Fig \ref{fig:DFPN}). The features generated 
+by these layers are aggregated to make a prediction.
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width = 0.8 \linewidth]{images/paper6/DFPN.png}
+    \centering
+    \caption{DFPN architecture.}
+    \label{fig:DFPN}
+\end{figure}
+
+\subsection{EXPERIMENTS}

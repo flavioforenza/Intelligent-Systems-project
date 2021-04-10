@@ -104,3 +104,13 @@ There are two steps to apply the GrabCut:
     \item enhance the mask based on the previously created bounding box and on the RGB image.
 \end{enumerate}
 The enhanced mask will be used to recursively train the network.
+
+\subsubsection{Recursive Mask Refinement}
+By combining the labels with the enhanced masks, a semantic segmentation is obtained. The purpose is to assign the category label that describes the content to the pixels belonging to the foreground. As a semantic segmentation network it was decided to use the one called \emph{DeepLab} \cite{0876055502}. This network is trained with the improved masks and has the purpose of generating more and more precise masks, without noise, which will be used as a new training set. Enhancing the mask is a recursive process that will end when the system converges to the best representation of the mask. The masks are then used as semantic labels to continue training the network.
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width = 1 \linewidth]{images/paper6/DeepLab.png}
+    \centering
+    \caption{The process of semantic mask generation.}
+    \label{fig:semanticWork}
+\end{figure}

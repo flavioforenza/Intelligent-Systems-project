@@ -182,4 +182,76 @@ rounds where for each of them the mask is continuously improved. The data
 augumentation process is present in every training session.
 
 \subsubsection{Evaluation Metrics}
-The \emph{Intersection over Union} (IoU) averaged over 21 categories is used as an evaluation index of the semantic segmentation and foreground segmentation. This metric is particularly useful for evaluating the accuracy of the identification of an object. Both the predicted mask and the ground truth mask are required for its calculation. The IoU index is therefore calculated from the ratio between the area of overlap and the area of union of the two masks. Obviously, the higher this index is, the better the predicted mask will be.
+The \emph{Intersection over Union} (IoU) averaged over 21 categories is used as an 
+evaluation index of the semantic segmentation and foreground segmentation. 
+This metric is particularly useful for evaluating the accuracy of the identification 
+of an object. Both the predicted mask and the ground truth mask 
+are required for its calculation. The IoU index is therefore calculated from 
+the ratio between the area of overlap and the area of union of the two masks. 
+Obviously, the higher this index is, the better the predicted mask will be.
+
+\subsubsection{Semantic Segmentation Results}
+\begin{enumerate}
+    \item \emph{Impact of the mask quality}: as shown in Table \ref{IoU}, the various processing 
+    steps lead to a constant increase in the IoU index. In particular, 
+    the value reached by the index is that relating to the first round of 
+    network training, therefore we proceed recursively with the training of 
+    the network so that it can produce a better mask.
+    \begin{table}[h!]
+        \centering
+        \begin{adjustbox}{max width=\textwidth}
+        \begin{tabular}{|c|c|}
+            \hline
+            Training Mask Type & IoU(\%)\\
+            \hline
+            Coarse Masks & 32.5 \\
+            Bounding Boxes & 35.2 \\
+            Enhanced Masks & 47.7 \\
+            Refined Masks & 50.4 \\
+            \hline
+        \end{tabular}
+        \end{adjustbox}
+        \caption{THe performance of semantic segmentation networks evalueted in the validation split of PASCAL VOC dataset in the mean IoU.}
+        \label{IoU}
+    \end{table}
+    
+    \item \emph{Effectiveness of recursive refinement}: the evaluation of each refined 
+    mask takes place using two types of masks, with or without application 
+    of the GrabCut. Between two rounds the masks are improved 
+    with a post-processing process by three strategies: a) If the pixels in 
+    the foreground are less than 1\% and greater than 80\%, then this image 
+    will be discarded by the next training round. b) All the pixels 
+    of the original image, labeled with a category must correspond to the 
+    predicted pixels with the same category, otherwise these will be considered 
+    as background pixels. c) In recursive training, the GrubCut 
+    method is applied to the masks that the DeepLab model predicted to 
+    have improved masks. In figure \ref{fig:GrubCutApp} it can be seen that the application 
+    of GrubCut increases the IoU value and also the system saturates after 
+    5 training rounds.
+    \begin{figure}[h!]
+        \centering
+        \includegraphics[width = 0.8 \linewidth]{images/paper6/GrabCut.png}
+        \centering
+        \caption{Enhancement with GrubCut application}
+        \label{fig:GrubCutApp}
+    \end{figure}
+
+    \item \emph{Comparison with others}: The performance comparison is carried out on both the validation and test sets of the PASCAL VOC dataset (Fig. \ref{fig:IoU score comparison}). In the state of the art, models trained with methods based on object-level labels annotation obtain a better score (greater than 60\%) than models trained with methods that have an annotation of the type image-level labels. The proposed model, on the other hand, while using the image-level labels annotation method, achieves an average IoU score greater than 60\% on both the evaluation and test sets. However, there are several classes in which the model obtains a low IoU value (Fig. \ref{fig:classes}).
+    \begin{figure}[h!]
+        \centering
+        \includegraphics[width = 0.6 \linewidth]{images/paper6/comparison.png}
+        \centering
+        \caption{Comparison, in terms of IoU score, between different models.}
+        \label{fig:IoU score comparison}
+    \end{figure}
+    \begin{figure}[h!]
+        \centering
+        \includegraphics[width = 1 \linewidth]{images/paper6/classes.png}
+        \centering
+        \caption{Score of IoU in some classes.}
+        \label{fig:classes}
+    \end{figure}
+\end{enumerate}
+
+\subsubsection{Qualitative Results}
+

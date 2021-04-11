@@ -153,3 +153,33 @@ by these layers are aggregated to make a prediction.
 \end{figure}
 
 \subsection{EXPERIMENTS}
+The network is trained with the images and labels present in ImageNet, while 
+the evaluation of the model is carried out on the PASCAL VOC dataset.
+\subsubsection{Datasets}
+\begin{enumerate}
+    \item \emph{ImageNet}: contains about 100,000 labels (synset) annotated by the 
+    human, and each label has at least 1000 related images. Two datasets 
+    useful for training are formed by ImageNet, these are ImageNet-Sub1 
+    and ImageNet-Sub2. The first has a collection of images collected based 
+    on the selected category while the second contains images with categories 
+    that are not present in the VOC dataset that are present in 
+    ImageNet-Sub1.
+    \item \emph{VOC}: dataset containing 21 object categories including background. 
+    The collection is divided into 3 parts: training, validation and test. In 
+    order to be able to evaluate the mask, the results must be sent to the 
+    PASCAL VOC evaluation server. 20 image categories are chosen that 
+    approximate those of ImageNet as the training dataset.
+    \item \emph{MIT Object Discovery Dataset}: this dataset is useful for comparing the 
+    results obtained from segmenting objects in the foreground. There are 
+    at least three categories of objects in the collection.
+\end{enumerate}
+
+\subsubsection{Training Details for Recursive Mask Refinement}
+The Stochastic Gradient Descent mini-batch with a batch size of 12 images 
+is chosen among the parameters. Parameters such as learning rate, momentum 
+and Weight decay are set ad hoc. The training process consists of 5 
+rounds where for each of them the mask is continuously improved. The data 
+augumentation process is present in every training session.
+
+\subsubsection{Evaluation Metrics}
+The \emph{Intersection over Union} (IoU) averaged over 21 categories is used as an evaluation index of the semantic segmentation and foreground segmentation. This metric is particularly useful for evaluating the accuracy of the identification of an object. Both the predicted mask and the ground truth mask are required for its calculation. The IoU index is therefore calculated from the ratio between the area of overlap and the area of union of the two masks. Obviously, the higher this index is, the better the predicted mask will be.

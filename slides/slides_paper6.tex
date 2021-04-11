@@ -15,16 +15,16 @@
 \end{frame}
 
 \begin{frame}{RELATED WORK}
-    The following framework can be used both to perform semantic 
-    segmentation and to extract foreground objects. There are various 
-    models proposed at the state of the art that carry out a different 
-    semantic segmentation and a different foreground segmentation.
+    The following framework can be used for both semantic segmentation 
+    and foreground object segmentation. There are various models proposed 
+    at the state of the art that carry out a different semantic segmentation 
+    and a different foreground segmentation.
     \begin{table}[h!]
         \begin{adjustbox}{max width=\textwidth}
         \begin{tabular}{|p{6cm}|p{6cm}|}
             \hline
             \centering
-            \bfseries{Semantic Segmentation Methods} &  ~~~~~~~~~~\bfseries{Foreground Methods} \\
+            \bfseries{Semantic Segmentation Methods} &  ~\bfseries{Foreground Segmentation Methods} \\
             \hline
             \begin{enumerate}
                 \item \emph{Fully Supervised Pixel-Wise Annotation-Based Methods}: trained with 
@@ -47,3 +47,39 @@
         \end{adjustbox}
     \end{table}
 \end{frame}
+
+\begin{frame}{THE PROPOSED APPROACH - 3 Steps}
+    The work performed by the model is divided into three steps: \emph{coarse mask generation}, \emph{coarse mask enhancement}, and \emph{recursive mask refinement}.
+    \begin{figure}[h!]
+        \centering
+        \includegraphics[width = 1 \linewidth]{images/paper6/step.png}
+        \centering
+        \caption{Steps of the proposed method.}
+    \end{figure}
+\end{frame}
+
+\begin{frame}{THE PROPOSED APPROACH - \emph{Coarse Mask Generation}}
+    \begin{minipage}{\linewidth}
+        \centering
+        \begin{minipage}{0.45\linewidth}
+            A CNN network\footnotemark is used to be able 
+            to extract a first coarse mask. 
+            Unfortunately, as can be seen in 
+            the image, the generated masks 
+            appear to be inaccurate and do 
+            not comply with the position of 
+            the underlying object.
+        \end{minipage}
+        \hspace{0.05\linewidth}
+        \begin{minipage}{0.45\linewidth}
+            \begin{figure}[h!]
+                \centering
+                \includegraphics[width = 1 \linewidth]{images/paper6/coarse mask.png}
+                \centering
+            \end{figure}
+        \end{minipage}
+    \end{minipage}
+    \footnotetext{I. Croitoru, S.-V. Bogolin, and M. Leordeanu, “Unsupervised learning from video to detect foreground objects in single images,” in Proc. IEEE Int. Conf. Comput. Vis. (ICCV), Oct. 2017, pp. 4335–4343.}
+\end{frame}
+
+

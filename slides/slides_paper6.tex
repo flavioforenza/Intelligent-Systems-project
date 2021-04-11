@@ -2,5 +2,48 @@
 \subsection{\emph{"Coarse-to-Fine Semantic Segmentation From Image-Level Labels"}}
 
 \begin{frame}{INTRODUCTION}
-    ciao mondo
+    Weakly supervised and semi-supervised methods are used to achieve 
+    semantic segmentation. These methods need techniques that are capable 
+    of producing useful labels in order to train the models. Two types of 
+    techniques that produce labels are: \emph{Image-level labels} (categories) and 
+    \emph{Object-level labels} (bounding boxes). In the following paper, the use of 
+    the first technique prevails over the second because it is more accurate. 
+    The proposed framework has the task of training a model that only 
+    depends on image category level annotations. The final goal is to be able 
+    to recognize different objects, in the foreground, belonging to different 
+    categories.
+\end{frame}
+
+\begin{frame}{RELATED WORK}
+    The following framework can be used both to perform semantic 
+    segmentation and to extract foreground objects. There are various 
+    models proposed at the state of the art that carry out a different 
+    semantic segmentation and a different foreground segmentation.
+    \begin{table}[h!]
+        \begin{adjustbox}{max width=\textwidth}
+        \begin{tabular}{|p{6cm}|p{6cm}|}
+            \hline
+            \centering
+            \bfseries{Semantic Segmentation Methods} &  ~~~~~~~~~~\bfseries{Foreground Methods} \\
+            \hline
+            \begin{enumerate}
+                \item \emph{Fully Supervised Pixel-Wise Annotation-Based Methods}: trained with 
+                pixel-wise labels annotated by people.
+                \item \emph{Weakly Supervised Object-level Annotation-Based-Methods}: trained with 
+                methods such as object-level annotations based on the use of bounding 
+                boxes.
+                \item \emph{Weakly Supervised Image-Level Annotation-Based Methods}: trained 
+                with image category labels.
+            \end{enumerate}
+            & 
+            \begin{enumerate}
+                \item \emph{Joint segmentation-based Methods}: used prior knowledge as supervision.
+                \item \emph{Saliency prediction-based Methods}: identify regions present in the human 
+                visual scene.
+                \item \emph{Object proposal-based Methods}: locate all objects in images.
+            \end{enumerate}\\
+            \hline
+        \end{tabular}
+        \end{adjustbox}
+    \end{table}
 \end{frame}

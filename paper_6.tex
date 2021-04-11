@@ -211,7 +211,7 @@ Obviously, the higher this index is, the better the predicted mask will be.
             \hline
         \end{tabular}
         \end{adjustbox}
-        \caption{THe performance of semantic segmentation networks evalueted in the validation split of PASCAL VOC dataset in the mean IoU.}
+        \caption{The performance of semantic segmentation networks evalueted in the validation split of PASCAL VOC dataset in the mean IoU.}
         \label{IoU}
     \end{table}
     
@@ -236,14 +236,26 @@ Obviously, the higher this index is, the better the predicted mask will be.
         \label{fig:GrubCutApp}
     \end{figure}
 
-    \item \emph{Comparison with others}: The performance comparison is carried out on both the validation and test sets of the PASCAL VOC dataset (Fig. \ref{fig:IoU score comparison}). In the state of the art, models trained with methods based on object-level labels annotation obtain a better score (greater than 60\%) than models trained with methods that have an annotation of the type image-level labels. The proposed model, on the other hand, while using the image-level labels annotation method, achieves an average IoU score greater than 60\% on both the evaluation and test sets. However, there are several classes in which the model obtains a low IoU value (Fig. \ref{fig:classes}).
-    \begin{figure}[h!]
+    \item \emph{Comparison with others}: The performance comparison is carried out on both the validation and test sets of the PASCAL VOC dataset (Tab. \ref{IoU score comparison}). In the state of the art, models trained with methods based on object-level labels annotation obtain a better score (greater than 60\%) than models trained with methods that have an annotation of the type image-level labels. The proposed model, on the other hand, while using the image-level labels annotation method, achieves an average IoU score greater than 60\% on both the evaluation and test sets. However, there are several classes in which the model obtains a low IoU value (Fig. \ref{fig:classes}).
+    \begin{table}[h!]
         \centering
-        \includegraphics[width = 0.6 \linewidth]{images/paper6/comparison.png}
-        \centering
+        \begin{adjustbox}{max width=0.8\textwidth}
+        \begin{tabular}{|c|c|c|}
+            \hline
+            Methods & mIoU(val) & mIoU(test)\\
+            \hline
+            Supervision: Object-level Labels & &\\
+            SDI \cite{0876055513} & 65.7 & 67.5\\
+            \hline
+            Supervision: Image-level Labels & &\\
+            Bootstrap \cite{0876055555} & 63.0 & 63.9\\
+            \bfseries{The proposed weakly supervised method} & \bfseries{61.9} & \bfseries{62.8}\\
+            \hline
+        \end{tabular}
+        \end{adjustbox}
         \caption{Comparison, in terms of IoU score, between different models.}
-        \label{fig:IoU score comparison}
-    \end{figure}
+        \label{IoU score comparison}
+    \end{table}
     \begin{figure}[h!]
         \centering
         \includegraphics[width = 1 \linewidth]{images/paper6/classes.png}
@@ -254,7 +266,10 @@ Obviously, the higher this index is, the better the predicted mask will be.
 \end{enumerate}
 
 \subsubsection{Qualitative Results}
-Another purpose of the model was to carry out a semantic segmentation also on the different objects, belonging to different categories, present in a single image, in order to be able to distinguish them. A small example of multiple segmentation on different objects is shown in figure \ref{fig:segmentationCategories}.
+Another purpose of the model was to carry out a semantic segmentation also 
+on the different objects, belonging to different categories, present in a single 
+image, in order to be able to distinguish them. A small example of multiple 
+segmentation on different objects is shown in figure \ref{fig:segmentationCategories}.
 \begin{figure}[h!]
     \centering
     \includegraphics[width = 1 \linewidth]{images/paper6/multiple segmentation.png}
@@ -264,3 +279,42 @@ Another purpose of the model was to carry out a semantic segmentation also on th
 \end{figure}
 
 \subsubsection{Foreground Segmentations Results}
+Also for the segmentation of objects in the foreground, comparisons were 
+made with existing models of the state of the art. The dataset used this 
+time is that of the MIT Object Discovery unlike the PASCAL VOC used 
+in the previous comparisons. From the performance obtained, the proposed 
+model, which is remembered to be weakly supervised, manages to achieve the 
+performance of the supervised models, with a difference of 2.06\% compared 
+to the supervised \emph{PixelObjectness} model \cite{0876055538}.
+\begin{table}[h!]
+    \centering
+    \begin{adjustbox}{max width=\textwidth}
+    \begin{tabular}{|c||c|c|c|c||c|c|c|c|}
+        \hline
+        \multirow{2}{*}{\bfseries{Methods}} & \multicolumn{4}{c||}{\bfseries{MIT dataset (subset)}} & \multicolumn{4}{c|}{\bfseries{MIT dataset (full)}} \\            & \bfseries{Ariplane} & \bfseries{Car} & \bfseries{Horse}  & \bfseries{Average} & \bfseries{Ariplane} & \bfseries{Car} & \bfseries{Horse}  & \bfseries{Average} \\
+        \hline
+        \bfseries{\#Images} & 82 & 89 & 93 & N/A & 470 & 1208 & 810 & N/A\\
+        \hline
+        UnsupervisedSeg \cite{0876055520} & 61.37 & 70.52 & 55.09 &62.32 & N/A & N/A & N/A & N/A\\
+        \hline
+        PixelObjectness \cite{0876055538} & 66.43 & 85.07 & 60.85 &70.78 & 66.18 & 84.80 & 64.90 & 71.96\\
+        \hline 
+        \bfseries{FPN-Baseline} & 61.09 & 76.22 & 57.89 & \bfseries{65.08} & 61.93 & 75.94 & 64.03 & \bfseries{67.3}\\
+        \hline
+        \bfseries{Proposed Method} & 64.92 & 77.60 & 60.36 & \bfseries{67.63(+2.57)} & 65.88 & 77.07 & 65.82 & \bfseries{69.59(+2.29)}\\
+        \hline
+    \end{tabular}
+    \end{adjustbox}
+    \caption{Quantitative Results of Foreground Segmentation on MIT object Discovery Dataset.}
+    \label{}
+\end{table}
+
+\subsection{CONCLUSION}
+The proposed framework is therefore useful for carrying out a semantic segmentation 
+starting with the mask, identified by an unsupervised network for 
+the identification of objects in the foreground \cite{0876055520}, and then improving it 
+with a fully convolution neural network. The final mask is obtained simply 
+by training the model with the annotated labels for each category. The 
+method also manages to detect multiple masks for each type of category 
+present in each image. It is also possible to identify a foreground object, 
+achieving performance equivalent to that of supervised methods.

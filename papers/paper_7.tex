@@ -13,4 +13,95 @@
 \end{center}
 
 \subsection{INTRODUCTION}
-Random noise distributions correspond to standard probabilistic distributions, such as the Gaussian, Poisson and other distributions. There have been many methods that attempt to clean up noisy images. The classical methods are based on the use of filters such as Gaussian, Gabor or median filters. Other tools such as the Variational method have been widely used. This method is based on reducing the cost function containing the fidelity term of the data, useful for calculating the difference between true and observed data, and the regularization terms. Another method used was that of TV regularization. Unfortunately this method fails to preserve texture detail. Nonlocal methods, on the other hand, are able to capture image details. These methods exploit the self-similarity properties that can be integrated into variational methods. Despite these methods, the function of the weights is difficult to determine. Methods based on deep learning have achieved good noise reduction performance. Many of these assume that the value can be removed by applying the L2 norm. According to the study carried out in the following article, in order to remove the mixed noise it is necessary to determine the type and level of noise in each pixel. The methods based on the variation, unlike the neural networks, require a single image and can integrate different techniques of regularization useful to be able to remove the single noise and the mixed noise. The complexity of these methods lies in being able to create a non-computationally complicated design. In the proposed article, the EM (Expectation-Maximization) algorithm is used to remove the noise, with the integration of a CNN process as regularization, in order to create a new variational method. The method is able to iteratively estimate the noise parameters useful for classifying the type and level of noise in each pixel. The work carried out is divided into four phases: regularization, synthesis, parameter estimation and error classification.
+Random noise distributions correspond to standard probabilistic distributions, 
+such as the Gaussian, Poisson and other distributions. There have 
+been many methods that attempt to clean up noisy images. The classical 
+methods are based on the use of filters such as Gaussian, Gabor or median 
+filters. Other tools such as the Variational method have been widely used. 
+This method is based on reducing the cost function containing the fidelity 
+term of the data, useful for calculating the difference between true and observed 
+data, and the regularization terms. Another method used was that of 
+TV regularization. Unfortunately this method fails to preserve texture detail. 
+Nonlocal methods, on the other hand, are able to capture image details. 
+These methods exploit the self-similarity properties that can be integrated 
+into variational methods. Despite these methods, the function of the weights 
+is difficult to determine. Methods based on deep learning have achieved good 
+noise reduction performance. Many of these assume that the value can be 
+removed by applying the L2 norm. According to the study carried out in 
+the following article, in order to remove the mixed noise it is necessary to 
+determine the type and level of noise in each pixel. The methods based on 
+the variation, unlike the neural networks, require a single image and can 
+integrate different techniques of regularization useful to be able to remove 
+the single noise and the mixed noise. The complexity of these methods lies 
+in being able to create a non-computationally complicated design. In the 
+proposed article, the EM (Expectation-Maximization) algorithm is used to 
+remove the noise, with the integration of a CNN process as regularization, 
+in order to create a new variational method. The method is able to iteratively 
+estimate the noise parameters useful for classifying the type and level 
+of noise in each pixel. The work carried out is divided into four phases: 
+regularization, synthesis, parameter estimation and error classification.
+
+\subsection{RELATED WORK}
+\subsubsection{Mixed Noise Model}
+The mixed noise is:
+\begin{equation}
+    n = \left\{ \\
+    \begin{array}{cc}
+        n_1, & with~probability~r_1,\\
+        n_2, & with~probability~r_2,\\
+        \cdots, & \cdots\\
+        n_k, & with~probability~r_k,\\ 
+    \end{array}
+     \right\}
+\end{equation}
+where $ n_k $ is the \emph{k}-th noise component with probability density function (PDF) 
+$ p_k $ and $ r_k $ are the unknown mixture ratios and thei sum is equal to 1.
+
+\subsubsection{Weighted K-SVD Model}
+The following work is based on the method proposed in \cite{0884882814}. After obtaining 
+the value of the mixed-noise \emph{Probability Density Function} (PDF), and 
+assuming that the noise has a uniform distribution, we can derive the \emph{negative 
+log-likelihood} function (\ref{PDF}) useful as {\bfseries{fidelity term}} in the variational 
+method. 
+\begin{equation}\label{PDF}
+    L(u,\Theta) = - \sum_{x\in\Omega}\ln\sum_{k=1}^Kr_kp_k(u(x)-f(x))
+\end{equation}
+In order for this probability to be extended to more types of noise 
+distribution, it is necessary to perform an optimization that minimizes the 
+upper limit of the function (\ref{H function}). 
+\begin{eqnarray}\label{H function}
+    H(u,\Theta,w) & = & - \sum_{x\in\Omega}\sum_{k=1}\ln\left[r_kp_k(u(x)-f(x))\right]w_k \nonumber \\
+                  &   & + \sum_{x\in\Omega}\sum_{k=1}w_k(x)\ln{w_k(x)}  
+\end{eqnarray}
+To minimize H, a minimization of $ w $ must be performed, which is a probability 
+indicates the noise at each pixel, and an iterative minimization of the other 
+two variables $ u $ and $ \Theta $.
+
+\subsubsection{IRCNN}
+Another method \cite{0884882819} uses a CCN, based on the IRCNN model, to restore an 
+image in which Gaussian noise is present. In this model, patches based $ L^2 $ 
+residual loss functions are adopted. Unfortunately, if there are mixed-noises, 
+this method does not produce satisfactory results.
+
+\subsection{THE PROPOSED METHOD (EM-CNN)}
+Removal of mixed-noise can be done with the following model:
+\begin{equation}
+    (u^*, \Theta^*, w^*) = \argmin_x\left\{H(u,\Theta,w) + \lambda_1S(u)\right\}
+\end{equation}
+where $ S $ as regularizer, such \emph{Total Variation Regularization} (TV) while $ \lambda_1 $ 
+control the balance of the terms. By changing $u$ with an auxiliary function 
+$v$, and applying the \emph{augmented Lagrangian method} (ALM) \cite{0884882833}, the minimizations 
+on each component of $H$ ($u$, $\Theta$, $w$) change. The resolution of these 
+minimizations allows to divide the mixed-noise removal problem into Gaussian 
+noise removal (renewing $u$), choice of the fidelity term (renewing $v$), 
+noise reduction (updating the Lagragian multiplier $u$), parameter estimation 
+noise ($\Theta$ update) and error classification ($w$ update). The formula used by 
+the model is able to handle different types of Gaussian noises such as impulse 
+noise, mixed-noise Gaussian-impulse and many others. Each noise has 
+a certain probability function pk, so just change this value in (\ref{H function}). A CNN 
+can be used to learn Gaussian noise for different types of levels. In this paper 
+the CNN based denoiser \cite{0884882819} was used. The weight $w$ is useful for assigning 
+different fidelity terms to pixels contaminated by different levels of types of 
+noise. The minimization of $\Theta$ and $w$ are part of EM processes. Thanks to 
+these it is possible to extract information such as noise variations and the 
+classification of this in different classes.

@@ -1,15 +1,16 @@
 \section{Variational-Based Mixed Noise Removal With CNN Deep Learning Regularization}
 
-\begin{flushleft}
+\begin{center}
     \author{
     Faqiang Wang,
     Haiyang Huang,
     Jun Liu
     }
-\end{flushleft}
+\end{center}
 
 \begin{center}
     \emph{IEEE TRANSACTIONS ON IMAGE PROCESSING, VOL.29, 2020}
 \end{center}
 
 \subsection{INTRODUCTION}
+Random noise distributions correspond to standard probabilistic distributions, such as the Gaussian, Poisson and other distributions. There have been many methods that attempt to clean up noisy images. The classical methods are based on the use of filters such as Gaussian, Gabor or median filters. Other tools such as the Variational method have been widely used. This method is based on reducing the cost function containing the fidelity term of the data, useful for calculating the difference between true and observed data, and the regularization terms. Another method used was that of TV regularization. Unfortunately this method fails to preserve texture detail. Nonlocal methods, on the other hand, are able to capture image details. These methods exploit the self-similarity properties that can be integrated into variational methods. Despite these methods, the function of the weights is difficult to determine. Methods based on deep learning have achieved good noise reduction performance. Many of these assume that the value can be removed by applying the L2 norm. According to the study carried out in the following article, in order to remove the mixed noise it is necessary to determine the type and level of noise in each pixel. The methods based on the variation, unlike the neural networks, require a single image and can integrate different techniques of regularization useful to be able to remove the single noise and the mixed noise. The complexity of these methods lies in being able to create a non-computationally complicated design. In the proposed article, the EM (Expectation-Maximization) algorithm is used to remove the noise, with the integration of a CNN process as regularization, in order to create a new variational method. The method is able to iteratively estimate the noise parameters useful for classifying the type and level of noise in each pixel. The work carried out is divided into four phases: regularization, synthesis, parameter estimation and error classification.

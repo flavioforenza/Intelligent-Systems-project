@@ -64,7 +64,7 @@ assuming that the noise has a uniform distribution, we can derive the \emph{nega
 log-likelihood} function (\ref{PDF}) useful as {\bfseries{fidelity term}} in the variational 
 method. 
 \begin{equation}\label{PDF}
-    L(u,\Theta) = - \sum_{x\in\Omega}\ln\sum_{k=1}^Kr_kp_k(u(x)-f(x))
+    \mathcal{L}(u,\Theta) = - \sum_{x\in\Omega}\ln\sum_{k=1}^Kr_kp_k(u(x)-f(x))
 \end{equation}
 In order for this probability to be extended to more types of noise 
 distribution, it is necessary to perform an optimization that minimizes the 
@@ -129,10 +129,42 @@ points are generated from a mixture og finite number of Gaussian distributions
 with unknown parameters. The distributions of Gaussian noises change 
 according to the assumed variance ($\sigma^2$) value. The new function $ \mathcal{H} $ will be 
 as follows:
-\begin{eqnarray}
+\begin{eqnarray}\label{HFunctionGMM}
     \mathcal{H}(u,r,\sigma^2,w) & = & \frac{1}{2}\sum_{x\in\Omega}\sum_{k=1}^K\frac{(u(x)-f(x))^2}{\sigma^2_k}w_k(x)-\sum_{x\in\Omega}\sum_{k=1}^Kw_k(x)\ln{r_k}\nonumber \\
                                 &   & + \frac{1}{2}\sum_{x\in\Omega}\sum_{k=1}^Kw_k(x)\ln{\sigma^2_k}+\frac{1}{2}\sum_{x\in\Omega}\sum_{k=1}^Kw_k(x)\ln{w_k}(x)
 \end{eqnarray}
-The optimizations (\ref{uMin}) (\ref{ThetaMin}) (\ref{wMin}) of the parameters of (\ref{HFunction}) are adapted by 
-including the two new parameters $r$ and $\sigma^2$, parameters that are included in 
-$\Theta$.
+The optimizations (\ref{uMin}) (\ref{ThetaMin}) (\ref{wMin}) of the parameters of (\ref{HFunctionGMM}) are adapted by 
+including the two new parameters $r$ and $\sigma^2$, enclosed in $\Theta$, which will be minimized 
+in turn. Through the optimization of these parameters it is possible to remove 
+the mixed-noise Gaussian. In summary, all the steps carried out are 
+illustrated in figure \ref{fig:EM-CNN}.
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width = 0.7 \linewidth]{images/paper7/flowchart.png}
+    \centering
+    \caption{The flowchart of EM-CNN algorithm.}
+    \label{fig:EM-CNN}
+\end{figure}
+Image degradation occurs using the additive noise model: 
+$$ f = u + n $$
+where $f$ is the observed image (the one resulting from the combination of 
+noises), $u$ is the true image and $n$ is the introduced noise. The image $f$ will 
+be the input of the CNN network which, through its denoise \cite{0884882819}, will perform 
+a smoothing on the image obtaining a new image $u^{v+1}$. CNN applies two 
+operations on this image in parallel. The first is that of the noise put back 
+in which the noise present in the image f is extracted by simply subtracting 
+the image $u^{v+1}$. Subsequently, to calcutale the fidelity term, the EM algorithm 
+\cite{0884882814} is applied to this noise which has the task of estimating the error 
+and classifying it by minimizing the terms of \ref{HFunctionGMM}. The minimization of each 
+weight $w$ leads to a continuous updating of this parameter which translates 
+into greater precision in determining the noise on each individual pixel. The 
+estimation of the parameters allows to carry out the synthesis process, or to 
+select a new fidelity term, for each pixel, based on the estimates made on the 
+noise. The second operation is to apply the \emph{Total Variation Regularization} 
+(TV) \cite{0884882802} on the starting image $u^{v+1}$ useful for carrying out a good 
+restructuring of the image from noise and blurred data. The image $V^v$ with the 
+updated w weights, will be the new input of the CNN network that through 
+multiple iterative processes will improve until its convergence, or until the 
+fidelity term will no longer change. The output returned by the model will 
+consist of a restructured image ($u^*$) accompanied by the estimates of the 
+individual noises ($n_1^ *, n_2^*$) applied at the beginning.

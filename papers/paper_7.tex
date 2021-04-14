@@ -181,7 +181,7 @@ Gaussian mixture noise model to optimize the Gaussian plus impulse noise.
 
 \subsection{EXPERIMENTAL RESULTS}
 The experiments are conducted on mixed-noise Gaussian noise and on Gaussian 
-plus impulse noise. The indices used to estimate the quality of the restructured
+plus impulse noise. The indexs used to estimate the quality of the restructured
 images are the \emph{Signal-to-Noise Ratio} (PSNR) and the \emph{Structural 
 Similarity Index} (SSIM) \cite{0884882841}.
 
@@ -201,7 +201,7 @@ texture detail.
 
 To test the efficiency of the methods, several images belonging to a 
 BSD100 dataset \cite{0884882842} were taken on which there are two Gaussian noises ($n_1$ 
-and $n_2$) with different mixture $r_1, r_2$ and standard deviation ($\sigma$). By comparing the 
+and $n_2$) with different ratios $r_1, r_2$ and standard deviation ($\sigma$). By comparing the 
 results obtained in table \ref{indexCompare}, the proposed method achieves the highest values 
 in both indices compared to the two methods \cite{0884882815} \cite{0884882819} most common in the 
 state of the art.
@@ -229,3 +229,77 @@ state of the art.
     \caption{Average PSNR and SSIM values on BSD100 datasets of some methods.}
     \label{indexCompare}
 \end{table}
+
+\subsubsection{Gaussian Noise Plus Impulse Noise}
+To remove the “salt and pepper” noise, only one image was used on which 
+this type of noise was applied. Also for this type of noise, the evaluation is 
+made by changing the mixture ratio r and the sigma standard deviation with 
+different values. The work done by the proposed method, compared with the 
+other methods, is visible in figure \ref{fig:saltComp}. As for the values obtained of the PSNR 
+and SSIM indexs, these are visible in table \ref{GNPINIndex}.
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width = \linewidth]{images/paper7/salt.png}
+    \centering
+    \caption{Image reconstruction under Gaussain noise plus random-valued noise comparison.}
+    \label{fig:saltComp}
+\end{figure}
+
+\begin{table}[h!]
+    \centering
+    \begin{adjustbox}{max width=\textwidth}
+    \begin{tabular}{|c||ccc|ccc|ccc|}
+        \hline
+            & \multicolumn{3}{c||}{$\sigma_1=5$} & \multicolumn{3}{c||}{$\sigma_1=10$} & \multicolumn{3}{c||}{$\sigma_1=15$}\\
+        \hline        
+        $r\rightarrow$ & 0.1 & 0.2 & 0.3 & 0.1 & 0.2 & 0.3 & 0.1 & 0.2 & 0.3\\
+        \hline 
+        \hline
+        \multirow{2}{*}{Noisy} & 18.76 & 15.76 & 14.04 & 18.43 & 15.61 & 13.95 & 17.94 & 15.38 & 13.81\\
+        & 0.3545 & 0.2290 & 0.1662 & 0.3313 & 0.2216 & 0.1626 & 0.3040 & 0.2109 & 0.1571\\
+        \hline
+        \multirow{2}{*}{Two-phase\cite{0884882828}} & 25.40 & 24.77 & 24.13 & 24.34 & 23.94 & 23.45 & 23.32 & 23.02 & 22.67\\
+        & 0.6599 & 0.6313 & 0.5957 & 0.5116 & 0.4914 & 0.4655 & 0.4224 & 0.4058 & 0.3854\\
+        \hline
+        \multirow{2}{*}{ACWMF+K-SVD \cite{0884882844}\cite{0884882813}} & 26.07 & 25.27 & 24.54 & 25.50 & 24.91 & 23.13 & 24.64 & 24.19 & 23.67\\
+        & 0.7130 & 0.6761 & 0.6333 & 0.5902 & 0.5613 & 0.5291 & 0.4855 & 0.4625 & 0.4414\\
+        \hline    
+        \multirow{2}{*}{LSM-NLR \cite{0884882826}} & 29.48 & 26.97 & 24.55 & 29.43 & 27.08 & 24.43 & 28.51 & 26.06 & 23.98\\
+        & 0.6548 & 0.5774 & 0.4982 & 0.6420 & 0.5646 & 0.4770 & 0.6282 & 0.5458 & 0.4643\\
+        \hline
+        \multirow{2}{*}{$l_1-l_0$\cite{0884882829}} & 30.45 & 27.75 & 25.95 & 28.45 & 26.59 & 25.34 & 27.33 & 25.69 & 24.55\\
+        & 0.8962 & 0.7911 & 0.7312 & 0.7539 & 0.6748 & 0.6293 & 0.6793 & 0.6010 & 0.5744\\
+        \hline
+        \multirow{2}{*}{Proposed} & \bfseries{31.06} & \bfseries{30.44} & \bfseries{27.66} & \bfseries{30.97} & \bfseries{29.5} & \bfseries{27.41} & \bfseries{29.74} & \bfseries{28.09} & \bfseries{25.73}\\
+        & \bfseries{0.9214} & \bfseries{0.9157} & \bfseries{0.8497} & \bfseries{0.8943} & \bfseries{0.8749} & \bfseries{0.8316} & \bfseries{0.8530} & \bfseries{0.8222} & \bfseries{0.7750}\\
+        \hline
+    \end{tabular}
+    \end{adjustbox}
+    \caption{Average PSNR and SSIM values on one image of some methods.}
+    \label{GNPINIndex}
+\end{table}
+
+\subsubsection{Realistic Noise Removal}
+The model was also tested with the images present in the dataset provided 
+in \cite{0884882845}. From the following images only one of their cut out parts is taken 
+(Fig \ref{fig:crop}). This time the EM-CNN model was compared with different types 
+of existing denoising, including the IRCNN which is adopted by CNN of the 
+proposed model. Figure \ref{fig:cropRes} shows the results, in terms of PSNR, obtained on 
+each cropped image. From these results it can be seen that the proposed 
+model does not always manage to obtain the best result, but in any case its 
+PSNR average remains higher than the competing denoisers.
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width = \linewidth]{images/paper7/crop.png}
+    \centering
+    \caption{Cropped real noisy images.}
+    \label{fig:crop}
+\end{figure}
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width = 0.8\linewidth]{images/paper7/crop result.png}
+    \centering
+    \caption{PSNR result of different methods on cropped real noisy images.}
+    \label{fig:cropRes}
+\end{figure}

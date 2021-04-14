@@ -298,8 +298,16 @@ PSNR average remains higher than the competing denoisers.
 
 \begin{figure}[h!]
     \centering
-    \includegraphics[width = 0.8\linewidth]{images/paper7/crop result.png}
+    \includegraphics[width = 0.7\linewidth]{images/paper7/crop result.png}
     \centering
     \caption{PSNR result of different methods on cropped real noisy images.}
     \label{fig:cropRes}
 \end{figure}
+
+\subsection{CONCLUSION}
+Noise removal, as well as being carried out by the denoiser, is given by the 
+learning made by the CNN network on the new input images which, through 
+an iterative process, are gradually improved. This is possible only thanks to 
+the estimates derived from the EM algorithm and how this can classify the 
+various types of noise. Without this information, each input image would 
+not get the proper correction, thus generating incorrect output images.

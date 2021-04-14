@@ -70,10 +70,10 @@ In order for this probability to be extended to more types of noise
 distribution, it is necessary to perform an optimization that minimizes the 
 upper limit of the function (\ref{H function}). 
 \begin{eqnarray}\label{H function}
-    H(u,\Theta,w) & = & - \sum_{x\in\Omega}\sum_{k=1}\ln\left[r_kp_k(u(x)-f(x))\right]w_k \nonumber \\
+    \mathcal{H}(u,\Theta,w) & = & - \sum_{x\in\Omega}\sum_{k=1}\ln\left[r_kp_k(u(x)-f(x))\right]w_k \nonumber \\
                   &   & + \sum_{x\in\Omega}\sum_{k=1}w_k(x)\ln{w_k(x)}  
 \end{eqnarray}
-To minimize H, a minimization of $ w $ must be performed, which is a probability 
+To minimize $\mathcal{H}$, a minimization of $ w $ must be performed, which is a probability 
 indicates the noise at each pixel, and an iterative minimization of the other 
 two variables $ u $ and $ \Theta $.
 
@@ -84,14 +84,20 @@ residual loss functions are adopted. Unfortunately, if there are mixed-noises,
 this method does not produce satisfactory results.
 
 \subsection{THE PROPOSED METHOD (EM-CNN)}
+In the following paper a general variational model is proposed, formed by 
+the combination of a deep learning method and variational methods, with 
+regularized CNN to remove the mixed-noise problem, especially noises such 
+as the Gaussian mixture and the Gaussian-impulse.
+
+\subsubsection{General Model}
 Removal of mixed-noise can be done with the following model:
-\begin{equation}
-    (u^*, \Theta^*, w^*) = \argmin_x\left\{H(u,\Theta,w) + \lambda_1S(u)\right\}
+\begin{equation}\label{HFunction}
+    (u^*, \Theta^*, w^*) = \argmin_x\left\{H(u,\Theta,w) + \lambda_1\mathcal{J}(u)\right\}
 \end{equation}
-where $ S $ as regularizer, such \emph{Total Variation Regularization} (TV) while $ \lambda_1 $ 
+where $\mathcal{J}$ is a regularizer, such \emph{Total Variation Regularization} (TV) while $ \lambda_1 $ 
 control the balance of the terms. By changing $u$ with an auxiliary function 
 $v$, and applying the \emph{augmented Lagrangian method} (ALM) \cite{0884882833}, the minimizations 
-on each component of $H$ ($u$, $\Theta$, $w$) change. The resolution of these 
+on each component of $\mathcal{H}$ ($u$, $\Theta$, $w$) change. The resolution of these 
 minimizations allows to divide the mixed-noise removal problem into Gaussian 
 noise removal (renewing $u$), choice of the fidelity term (renewing $v$), 
 noise reduction (updating the Lagragian multiplier $u$), parameter estimation 
@@ -104,4 +110,29 @@ the CNN based denoiser \cite{0884882819} was used. The weight $w$ is useful for 
 different fidelity terms to pixels contaminated by different levels of types of 
 noise. The minimization of $\Theta$ and $w$ are part of EM processes. Thanks to 
 these it is possible to extract information such as noise variations and the 
-classification of this in different classes.
+classification of this in different classes. In summary, the minimizations to 
+be calculated are the following:
+
+\begin{equation}\label{uMin}
+    u^{v+1} = \argmin_u \lambda_1\mathcal{J}(u)+\mathcal{H}(u,\Theta^v,w^v),
+\end{equation}
+\begin{equation}\label{ThetaMin}
+    \Theta^{v+1} = \argmin_\Theta \mathcal{H}(u^{v+1}, \Theta, w^v),
+\end{equation}
+\begin{equation}\label{wMin}
+    w^{v+1} = \argmin_{w\in{S}} \mathcal{H}(u^{v+1}, \Theta^{v+1},w)
+\end{equation}
+
+\subsubsection{Gaussian Mixture Model}
+A Gaussian mixture model is a probabilistic model that assumes all the data 
+points are generated from a mixture og finite number of Gaussian distributions 
+with unknown parameters. The distributions of Gaussian noises change 
+according to the assumed variance ($\sigma^2$) value. The new function $ \mathcal{H} $ will be 
+as follows:
+\begin{eqnarray}
+    \mathcal{H}(u,r,\sigma^2,w) & = & \frac{1}{2}\sum_{x\in\Omega}\sum_{k=1}^K\frac{(u(x)-f(x))^2}{\sigma^2_k}w_k(x)-\sum_{x\in\Omega}\sum_{k=1}^Kw_k(x)\ln{r_k}\nonumber \\
+                                &   & + \frac{1}{2}\sum_{x\in\Omega}\sum_{k=1}^Kw_k(x)\ln{\sigma^2_k}+\frac{1}{2}\sum_{x\in\Omega}\sum_{k=1}^Kw_k(x)\ln{w_k}(x)
+\end{eqnarray}
+The optimizations (\ref{uMin}) (\ref{ThetaMin}) (\ref{wMin}) of the parameters of (\ref{HFunction}) are adapted by 
+including the two new parameters $r$ and $\sigma^2$, parameters that are included in 
+$\Theta$.

@@ -39,7 +39,7 @@ remove the noise, with the integration of a CNN process as regularization,
 in order to create a new variational method. The method is able to iteratively 
 estimate the noise parameters useful for classifying the type and level 
 of noise in each pixel. The work carried out is divided into four phases: 
-regularization, synthesis, parameter estimation and error classification.
+regularization, synthesis, parameter estimation and noise classification.
 
 \subsection{RELATED WORK}
 \subsubsection{Mixed Noise Model}
@@ -101,7 +101,7 @@ on each component of $\mathcal{H}$ ($u$, $\Theta$, $w$) change. The resolution o
 minimizations allows to divide the mixed-noise removal problem into Gaussian 
 noise removal (renewing $u$), choice of the fidelity term (renewing $v$), 
 noise reduction (updating the Lagragian multiplier $u$), parameter estimation 
-noise ($\Theta$ update) and error classification ($w$ update). The formula used by 
+noise ($\Theta$ update) and noise classification ($w$ update). The formula used by 
 the model is able to handle different types of Gaussian noises such as impulse 
 noise, mixed-noise Gaussian-impulse and many others. Each noise has 
 a certain probability function pk, so just change this value in (\ref{H function}). A CNN 
@@ -154,7 +154,7 @@ a smoothing on the image obtaining a new image $u^{v+1}$. CNN applies two
 operations on this image in parallel. The first is that of the noise put back 
 in which the noise present in the image f is extracted by simply subtracting 
 the image $u^{v+1}$. Subsequently, to calcutale the fidelity term, the EM algorithm 
-\cite{0884882814} is applied to this noise which has the task of estimating the error 
+\cite{0884882814} is applied to this noise which has the task of estimating the noise 
 and classifying it by minimizing the terms of \ref{HFunctionGMM}. The minimization of each 
 weight $w$ leads to a continuous updating of this parameter which translates 
 into greater precision in determining the noise on each individual pixel. The 

@@ -13,20 +13,6 @@
     in order to create a new variational method.
 \end{frame}
 
-\begin{frame}{RELATED WORK - Variational Method Approach}
-    To obtain the clean image is necessry minimizing a cost functional(\ref{cost}).
-    \begin{block}{COST-FUNCTIONAL}
-        \begin{equation}\label{cost}
-            F(u) = E(u)+\lambda\mathcal{J}(u)
-        \end{equation}
-    \end{block}
-    where $E(u)$ is the set of data fidelity terms belonging to each pixel of the 
-    image $u$ useful to measure the discrepancy between the true and the 
-    observed data and it can derived from the maximum likelihood estimation 
-    of noise, task perfromed by the EM algorithm \footfullcite{0884882814}.  $\mathcal{J}$ is a regularizer while $ \lambda $ 
-    control the balance of the terms
-\end{frame}
-
 \begin{frame}{RELATED WORK - What types of image noise?}
     The noises analyzed in this paper are mainly two categories of Gaussian 
     noises:
@@ -66,4 +52,55 @@
     $ p_k $ and $ r_k $ are the unknown mixture ratios and thei sum is equal to 
     1. Each type of noise has a standard deviation ($\sigma$) which indicates the 
     amount of noise distribution present.     
+\end{frame}
+
+\begin{frame}{RELATED WORK - Variational Method Approach}
+    To obtain the clean image is necessry minimizing a cost functional(\ref{cost}).
+    \begin{block}{COST-FUNCTIONAL}
+        \begin{equation}\label{cost}
+            F(u) = E(u)+\lambda\mathcal{J}(u)
+        \end{equation}
+    \end{block}
+    where $E(u)$ is the set of data fidelity terms belonging to each pixel of the 
+    image $u$ useful to measure the discrepancy between the true and the 
+    observed data and it can derived from the maximum likelihood estimation 
+    of noise, task perfromed by the EM algorithm \footfullcite{0884882814}.  $\mathcal{J}$ is a regularizer while $ \lambda $ 
+    control the balance of the terms
+\end{frame}
+
+\begin{frame}{RELATED WORK - EM Algorithm (An Optimization problem)}
+    The EM algorithm is applied to this noise which has the task of estimating the noise 
+    and classifying it by minimizing the terms of \ref{HFunction}. The minimization of each 
+    weight $w$ leads to a continuous updating of this parameter which translates 
+    into greater precision in determining the noise on each individual pixel.
+    \begin{equation}\label{HFunction}
+        (u^*, \Theta^*, w^*) = \argmin_x\left\{H(u,\Theta,w) + \lambda_1\mathcal{J}(u)\right\}
+    \end{equation}
+    where $\Theta^*$ is a statistical parameters set contains noise parameters such as mixture ratios ($r$), means and variances ($\sigma^2$).
+\end{frame}
+
+\begin{frame}{THE PROPOSED METHOD (EM-CNN) - Architecture}
+    \begin{minipage}{\linewidth}
+        \centering
+        \begin{minipage}{0.45\linewidth}
+            The convolutional neural network (CNN) performs the following tasks            
+            \begin{enumerate}
+                \item Smoothness (Denoiser)
+                \item Regularization (TV)
+                \item Synthesis (Best Choice)
+                \item Parameters estimation (EM)
+                \item Noise classification (EM)
+                \item Output (Restored image and Noise Estimation)
+            \end{enumerate} 
+        \end{minipage}
+        \hspace{0.05\linewidth}
+        \begin{minipage}{0.47\linewidth}
+            \begin{figure}[h!]
+                \centering
+                \includegraphics[width = 1 \linewidth]{images/paper7/flowchart.png}
+                \centering
+                \label{fig:EM-CNN}
+            \end{figure}
+        \end{minipage}
+    \end{minipage}
 \end{frame}

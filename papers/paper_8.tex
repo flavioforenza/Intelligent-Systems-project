@@ -59,3 +59,16 @@ in the same position, obtaining better performance than methods based on
 similarity but nevertheless are not robust to distracting elements. The proposed 
 method instead takes into account both the background patches and 
 the target template patches in order to make comparisons on similarities.
+
+\subsection{METHODS}
+\subsubsection{Multi Stream Deep Similarity Learning Networks}
+A mulit-stream similarity learning network is used in this paper. In the 
+proposed framework there are various data streams (Fig. \ref{fig:EMDSLT}):
+\begin{enumerate}
+    \item Template Stream: the target template defined in the beginning frame;
+    \item Searching Stream: the search region;
+    \item Background Stream: background patches that sample around the target 
+    in the beginning frame.
+\end{enumerate}
+
+\subsubsection{Template-Searching-Background Loss}

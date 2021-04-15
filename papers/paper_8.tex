@@ -44,3 +44,18 @@ generated.
     \caption{The framework of EMDSLT proposed method.}
     \label{fig:EMDSLT}
 \end{figure}.
+
+\subsection{RELATED WORK}
+Methods such as generative trackers have been developed for finding positions 
+in which to find the best candidate during the tracking process. Good 
+results have been achieved by compound trackers \cite{0893551105} \cite{0893551118}. Networks such as 
+RNNs \cite{0893551121} can be used to predict possible target positions in each frame. 
+However, these types of networks have not yet achieved satisfactory results. 
+Some methods instead train a CNN offline while the test is done online. Unfortunately, 
+these models are not fast. Other models instead if they fail a first 
+time, then they will always fail until the target returns to the search region. 
+Methods such as \cite{0893551129} \cite{0893551134} search for the target template in subsequent frames 
+in the same position, obtaining better performance than methods based on 
+similarity but nevertheless are not robust to distracting elements. The proposed 
+method instead takes into account both the background patches and 
+the target template patches in order to make comparisons on similarities.

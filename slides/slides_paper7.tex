@@ -1,0 +1,69 @@
+\section{Paper 7}
+\subsection{\emph{"Variational-Based Mixed Noise Removal With CNN Deep Learning Regularization"}}
+
+\begin{frame}{INTRODUCTION}
+    Random noise distributions correspond to standard probabilistic distributions, 
+    such as the Gaussian, Poisson and other distributions. There have 
+    been many methods that attempt to clean up noisy images. Other tools such as the Variational method have been widely used. 
+    This method is based on reducing the cost function containing the fidelity 
+    term of the data, useful for calculating the difference between true and observed 
+    data, and the regularization terms. In the 
+    proposed article, the EM (Expectation-Maximization) algorithm is used to 
+    remove the noise, with the integration of a CNN process as regularization, 
+    in order to create a new variational method.
+\end{frame}
+
+\begin{frame}{RELATED WORK - Variational Method Approach}
+    To obtain the clean image is necessry minimizing a cost functional(\ref{cost}).
+    \begin{block}{COST-FUNCTIONAL}
+        \begin{equation}\label{cost}
+            F(u) = E(u)+\lambda\mathcal{J}(u)
+        \end{equation}
+    \end{block}
+    where $E(u)$ is the set of data fidelity terms belonging to each pixel of the 
+    image $u$ useful to measure the discrepancy between the true and the 
+    observed data and it can derived from the maximum likelihood estimation 
+    of noise, task perfromed by the EM algorithm \footfullcite{0884882814}.  $\mathcal{J}$ is a regularizer while $ \lambda $ 
+    control the balance of the terms
+\end{frame}
+
+\begin{frame}{RELATED WORK - What types of image noise?}
+    The noises analyzed in this paper are mainly two categories of Gaussian 
+    noises:
+    \begin{minipage}{\linewidth}
+        \centering
+        \begin{minipage}{0.45\linewidth}
+            \begin{block}{GAUSSIAN MIXED-NOISE}
+                $$
+                \small
+                n = \left\{
+                    \begin{array}{cc}
+                        n_1, & with~probability~r_1\\
+                        n_2, & with~probability~r_2\\
+                        \cdots, & \cdots\\
+                        n_k, & with~probability~r_k\\ 
+                    \end{array}
+                    \right\}
+                $$
+            \end{block}  
+        \end{minipage}
+        \hspace{0.05\linewidth}
+        \begin{minipage}{0.47\linewidth}
+            \begin{block}{GAUSSIAN RANDOM NOISE}
+                $$
+                \small
+                n = \left\{
+                    \begin{array}{cc}
+                        n_1, & with~probability~1-r\\
+                        n_2, & with~probability~r\\
+                    \end{array}
+                    \right\}
+                $$
+            \end{block} 
+        \end{minipage}
+    \end{minipage}
+    where $ n_k $ is the \emph{k}-th noise component with probability density function (PDF) 
+    $ p_k $ and $ r_k $ are the unknown mixture ratios and thei sum is equal to 
+    1. Each type of noise has a standard deviation ($\sigma$) which indicates the 
+    amount of noise distribution present.     
+\end{frame}

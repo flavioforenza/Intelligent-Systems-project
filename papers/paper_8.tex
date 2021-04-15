@@ -1,0 +1,46 @@
+\section{Visual Object Tracking via Multi-Stream Deep Similarity Learning Networks}
+
+\begin{center}
+    \author{
+    Kunpeng Li,
+    \emph{Student Member, IEEE},
+    Yu Kong,
+    \emph{Member, IEEE},
+    Yunf Fu,
+    \emph{Fellow, IEEE}
+    }
+\end{center}
+
+\begin{center}
+    \emph{IEEE TRANSACTIONS ON IMAGE PROCESSING, VOL.29, 2020}
+\end{center}
+
+\subsection{INTRODUCTION}
+The goal of visual tracking systems is to be able to obtain the position of 
+the tracked target even in subsequent frames. The problems to be solved are 
+those of occlusion, background clutter, illumination variations, deformation 
+etc. The existing state-of-the-art models carry out training online exclusively. 
+Some methods, based on pre-trained convolutional networks (CNN), track 
+the object based on the background. In these networks, stochastic gradient 
+descent is applied in order to update the entire network. However, these 
+models appear to be too slow and do not work well in real-time. The following 
+paper uses a model that compares similarities and is trained offline in order to 
+predict the patch present in the next frame. The method, thanks to the use of 
+the relative distance, is robust in the presence of phenomena that introduce 
+the so called distractors. The purpose is to be able to compare the patch that 
+identifies the target template (the object) with all the possible positions 
+of the same region belonging to the next frame. In addition to tracking the 
+object, the proposed model is a framework for EMDSLT tracking like the 
+one shown in figure \ref{fig:EMDSLT}. Within it, two procedures are considered important: 
+updating the model and self-recovery from failures. The network is composed 
+of two types of structures, one that is responsible for dast-speed verification 
+and production of the tracking results, while the second is responsible for re-verification 
+and re-detection of the target object on the patches previously 
+generated.
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width = \linewidth]{images/paper8/EMDSLT.png}
+    \centering
+    \caption{The framework of EMDSLT proposed method.}
+    \label{fig:EMDSLT}
+\end{figure}.

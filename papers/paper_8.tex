@@ -72,3 +72,8 @@ proposed framework there are various data streams (Fig. \ref{fig:EMDSLT}):
 \end{enumerate}
 
 \subsubsection{Template-Searching-Background Loss}
+Several positive $X^+_i$, negative $X^-_i$ and background $B_{i-1,j}$ patches can be generated in an image. Patches are considered positive if they have a small cosine distance with the target template $T$, on the contrary, patches will be considered negative if they are closer to the background patches within the search region $S_i$. The loss function to be minimized is the following:
+\begin{equation}
+    L(T,\{X_{i,k}\}^N_{k=1}, \{B_{i-1}\}^M_{j=1}) = \sum_{k=1}^NL(T,X_{i,k}, \{B_{i-1,j}\}^M_{j=1})
+\end{equation}
+Where $T$ is the target template, $X_{i,k}$ is the $k-th$ candidate patch $X$ of frame $i$, $M$ is the number of background patches and $N$ is the number of candidate patches $X_{i,k}$.

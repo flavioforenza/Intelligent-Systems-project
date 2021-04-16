@@ -72,8 +72,32 @@ proposed framework there are various data streams (Fig. \ref{fig:EMDSLT}):
 \end{enumerate}
 
 \subsubsection{Template-Searching-Background Loss}
-Several positive $X^+_i$, negative $X^-_i$ and background $B_{i-1,j}$ patches can be generated in an image. Patches are considered positive if they have a small cosine distance with the target template $T$, on the contrary, patches will be considered negative if they are closer to the background patches within the search region $S_i$. The loss function to be minimized is the following:
+Several positive $X^+_i$, negative $X^-_i$ and background $B_{i-1,j}$ patches can be 
+generated in an image. Patches are considered positive if they have a small 
+cosine distance with the target template $T$, on the contrary, patches will be 
+considered negative if they are closer to the background patches within the 
+search region $S_i$. The loss function to be minimized is the following:
 \begin{equation}
     L(T,\{X_{i,k}\}^N_{k=1}, \{B_{i-1}\}^M_{j=1}) = \sum_{k=1}^NL(T,X_{i,k}, \{B_{i-1,j}\}^M_{j=1})
 \end{equation}
-Where $T$ is the target template, $X_{i,k}$ is the $k-th$ candidate patch $X$ of frame $i$, $M$ is the number of background patches and $N$ is the number of candidate patches $X_{i,k}$.
+Where $T$ is the target template, $X_{i,k}$ is the $k-th$ candidate patch $X$ of frame 
+$i$, $M$ is the number of background patches and $N$ is the number of candidate 
+patches $X_{i,k}$.
+
+\subsubsection{Tracking Method}
+Background patches are obtained by sampling around the previous positions 
+of frame $i-1$. The background patches that have a high correlation with 
+the target template will be definitively chosen. Find these patches first, the 
+selected $X_i$ pateches will be the ones that will match the target template and 
+discriminate against the background patches. Ultimately, the choice of 
+patch $X_i$ comes down to an optimization problem.
+\begin{equation}
+    X_i = \argmin_{X_{i,k} \in S_i}d(T,X_{i,k}, \{B_{i-1,j}\}^M_{j=1})
+\end{equation}
+where $d(\cdot)$ is a distance function.
+
+\subsubsection{Tracking With Updating}
+As already mentioned, the two important aspects of the framework are to update the model and allow self-recovery when it is unable to track the target. In order to guarantee these two operations, a confidence assessment of the monitoring results must be carried out. The set of patches Xi, each of which belongs to each frame ($K = k_1$), is passed to the part of the network that performs the re-verification in order to return the "\emph{Trust Score s}" obtained based on the similarity with the target template . This score indicates the confidence level of the monitoring and can then be used to identify any errors that can be corrected with an update of the taget template. When the s score is less than a $\sigma$ threshold. then a failure has occurred. If a failure occurs, then the number of frames ($K = k_2$) would be increased by 1 and then re-detected, on the patches, which would return a new patch $X'$ with a new score $s'$. If $s'> \sigma$, then this will be the new tracking result ending the recovery process. When this occurs, the target template, calculated with the new formula (\ref{newX}) will be updated and then replaced with the last detected. In \ref{newX}, $m$ represents the matching function, $m(a,b)=f(a)^Tf(b)$, used to obtain the Trust Score. 
+\begin{equation}\label{newX}
+    X'_i = \argmax_{X_{i,k} \in S_i}m(T,X_{i,k})
+\end{equation}

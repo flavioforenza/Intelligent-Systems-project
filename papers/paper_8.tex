@@ -138,3 +138,17 @@ are selected if they have an overlap with the ground truth in the range 0.1 to
 indicates the re-detection process will take place in sequence on each single 
 patch that has caused the tracking to fail), while the $\sigma_1$ and $\sigma_2$ thresholds 
 are set accordingly to 1.6 and 2.
+
+\subsubsection{Experimental Setup}
+The experiments were conducted on four different types of datasets: OTB-2013 
+\cite{0893551142}, OTB-100 \cite{0893551143}, VOT-2015 \cite{0893551144} and VOT-2016 \cite{0893551140}. The first two contain 
+a total of 150 bounding-box annotated videos and two metrics, precision 
+plots and success plots were used to assess the quality of the tracing. The 
+first metric reaches a high value when the distance between the bounding-box 
+(ground-truth) centers and the predicted one are less than a certain threshold, 
+while the second metric takes into account the overlap of the two components, 
+which is calculated with \emph{IoU} index. The last two datasets contain 
+a total of 100 videos and the metrics to evaluate the tracking are accuracy, 
+robustness and the expected average overlap (\emph{EAO}). To be considered good, 
+a tracker must achieve high accuracy and a high AEO score, while it must 
+achieve a low robustness score.

@@ -76,13 +76,26 @@ Several positive $X^+_i$, negative $X^-_i$ and background $B_{i-1,j}$ patches ca
 generated in an image. Patches are considered positive if they have a small 
 cosine distance with the target template $T$, on the contrary, patches will be 
 considered negative if they are closer to the background patches within the 
-search region $S_i$. The loss function to be minimized is the following:
+search region $S_i$. The loss-function calculation encourages the distance 
+between a positive patch and the background patches to be greater than that 
+between the positive patch and the target model.
 \begin{equation}
-    L(T,\{X_{i,k}\}^N_{k=1}, \{B_{i-1}\}^M_{j=1}) = \sum_{k=1}^NL(T,X_{i,k}, \{B_{i-1,j}\}^M_{j=1})
+    L(T,\{X_{i,k}\}^N_{k=1}, \{B_{i-1}\}^M_{j=1}) = log(1+e^{l_id_i})
 \end{equation}
 Where $T$ is the target template, $X_{i,k}$ is the $k-th$ candidate patch $X$ of frame 
 $i$, $M$ is the number of background patches and $N$ is the number of candidate 
-patches $X_{i,k}$.
+patches $X_{i,k}$. $d(\cdot)$ is the distance function:
+\begin{equation}\label{distanceFunc}
+    d_i=\sum^M_{j=1} D(T, X_i) - D(X_i, B_{i-1,j})
+\end{equation}
+where $D$ is the cosine distance that describe the distance of two image patches 
+$X_1$ and $X_2$ and $l_i \in \{+1,-1\}$ is the ground truth label of $X_i$. Since the 
+loss function must be calculated for each patch, the shortest distance will 
+be chosen based on the values returned by the calculation of the following 
+loss-function (\ref{FinalLoss}).
+\begin{equation}\label{FinalLoss}
+    L(T,\{X_{i,k}\}^N_{k=1}, \{B_{i-1}\}^M_{j=1}) = \sum_{k=1}^NL(T,X_{i,k}, \{B_{i-1,j}\}^M_{j=1})
+\end{equation}
 
 \subsubsection{Tracking Method}
 Background patches are obtained by sampling around the previous positions 
@@ -152,3 +165,50 @@ a total of 100 videos and the metrics to evaluate the tracking are accuracy,
 robustness and the expected average overlap (\emph{EAO}). To be considered good, 
 a tracker must achieve high accuracy and a high AEO score, while it must 
 achieve a low robustness score.
+
+\subsubsection{Result and Analysis}
+\begin{enumerate}
+    \item \emph{Comparison with Recent Real-Time Trackers}: the performance of each tracker, including the one proposed, is shown below. For the OTB dataset, several metrics are used to evaluate its tracking quality. Among these metrics we have those of AUC and precision, while for the VOT dataset the metrics specified above are used (Fig.\ref{fig:PerfComp}).
+    \begin{figure}[h!]
+        \centering
+        \includegraphics[width = \linewidth]{images/paper8/metrics.png}
+        \centering
+        \caption{Performance comparison with Recent Real-Time Trackers}
+        \label{fig:PerfComp}
+    \end{figure}
+    \item \emph{Attribute-Based Evaluation}: the presence of distracting elements leads 
+    many methods to fail to track them. In figure \ref{fig:AUCScore} it is possible to see the 
+    comparison, in terms of AUC score, reached by different methods on 
+    the OTB-2013 dataset, when these elements are present. The values 
+    in blue are the highest and are obtained from the best method, while 
+    those in red are placed in second position.
+    \begin{figure}[h!]
+        \centering
+        \includegraphics[width = \linewidth]{images/paper8/AUC.png}
+        \centering
+        \caption{AUC score on OTB-2013 dataset.}
+        \label{fig:AUCScore}
+    \end{figure}
+    \item \emph{Qualitative Evaluation}: The use of the Template-Searching-Background (TSB), allows you to use the background patches to train the model (Fig.\ref{fig:TSBMin}). This method helps to minimize the relative distance $d(\cdot)$ (\ref{distanceFunc}) which translated into other words means bringing the target template closer to the $X_i^+$ samples and at the same time moving the background distractors $B_i$ away from the positive sample. This method allows for better performance than existing state-of-the-art models. A visual example of comparison of the trackers made by the different methods, including the one proposed, is visible in figure \ref{fig:qualitativeTracking}.
+    \begin{figure}[h!]
+        \centering
+        \includegraphics[width = \linewidth]{images/paper8/TSB.png}
+        \centering
+        \caption{Template-Searching-Background to minimizes the relative distance.}
+        \label{fig:TSBMin}
+    \end{figure}
+    \begin{figure}[h!]
+        \centering
+        \includegraphics[width = \linewidth]{images/paper8/qualitative.png}
+        \centering
+        \caption{Qualitative reuslt of seven trackers. The bounding box with an orange dotted line shows the ground-truth localization of the target object.}
+        \label{fig:qualitativeTracking}
+    \end{figure}
+\end{enumerate}
+
+\subsection{CONCLUSION}
+The proposed framework, from the results obtained in the benchmarks, seems 
+to be the best. The achievement of these results were possible thanks to the 
+integration of a verification and detecting method. The use of the TSB 
+method was fundamental, which, by reducing the relative distance between 
+the various patches, allowed for good model learning.

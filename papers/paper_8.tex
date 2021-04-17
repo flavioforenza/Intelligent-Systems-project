@@ -189,7 +189,15 @@ achieve a low robustness score.
         \caption{AUC score on OTB-2013 dataset.}
         \label{fig:AUCScore}
     \end{figure}
-    \item \emph{Qualitative Evaluation}: The use of the Template-Searching-Background (TSB), allows you to use the background patches to train the model (Fig.\ref{fig:TSBMin}). This method helps to minimize the relative distance $d(\cdot)$ (\ref{distanceFunc}) which translated into other words means bringing the target template closer to the $X_i^+$ samples and at the same time moving the background distractors $B_i$ away from the positive sample. This method allows for better performance than existing state-of-the-art models. A visual example of comparison of the trackers made by the different methods, including the one proposed, is visible in figure \ref{fig:qualitativeTracking}.
+    \item \emph{Qualitative Evaluation}: The use of the Template-Searching-Background 
+    (TSB), allows you to use the background patches to train the model 
+    (Fig.\ref{fig:TSBMin}). This method helps to minimize the relative distance $d(\cdot)$ (\ref{distanceFunc}) 
+    which translated into other words means bringing the target template 
+    closer to the $X_i^+$ samples and at the same time moving the background 
+    distractors $B_i$ away from the positive sample. This method allows for 
+    better performance than existing state-of-the-art models. A visual example 
+    of comparison of the trackers made by the different methods, 
+    including the one proposed, is visible in figure \ref{fig:qualitativeTracking}.
     \begin{figure}[h!]
         \centering
         \includegraphics[width = \linewidth]{images/paper8/TSB.png}

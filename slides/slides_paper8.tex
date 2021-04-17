@@ -50,5 +50,74 @@
 \end{frame}
 
 \begin{frame}{METHODS - \emph{Template-Searching-Background Loss} (TSB)}
-    
+    The use of the Template-Searching-Background (TSB), allows to use the 
+    background patches to train the model. This method helps to minimize 
+    the relative distance $d(\cdot)$ (\ref{distanceFunc}) which translated into other words means 
+    bringing the target template closer to the $X_i^+$ samples and at the same 
+    time moving the background distractors $B_i$ away from the positive 
+    sample.
+    \begin{minipage}{\linewidth}
+        \centering
+        \begin{minipage}{0.45\linewidth}
+            \begin{block}{RELATIVE DISTANCE}
+                \begin{equation}\label{distanceFunc}
+                    d_i=\sum^M_{j=1} D(T, X_i) - D(X_i, B_{i-1,j})
+                \end{equation}
+            \end{block}  
+        \end{minipage}
+        \hspace{0.05\linewidth}
+        \begin{minipage}{0.47\linewidth}
+            \begin{figure}[h!]
+                \centering
+                \includegraphics[width =\linewidth]{images/paper8/TSB.png}
+                \centering
+            \end{figure}
+        \end{minipage}
+    \end{minipage}
+\end{frame}
+
+\begin{frame}{METHODS - Tracking With Updating}
+    To evaluate the correspondence of an $X_i^+$ patch, a \emph{Trust Score s} is calculated. The score $s$ will be compared with two thresholds $\sigma_1$ and $\sigma_2$.
+    If $s\leq\sigma_1$ then a new positive patch $X{'}_i^+$, and consequently a new score $s'$, will be recalculated which will be replaced with the previous patch $X_i^+$ when $s'\geq\sigma_1$.
+    If $s\geq\sigma_2$ then update the target template $T$ with $X_i^+$.
+    \begin{equation}\label{distanceFunc}
+        X_i = \argmin_{X_{i,k} \in S_i}d(T,X_{i,k}, \{B_{i-1,j}\}^M_{j=1})
+    \end{equation}
+    \begin{equation}\label{newX}
+        X'_i = \argmax_{X_{i,k} \in S_i}m(T,X_{i,k})
+    \end{equation}
+\end{frame}
+
+\begin{frame}{EXPERIMENTS}
+    The experiments were conducted on four different types of datasets: 
+    OTB-2013, OTB-100, VOT-2015 and VOT-2016. The metrics used to 
+    evaluate the performance of all existing methods, including the one 
+    proposed, are accuracy, Area-Under-the-Curve (AUC), 
+    Expected-Average-Overlap (EAO) and robustness.
+    \begin{figure}[h!]
+        \centering
+        \includegraphics[width = \linewidth]{images/paper8/metrics.png}
+        \centering
+    \end{figure}
+\end{frame}
+
+\begin{frame}{EXPERIMENTS - AUC score on distractors}
+    Target tracking can be onerous when there are elements such as 
+    distractors in the scene. These lead most trackers to fail. The 
+    re-verification and re-detecting operations were essential to reduce this 
+    problem. In the table, the values in blue are the highest and are obtained 
+    from the best method, while those in red are placed in second position.
+    \begin{figure}[h!]
+        \centering
+        \includegraphics[width = \linewidth]{images/paper8/AUC.png}
+        \centering
+    \end{figure}
+\end{frame}
+
+\begin{frame}{CONCLUSION}
+    The proposed framework, from the results obtained in the benchmarks, seems 
+    to be the best. The achievement of these results were possible thanks to the 
+    integration of a verification and detecting method. The use of the TSB 
+    method was fundamental, which, by reducing the relative distance between 
+    the various patches, allowed for good model learning.
 \end{frame}

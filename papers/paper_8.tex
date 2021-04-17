@@ -97,7 +97,44 @@ patch $X_i$ comes down to an optimization problem.
 where $d(\cdot)$ is a distance function.
 
 \subsubsection{Tracking With Updating}
-As already mentioned, the two important aspects of the framework are to update the model and allow self-recovery when it is unable to track the target. In order to guarantee these two operations, a confidence assessment of the monitoring results must be carried out. The set of patches Xi, each of which belongs to each frame ($K = k_1$), is passed to the part of the network that performs the re-verification in order to return the "\emph{Trust Score s}" obtained based on the similarity with the target template . This score indicates the confidence level of the monitoring and can then be used to identify any errors that can be corrected with an update of the taget template. When the s score is less than a $\sigma$ threshold. then a failure has occurred. If a failure occurs, then the number of frames ($K = k_2$) would be increased by 1 and then re-detected, on the patches, which would return a new patch $X'$ with a new score $s'$. If $s'> \sigma$, then this will be the new tracking result ending the recovery process. When this occurs, the target template, calculated with the new formula (\ref{newX}) will be updated and then replaced with the last detected. In \ref{newX}, $m$ represents the matching function, $m(a,b)=f(a)^Tf(b)$, used to obtain the Trust Score. 
+As already mentioned, the two important aspects of the framework are to 
+update the model and allow self-recovery when it is unable to track the target. 
+In order to guarantee these two operations, a confidence assessment of the 
+monitoring results must be carried out. The set of patches $X_i$ belonging to 
+each frame in $(K = k_1)$, is passed to the part of the network that performs 
+the re-verification in order to return the "\emph{Trust Score s}" obtained based on 
+the similarity with the target template. This score indicates the confidence 
+level of the monitoring and can then be used to identify any errors that can 
+be corrected with an update of the target template. When the $s$ score is less 
+than a $\sigma_1$ threshold, then a failure has occurred. If a failure occurs, then the 
+number of frames $K = k_2$ is set lower and then re-detection is performed, 
+which would return a new patch $X'_i$, calculated with the formula \ref{newX}, and a 
+new score $s'$. If $s'> \sigma_1$, then the new tracking patch will be $X'_i$. In \ref{newX}, $m$ 
+represents the matching function, $m(a,b)=f(a)^Tf(b)$, used to obtain 
+the Trust Score. If $s$ is greater than $\sigma_2$, then the target template $T$ is updated 
+with patches $X_i$.
 \begin{equation}\label{newX}
     X'_i = \argmax_{X_{i,k} \in S_i}m(T,X_{i,k})
 \end{equation}
+
+\subsection{EXPERIMENTS}
+\subsubsection{Network Architecture}
+The proposed CNN network is similar to that of AlexNet \cite{0893551108} with five convolutional 
+layers of which only the first two are followed by two max pool 
+layers. The batch normalization \cite{0893551138} and the ReLu layers are present after 
+each convolutional layer except the last.
+
+\subsubsection{Training Details}
+To train the model, the videos contained in the ImageNet dataset were used, 
+more precisely 90\% of the videos are used as a training set and the remaining 
+10\% as a validation set. The training cycles are 240K with mini-batch size 8. 
+The target template is set in each random frame of each training video. From 
+two other random adjacent frames, the background patches and the search 
+region are chosen. In the search region, a candidate patch $Xi$ is labeled 
+positive if its overlap with the ground truth bounding box is greater than 
+0.7, otherwise it is considered negative. As for the background patches, these 
+are selected if they have an overlap with the ground truth in the range 0.1 to 
+0.5. The number of frames $k_1$ is set to 10, while $k_2$ is equal to 1 (it 
+indicates the re-detection process will take place in sequence on each single 
+patch that has caused the tracking to fail), while the $\sigma_1$ and $\sigma_2$ thresholds 
+are set accordingly to 1.6 and 2.

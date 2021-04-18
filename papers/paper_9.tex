@@ -158,7 +158,12 @@ high computational cost.
 \end{table}
 
 \subsubsection{Experimental Evaluation Index}
-In order to evaluate the proposed method, two metrics are used: sensitivity (true positive rate) and accuracy. Another custom evaluation method used is that of \emph{Top1 \& Top5 precision}. In this metric $N$ represents the total number of images of a single individual, $N_1$ represents the number of images most similar (Grade1) while $N_5$ represent the least similar images (Grade5), therefore the precision is calculated as below:
+In order to evaluate the proposed method, two metrics are used: sensitivity 
+(true positive rate) and accuracy. Another custom evaluation method used 
+is that of \emph{Top1 \& Top5 precision}. In this metric $N$ represents the total 
+number of images of a single individual, $N_1$ represents the number of images 
+most similar (Grade1) while $N_5$ represent the least similar images (Grade5), 
+therefore the precision is calculated as below:
 \begin{equation}
     Precision_{top1}= \frac{N_1}{N}
 \end{equation}
@@ -260,4 +265,4 @@ the lower the recognition accuracy achieved by all the models. Even if the
 addition of external and internal features represent a benefit for the purpose 
 of recognition, at the computation level this operation turns out to be expensive 
 in the training phase even if it is lightened by the use of mini-batches 
-(triple) and the various optimizations of the network.
+(triplet) and the various optimizations of the network.

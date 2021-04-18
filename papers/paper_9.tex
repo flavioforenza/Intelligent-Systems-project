@@ -183,3 +183,81 @@ than those achieved by v1.
     \label{fig:compareV2}
 \end{figure}
 
+\subsubsection{Top1\&Top5 Precision Experiments Under Different Global Scopes}
+Comparisons were also made on the two personal Top1 \& Top5 precision 
+metrics. The results obtained by both methods are those shown in table \ref{T12}.
+\begin{table}[h!]
+    \centering
+    \begin{adjustbox}{max width=\textwidth}
+    \begin{tabular}{|c|cc|cc|}
+        \hline
+        \multirow{2}{*}{Method} & \multicolumn{2}{c|}{LFW} & \multicolumn{2}{c|}{CASIA-WebFace}\\
+        & Top5-acc & Top1-acc & Top5-acc & Top1-acc\\
+        \hline
+        v2 & 96.96 & 93.63 & 85.97 & 78.24\\
+        \hline
+        proposed & \bfseries{99.20} & \bfseries{98.86} & \bfseries{93.31} & \bfseries{84.92}\\
+        \hline    
+    \end{tabular}
+    \end{adjustbox}
+    \caption{Top1\&Top5 Precision (\%) between two methods.}
+    \label{T12}
+\end{table}
+
+\subsubsection{Experiments On Similar Fase Dataset (SFD)}
+In this experiment, the performance of another method called DeepID2+ \cite{0902694017} 
+was also verified. The reference dataset in this case is just SFD. The experiment 
+is conducted with images in which there are similar faces, divided by 
+degrees. Also in this case accuracy and sensitivity are the metrics considered. 
+In table \ref{SFDCompMeth} you can see the results obtained by all the models. As we 
+can see, the lower the similarity level (towards grade 5), the higher the levels 
+of accuracy and true positive rate achieved by the methods. The proposed 
+method, however, managed to obtain the best performances also in this experiment. 
+his Thighlights the importance of using external features that are 
+not considered by the other methods.
+\begin{table}[h!]
+    \centering
+    \begin{adjustbox}{max width=\textwidth}
+    \begin{tabular}{|c|ccccc|}
+        \hline
+        \multirow{2}{*}{Method} & \multicolumn{5}{c|}{Similar Face Dataset (SFD)}\\
+        & \RN{1} & \RN{2} & \RN{3} & \RN{4} & \RN{5}\\
+        \hline
+        DeepID2+ acc. & 49.73 & 59.75 & 58.64 & 64.37 & 66.33\\
+        DeepID2+ tpr. & 71.77 & 78.08 & 76.28 & 81.77 & 83.17\\
+        \hline
+        v2 acc. & 42.81 & 54.75 & 55.64 & 66.97 & 68.22\\
+        v2 tpr. & 63.33 & 70.00 & 65.33 & 71.67 & 68.08\\
+        \hline
+        proposed acc. & \bfseries{78.29} & \bfseries{83.19} & \bfseries{82.19} & \bfseries{86.11} & \bfseries{86.40}\\
+        proposed tpr. & \bfseries{79.17} & \bfseries{83.33} & \bfseries{79.67} & \bfseries{85.67} & \bfseries{84.67}\\
+        \hline
+    \end{tabular}
+    \end{adjustbox}
+    \caption{Comparison abount v2, DeepID+ and proposd methods on SFD dataset}
+    \label{SFDCompMeth}
+\end{table}
+
+\subsubsection{Supplementary Experiment on SFD}
+The last experiment is carried out only between the v2 method, which does 
+not use external features, and the one proposed. The aim is to see which of 
+the two can best distinguish the similarities of faces. The values shown in the 
+image \ref{fig:fei} represent the L2 distance between the upper and lower image. It can 
+be seen that for v2, in all three images, the same face always appears, while 
+the proposed method, thanks to the combination of external and internal 
+features, manages to distinguish both people.
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width = 0.8\linewidth]{images/paper9/features.png}
+    \centering
+    \caption{The importance of external and internal features.}
+    \label{fig:fei}
+\end{figure}
+
+\subsection{CONCLUSION}
+What appears strange is that the greater the similarity between two faces, 
+the lower the recognition accuracy achieved by all the models. Even if the 
+addition of external and internal features represent a benefit for the purpose 
+of recognition, at the computation level this operation turns out to be expensive 
+in the training phase even if it is lightened by the use of mini-batches 
+(triple) and the various optimizations of the network.

@@ -6,6 +6,9 @@
 \usepackage{multirow}
 \usepackage{caption}
 \usepackage{subcaption}
+\newcommand{\RN}[1]{%
+  \textup{\uppercase\expandafter{\romannumeral#1}}%
+}
 \captionsetup[figure]{labelsep=period}
 \captionsetup[subfigure]{labelformat=simple} % default is 'parens'
 \renewcommand\thesubfigure{\thefigure.\alph{subfigure}.}

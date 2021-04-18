@@ -44,7 +44,89 @@ of the skull (external features), or the opposite. The proposed model
 \subsection{DATASET COLLECTION}
 The creation of the proposed similar-face dataset (SFD) consists of several steps.
 \begin{enumerate}
-    \item \emph{Collecting The Suitable Data Source}: the dataset used to collect the faces are LFW and CASIA-WebFace. The first contains a set of images of faces collected from the network, while the second has faces appropriately selected and labeled.
-    \item \emph{Determining the Similarity Between Two Faces Images}: to measure the similarity of two faces, the calculation of the distance $L2$ on image vectors is used.
-    \item \emph{Generating the Similar FaceDataset (SFD)}:if vectors with a short distance are found, then this distance will be stored. Based on the distance value, this can be associated with a grade type. The images belonging to the same grade, and therefore with the same distance, will be grouped.
+    \item \emph{Collecting The Suitable Data Source}: the dataset used to collect the 
+    faces are LFW and CASIA-WebFace. The first contains a set of images 
+    of faces collected from the network, while the second has faces 
+    appropriately selected and labeled.
+    \item \emph{Determining the Similarity Between Two Faces Images}: to measure 
+    the similarity of two faces, the calculation of the distance $L2$ on image 
+    vectors is used.
+    \item \emph{Generating the Similar FaceDataset (SFD)}:if vectors with a short distance 
+    are found, then this distance will be stored. Based on the distance 
+    value, this can be associated with a grade type. The images belonging 
+    to the same grade, and therefore with the same distance, will be 
+    grouped.
+\end{enumerate}
+
+\subsection{NETWORK ARCHITECTURE AND TRAINING}
+\subsubsection{IE-CNN Module}
+The IE-CNN network takes care of having to extract the external and internal 
+fetures and to do this there are two modules arranged on two different 
+branches, one called EI-CNN branch and the other called trunk branch. The 
+latter produces an output $T (x)$ where $x$ represents the input that is weighed 
+down by a mask $F (x)$ of the same size. The result obtained represents 
+the input of the algorithm $H (x)$. The IE-CNN branch has a number of 
+convolutional layers $p$ equal to 3, while in the other branch the number of 
+convolutional layers $q$ is equal to 2. For the construction of the trunk branch 
+a pre-activation Residual Unit is used \cite{0902694026}, while in the other branch 
+a customized large-size pre-activation Residual Unit is used. Other optimizations 
+have been added for the model to achieve good performance.
+
+\subsubsection{Pre-Activation Residual Unit}
+IE-CNN training is carried out using the Stochastic Gradient Descent (SGD). 
+Batch normalization and the ReLu activation function are used and both 
+operate before the convolution operation with the aim of speeding up training 
+and reducing the problem of covariates shift.
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width = 0.8\linewidth]{images/paper9/architecture.png}
+    \centering
+    \caption{(a) Structure of pre-activation residual unit (b) the large-size one}
+    \label{fig:ResidualUnit}
+\end{figure}
+
+\subsubsection{Architecture}
+The IE-CNN branch structure is the one shown in figure \ref{fig:IE-CNN ARCHITECTURE}. The local pathway 
+is used to extract internal features and to improve fine-grained recognition 
+performance. The global pathway instead captures the external features. 
+The integration of all these features is carried out with a max-out merger 
+strategy.
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width = 0.8\linewidth]{images/paper9/IE-CNN.png}
+    \centering
+    \caption{IE-CNN branch.}
+    \label{fig:IE-CNN ARCHITECTURE}
+\end{figure}
+
+\subsubsection{Framework of the proposed training method}
+The proposed model maps each image in a Euclidean space where, through 
+the use of the distance L2, its similarity will be established. Following the 
+\emph{LMNN} method \cite{0902694039}, three sets of images are created:
+\begin{enumerate}
+    \item $x^o$ (\emph{original}): represents the image of the face of a single individual;
+    \item $x^p$ (\emph{positive}): represents the remaining images of the same individual;
+    \item $x^n$ (\emph{positive}): represent the images of the faces of the other different 
+    individuals.
+\end{enumerate}
+The aim is to have smaller Euclidean distances between $x^o$ and $x^p$. The 
+input of the network consists of mini-batches, composed of images of positive 
+and negative faces, composed of a few images useful for obtaining a better 
+convergence during the descent of the stochastic gradient. In order to select 
+the best set triples useful for training, the strategy to be used is to consider 
+a $\theta$ margin in which the negative images $x^n$  will be found. Positive and 
+negative image sets that have maximum distance will be chosen. 
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width = 0.4\linewidth]{images/paper9/SET.png}
+    \centering
+    \caption{High-dimensional space.}
+    \label{fig:HDS}
+\end{figure}
+
+The following are the steps performed on each original image $x^o$:
+\begin{enumerate}
+    \item Pre-processing: performed by a pre-trained CNN;
+    \item Features enchancement: both external and internal;
+    \item Mapping: in high-dimensional space.
 \end{enumerate}

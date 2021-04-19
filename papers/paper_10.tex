@@ -46,3 +46,40 @@ algorithm, used for the same purpose.
     \caption{Risso’s dolphins Grampus Griseus}
     \label{fig:Risso}
 \end{figure}
+
+\subsection{MATERIAL AND METHODS}
+\subsubsection{Survey Area and Data Collection}
+A dataset was created containing all the sightings of dolphins that took place 
+in the years between 2013 and 2018, in the Gulf of Taranto. The collection 
+contains a total of 93 different labeled Risso dolphins, but sadly only 23 of 
+these were selected as each has at least 15 images on each side of the fin. 
+Through the use of an $f_R$ mask filter, 70\% of each image consists of the 
+dolphin fin alone, excluding external elements such as the sea. This filter 
+led to consider a new dataset containing 433 images belonging to the 23 
+dolphins. The $D_{NN}$ dataset used to train CNNs contains images that have 
+not been pre-processed by the $f_R$ filter. This latest dataset is made up of 
+582 images belonging to 28 different dolphins. A validation dataset was also 
+created containing 300 images of known and unknown Risso's dolphins.
+
+\subsubsection{RUSBoost Methodology}
+The RUSBoost algorithm has the task of identifying each dolphin and predicting 
+its label. The application of this algorithm can be schematized in 
+figure \ref{fig:RUSBoost}. The architecture consists of 3 main phases:
+\begin{enumerate}
+    \item \emph{Pre-processing}: creation of the black and white image containing the 
+    extracted fin.
+    \item \emph{Features Extraction}: build the 3-dimensional super-SIFT descriptor. 
+    \item \emph{Classification}: application of the RUSBoost algorithm.
+\end{enumerate}
+RUSBoost consists of two other types of algorithms: Random Under-Sampling 
+(RUS) and Adaboost \cite{0907875811}. RUSBoost training takes place by carrying out 
+cross-validation, one-vs-all, on a set of labeled data of the 23 dolphins considered.
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width = 0.8\linewidth]{images/paper10/RUSBoost.png}
+    \centering
+    \caption{Experimental methodology based on RUSBoost.}
+    \label{fig:RUSBoost}
+\end{figure}
+
+\subsubsection{RUSPool}

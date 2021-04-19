@@ -73,7 +73,8 @@ figure \ref{fig:RUSBoost}. The architecture consists of 3 main phases:
 \end{enumerate}
 RUSBoost consists of two other types of algorithms: Random Under-Sampling 
 (RUS) and Adaboost \cite{0907875811}. RUSBoost training takes place by carrying out 
-cross-validation, one-vs-all, on a set of labeled data of the 23 dolphins considered.
+cross-validation, one against all, on each of the 23 dolphins taken into consideration, 
+therefore $M_i$ classifiers will be created, with $i = 1,2,...,23$.
 \begin{figure}[h!]
     \centering
     \includegraphics[width = 0.8\linewidth]{images/paper10/RUSBoost.png}
@@ -83,3 +84,46 @@ cross-validation, one-vs-all, on a set of labeled data of the 23 dolphins consid
 \end{figure}
 
 \subsubsection{RUSPool}
+The RUSPool algorithm aims to identify known dolphins among all and unknown 
+ones. This task is done by using the previous 23 already trained 
+RUSBoosts classifiers (Fig. \ref{fig:RUSPool Arch}). Therefore, each image given as input to RUSPool 
+will have n super-SIFT descriptors associated with it and this new sample is 
+supplied as input to the RUSBoosts classifiers. The result returned by each 
+classifier will represent the prediction that a dolphin has been recognized or 
+not. The result obtained from the difference in these probabilities, if greater 
+than a threshold equal to $0.11$, will be taken into consideration, discarding 
+all other cases of uncertainty. The final output will be a vector $R$ where its 
+elements $r_i$ represent the percentage of positive predictions for each classifier 
+$M_i$ (Fig. \ref{fig:ri}). A filter is applied on the vector R to obtain the 
+prediction of the identity of a dolphin given in input.
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width = 0.5\linewidth]{images/paper10/RUSPool Architecture.png}
+    \centering
+    \caption{RUSPool Architecture.}
+    \label{fig:RUSPool Arch}
+\end{figure}
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width = 0.4\linewidth]{images/paper10/ri.png}
+    \centering
+    \caption{Example of RUSPool output. $r_i$ is the bumber of positive predicitons of the $M_i$ classifiers.}
+    \label{fig:ri}
+\end{figure}
+
+\subsubsection{Convolutional Neural Network}
+A convolutional neural network (CNN) is used. Its architecture is composed 
+of a triple sequence of Conv-ReLu-MaxPool layers (Fig. \ref{CNNDol}). The number of 
+parameters and images useful for training the network is less than the most 
+widespread neural networks in the state of the art, thus reducing the problem 
+of overfitting. This architecture forms the previous NNPool network. The 
+dataset used is the one previously mentioned DNN.
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width = 0.8\linewidth]{images/paper10/NNPool Architecture.png}
+    \centering
+    \caption{CNN Architecture build for each dolphin.}
+    \label{fig:CNNDol}
+\end{figure}
+
+\subsubsection{NNPool}

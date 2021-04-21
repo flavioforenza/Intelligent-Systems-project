@@ -71,15 +71,35 @@
     \end{enumerate}
 \end{frame}
 
-\begin{frame}[t]{EXPERIMENTS}
-    The results obtained on different datasets \footfullcite{PASCAL-S, ECSSD, ASD}, were compared with those 
-    obtained by the systems already existing at the state of the art.
+\begin{frame}{EXPERIMENTS - Fixation Prediction}
+    The fixation prediction indicates the likelihood with which a human is 
+    looking at a given position in the scene. There are several metrics that are 
+    used to evaluate the prediction such as Natural Scanpath Saliency (NSS) 
+    and ROC (AUC). In the following article the ROC method is mainly used, 
+    on three types of datasets, to compare the proposed system with others already 
+    existing at the state of the art, as shown in Fig. \ref{fig: ROC}.
+    \begin{figure}[htbp]
+        \centering
+        \includegraphics[width = 1 \linewidth]{images/paper1/ROC.png}
+        \centering
+        \caption{ROC comparison.}
+        \label{fig: ROC}
+    \end{figure}
+    The computation of the CBSP takes into account this {\bfseries{center bias}}, 
+    without however losing the information on the other objects in the scene.
+\end{frame}
+
+\begin{frame}[t]{EXPERIMENTS - Salient Object Detection}
+    To compare the performance of the salient object detection, metrics such 
+    as Precision, Recall, F-score, Weighted F-score and MAE (Mean Absolute 
+    Error) were used. In precision and recall, HS and RF are the best, but in 
+    the F-score, CGVS($t_2$) whit center bias, is best. Without center bias, CGVS 
+    would achieve lower performance (CGVS'').
     \begin{figure}[htbp]
         \centering
         \includegraphics[width = 0.8 \linewidth]{/paper1/metrics.png}
         \centering
         \caption{Metrics comparison.}
-        \label{fig: metrics}
     \end{figure}
 \end{frame}
 

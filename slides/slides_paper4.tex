@@ -40,7 +40,7 @@
         a wide range of light sources."}
     \end{block}
     The only information available on the light source are: the "\emph{Spectral 
-    Power Distributions}" (SPD) and the "\emph{Spectral Reflectance}" (SR)
+    Power Distributions}" (SPD) and the "\emph{Spectral Reflectance}" (SR).
     Thanks to this information, we can obtain the existing chromaticity in the image 
     and compare it with that obtained from the "\emph{Camera Spectral Senstivities}" (CSS).
     \begin{block}{Target}
@@ -84,12 +84,13 @@
 \end{frame}
 
 \begin{frame}{EXPERIMENTAL RESULTS - Supervised methods}
-    Color constancy can also be calculated from convolutional neural networks (\emph{CCNs}) such as the one proposed in \footfullcite{0807099125}
+    Color constancy can also be calculated from convolutional neural 
+    networks (\emph{CNNs}) such as the one proposed in \footfullcite{0807099125}. 
     \begin{figure}[htbp]
         \centering
         \includegraphics[width = 1 \linewidth]{images/paper4/25tech1.png}
         \centering
-        \caption{Camera Independence with CCM on $ 1^{nd} $ thecnique. Mean, Median and Maximum RAE of CNN.}
+        \caption{Camera Independence with CCM. Mean, Median and Maximum RAE of CNN. ($T_r$:N, V:M is the best configuration)}
         \label{fig:CNNtec1}
     \end{figure}
     \begin{minipage}{\linewidth}
@@ -97,15 +98,15 @@
         \begin{minipage}{0.45\linewidth}
             \begin{figure}[H]
                 \includegraphics[width=\linewidth]{images/paper4/25tech2.png}
-                \caption{\small Camera Independence on $ 2^{nd} $ thecnique. Mean, Median and Maximum RAE of CNN.}\label{fig:1}
+                \caption{\small Camera and Scene Independence. Mean, Median and Maximum RAE of CNN. ($T_r$:N+M, V:C, $T_e$: C$2^{nd}$)}\label{fig:1}
             \end{figure}
         \end{minipage}
         \hspace{0.05\linewidth}
         \begin{minipage}{0.45\linewidth}
             \begin{figure}[htbp]
                 \centering
-                \includegraphics[width=0.8\linewidth]{images/paper4/25tech3.png}
-                \caption{\small Camera Independence on $ 3^{nd} $ thecnique. Mean, Median and Maximum RAE of CNN.}\label{fig:1}
+                \includegraphics[width=0.7\linewidth]{images/paper4/25tech3.png}
+                \caption{\small Camera  and Scene Independence from Single camera. Mean, Median and Maximum RAE of CNN. ($T_r$+V: C$2^{nd}$)}\label{fig:1}
                 \centering
             \end{figure}
         \end{minipage}
